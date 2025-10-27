@@ -42,7 +42,7 @@ export class AuthActions {
 
   public async signOut() {
     const res = await safeAction(
-      () => this.api.post<null, null>(ENDPOINTS.AUTH.SIGN_OUT, null),
+      () => this.api.post<null, null>(ENDPOINTS.AUTH.SIGN_OUT),
       "Error al iniciar sesión"
     );
 
@@ -51,7 +51,7 @@ export class AuthActions {
 
   public async closeAllSessions() {
     const res = await safeAction(
-      () => this.api.post<null, null>(ENDPOINTS.AUTH.CLOSE_ALL_SESSIONS, null),
+      () => this.api.post<null>(ENDPOINTS.AUTH.CLOSE_ALL_SESSIONS),
       "Error al iniciar sesión"
     );
 

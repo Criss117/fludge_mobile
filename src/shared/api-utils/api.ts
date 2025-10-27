@@ -44,7 +44,7 @@ export class API {
     return response;
   }
 
-  public async post<T, D>(endpoint: string, data: D) {
+  public async post<T, D = undefined>(endpoint: string, data?: D) {
     const response = await this.api.post<
       CommonResponse<T>,
       AxiosResponse<CommonResponse<T>, unknown>,
