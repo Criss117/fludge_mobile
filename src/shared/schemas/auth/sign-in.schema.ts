@@ -9,4 +9,4 @@ export const signInSchema = z.object({
     .min(1, "La contraseña es obligatoria"),
 });
 
-export type SignInDto = z.infer<typeof signInSchema>;
+export type SignInSchema = z.infer<typeof signInSchema>;

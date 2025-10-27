@@ -35,6 +35,7 @@ export default function SignInScreen() {
         </CardHeader>
         <CardContent className="flex gap-y-4">
           <SignInForm.Root>
+            <SignInForm.RootError />
             <SignInForm.EmailInput />
             <SignInForm.PasswordInput />
             <SignInForm.Submit />
