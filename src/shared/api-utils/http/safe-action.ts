@@ -7,6 +7,7 @@ export async function safeAction<T>(
 ): Promise<CommonResponse<T>> {
   try {
     const res = await action();
+
     return res.data;
   } catch (error) {
     if (error instanceof AxiosError) {

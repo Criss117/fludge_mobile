@@ -44,8 +44,8 @@ function Root({ children }: RootProps) {
   const form = useForm<SignInSchema>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: "cristian@fludge.dev",
+      password: "holiwiss",
     },
   });
 

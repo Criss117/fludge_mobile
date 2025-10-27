@@ -1,8 +1,20 @@
-import { authMutationsOptions } from "@/integrations/query/quey-container";
-import { CommonResponse } from "@/shared/api-utils/http/common-response";
-import { SessionSummary } from "@/shared/entities/session.entity";
-import { useMutation, UseMutationResult } from "@tanstack/react-query";
-import { createContext, use } from "react";
+import {
+  api,
+  authMutationsOptions,
+  authQueriesOptions,
+} from "@/integrations/query/query-container";
+import { LoadingScreen } from "@/modules/shared/components/loading-screen";
+import { secureStorage } from "@/modules/shared/lib/secure-storage";
+import type { CommonResponse } from "@/shared/api-utils/http/common-response";
+import type { SessionSummary } from "@/shared/entities/session.entity";
+import type { UserDetail } from "@/shared/entities/user.entity";
+import {
+  useMutation,
+  useQuery,
+  type UseMutationResult,
+  type UseQueryResult,
+} from "@tanstack/react-query";
+import { createContext, use, useEffect, useState } from "react";
 
 interface Context {
   signUp: UseMutationResult<
@@ -33,9 +45,12 @@ interface Context {
     void,
     unknown
   >;
+  user: UseQueryResult<UserDetail | null, Error>;
 }
 
 const AuthContext = createContext<null | Context>(null);
+
+export const AuthTokenKey = "authtoken" as const;
 
 export function useAuth() {
   const context = use(AuthContext);
@@ -48,10 +63,40 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [loadingToken, setLoadingToken] = useState(true);
+  const [authToken, setAuthToken] = useState<string | undefined>();
+  const user = useQuery({ ...authQueriesOptions.me(), enabled: !!authToken });
   const signUp = useMutation(authMutationsOptions.signUp());
-  const signIn = useMutation(authMutationsOptions.signIn());
   const signOut = useMutation(authMutationsOptions.signOut());
   const closeAllSessions = useMutation(authMutationsOptions.closeAllSessions());
+  const signIn = useMutation({
+    ...authMutationsOptions.signIn(),
+    onSuccess: (data) => {
+      if (data.data?.token) {
+        const token = data.data?.token;
+
+        api.applyAuthInterceptor(token).then(() => {
+          setAuthToken(token);
+        });
+        secureStorage.save(AuthTokenKey, token);
+      }
+    },
+  });
+
+  useEffect(() => {
+    secureStorage
+      .getValueFor(AuthTokenKey)
+      .then((token) => {
+        if (!token) return;
+        api.applyAuthInterceptor(token).then(() => {
+          setAuthToken(token);
+        });
+      })
+      .finally(() => setLoadingToken(false));
+  }, []);
+
+  if (loadingToken)
+    return <LoadingScreen message="Obteniendo datos del usuario..." />;
 
   return (
     <AuthContext.Provider
@@ -60,6 +105,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         signIn,
         signOut,
         closeAllSessions,
+        user,
       }}
     >
       {children}

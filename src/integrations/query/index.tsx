@@ -1,4 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import * as Clipboard from "expo-clipboard";
+import { DevToolsBubble } from "react-native-react-query-devtools";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -14,7 +16,22 @@ export function TanstackQueryProvider({
 }: {
   children: React.ReactNode;
 }) {
+  const onCopy = async (text: string) => {
+    try {
+      // For Expo:
+      await Clipboard.setStringAsync(text);
+      // OR for React Native CLI:
+      // await Clipboard.setString(text);
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      {children}
+      <DevToolsBubble onCopy={onCopy} queryClient={queryClient} />
+    </QueryClientProvider>
   );
 }
