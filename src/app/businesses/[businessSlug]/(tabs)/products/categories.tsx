@@ -1,10 +1,10 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-export default function Products() {
+export default function Categories() {
   return (
     <View>
-      <Text>Products</Text>
+      <Text>Categories</Text>
     </View>
   );
 }
