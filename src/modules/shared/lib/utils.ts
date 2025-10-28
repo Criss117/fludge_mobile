@@ -8,3 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 export function sleep(ms = 500) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
+
+export function firstLetterToUpperCase(...str: string[]) {
+  return str.map((s) => s.slice(0, 1).toUpperCase());
+}

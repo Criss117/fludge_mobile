@@ -5,7 +5,6 @@ import {
 } from "@/integrations/query/query-container";
 import { LoadingScreen } from "@/modules/shared/components/loading-screen";
 import { secureStorage } from "@/modules/shared/lib/secure-storage";
-import { sleep } from "@/modules/shared/lib/utils";
 import type { CommonResponse } from "@/shared/api-utils/http/common-response";
 import type { SessionSummary } from "@/shared/entities/session.entity";
 import { UserDetail } from "@/shared/entities/user.entity";
@@ -85,7 +84,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         api.applyAuthInterceptor(data.token);
 
         setIsFetchingSession(true);
-        await sleep(2000);
         const userResponse = await authActions.me();
 
         if (userResponse.error || !userResponse.data) {
@@ -128,7 +126,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         if (!isMounted) return;
 
-        if (userResponse.error || !userResponse.data) {
+        if (userResponse?.error || !userResponse.data) {
           // Token inválido o expirado, limpiar
           await secureStorage.remove(AuthTokenKey);
           console.warn("Invalid or expired token");

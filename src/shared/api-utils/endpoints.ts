@@ -6,4 +6,9 @@ export const ENDPOINTS = {
     SIGN_OUT: "/auth/sign-out",
     CLOSE_ALL_SESSIONS: "/auth/close-all-sessions",
   },
+  BUSINESSES: {
+    CREATE: "/businesses",
+    FIND_ONE: (businessSlug: string) =>
+      `/businesses/${businessSlug}` as `/businesses/${string}`,
+  },
 } as const;

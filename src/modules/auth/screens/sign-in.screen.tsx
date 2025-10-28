@@ -16,11 +16,9 @@ import {
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
 import { SignInForm } from "../components/sign-in-form";
-import { useAuth } from "../providers/auth.provider";
 
 export default function SignInScreen() {
   const { top } = useSafeAreaInsets();
-  const { user } = useAuth();
 
   return (
     <SafeAreaView className="flex-1 flex justify-center items-center gap-y-2 relative">
@@ -56,7 +54,6 @@ export default function SignInScreen() {
           </Link>
         </CardFooter>
       </Card>
-      <Text>{JSON.stringify(user, null, 2)}</Text>
     </SafeAreaView>
   );
 }
