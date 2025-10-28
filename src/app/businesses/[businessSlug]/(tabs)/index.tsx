@@ -1,9 +1,10 @@
 import { businessQueriesOptions } from "@/integrations/query/query-container";
+import { BusinessScreen } from "@/modules/businesses/screens/business.screen";
 import { Text } from "@/modules/shared/components/ui/text";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Stack, useGlobalSearchParams } from "expo-router";
+import { useGlobalSearchParams } from "expo-router";
 import React, { Suspense } from "react";
-import { ScrollView, View } from "react-native";
+import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface Props {
@@ -15,12 +16,7 @@ function BusinessHomeSuspense({ businessSlug }: Props) {
     businessQueriesOptions.findOne(businessSlug)
   );
 
-  return (
-    <ScrollView>
-      <Stack.Screen options={{ title: business.name }} />
-      <Text>{JSON.stringify(business, null, 2)}</Text>
-    </ScrollView>
-  );
+  return <BusinessScreen business={business} />;
 }
 
 export default function BusinessHome() {
@@ -30,7 +26,7 @@ export default function BusinessHome() {
   }>();
 
   return (
-    <View style={{ top: top }}>
+    <View style={{ top: top, paddingHorizontal: 8 }}>
       <Suspense fallback={<Text>Cargando...</Text>}>
         <BusinessHomeSuspense businessSlug={businessSlug} />
       </Suspense>

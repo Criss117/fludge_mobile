@@ -46,6 +46,12 @@
           "configureAndroidBackup": true,
           "faceIDPermission": "Allow Fludge to access your Face ID biometric data."
         }
+      ],
+      [
+        "expo-screen-orientation",
+        {
+          "initialOrientation": "DEFAULT"
+        }
       ]
     ],
     "experiments": {
