@@ -8,7 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/modules/shared/components/ui/card";
-import { Input } from "@/modules/shared/components/ui/input";
 import { Text } from "@/modules/shared/components/ui/text";
 import { Link } from "expo-router";
 import { View } from "react-native";
@@ -16,13 +15,14 @@ import {
   SafeAreaView,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
+import { SignUpForm } from "../components/sign-up-form";
 
 export default function SignUpScreen() {
   const { top } = useSafeAreaInsets();
 
   return (
     <SafeAreaView className="flex-1 flex justify-center items-center gap-y-2 relative">
-      <View className="absolute right-5" style={{ top: top }}>
+      <View className="absolute right-5" style={{ top: top + 10 }}>
         <ToggleTheme />
       </View>
       <Text className="text-5xl font-bold h-14">Fludge</Text>
@@ -34,14 +34,17 @@ export default function SignUpScreen() {
           </CardDescription>
         </CardHeader>
         <CardContent className="flex gap-y-4">
-          <Input placeholder="Email" />
-          <Input placeholder="Contraseña" />
-          <Input placeholder="Confirmar contraseña" />
-          <Button>
-            <Text>Crear cuenta</Text>
-          </Button>
+          <SignUpForm.Root>
+            <SignUpForm.RootError />
+            <SignUpForm.FirstNameInput />
+            <SignUpForm.LastNameInput />
+            <SignUpForm.PhoneInput />
+            <SignUpForm.EmailInput />
+            <SignUpForm.PasswordInput />
+            <SignUpForm.Submit />
+          </SignUpForm.Root>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="flex justify-center items-center flex-col">
           <Link href="/auth/sign-in" asChild replace>
             <Button variant="link">
               <Text>Ta tienes una cuenta?</Text>

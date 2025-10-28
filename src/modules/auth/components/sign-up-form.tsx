@@ -6,11 +6,13 @@ import {
 } from "@/modules/shared/components/ui/alert";
 import { Button } from "@/modules/shared/components/ui/button";
 import { Text } from "@/modules/shared/components/ui/text";
+
 import {
-  signInSchema,
-  type SignInSchema,
-} from "@/shared/schemas/auth/sign-in.schema";
+  signUpSchema,
+  SignUpSchema,
+} from "@/shared/schemas/auth/sign-up.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "expo-router";
 import { TriangleAlert } from "lucide-react-native";
 import { createContext, use } from "react";
 import { useForm, type UseFormReturn } from "react-hook-form";
@@ -22,58 +24,65 @@ interface RootProps {
 }
 
 interface Context {
-  form: UseFormReturn<SignInSchema, unknown, SignInSchema>;
+  form: UseFormReturn<SignUpSchema, unknown, SignUpSchema>;
   isPending: boolean;
   onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
 }
 
-const SignInFormContext = createContext<Context | null>(null);
+const SignUpFormContext = createContext<Context | null>(null);
 
-function useSignInForm() {
-  const context = use(SignInFormContext);
+function useSignUpForm() {
+  const context = use(SignUpFormContext);
 
   if (!context) {
-    throw new Error("useSignInForm must be used within a SignInFormProvider");
+    throw new Error("useSignUpForm must be used within a SignInFormProvider");
   }
 
   return context;
 }
 
 function Root({ children }: RootProps) {
-  const { signIn } = useAuth();
-  const form = useForm<SignInSchema>({
-    resolver: zodResolver(signInSchema),
+  const router = useRouter();
+  const { signUp } = useAuth();
+  const form = useForm<SignUpSchema>({
+    resolver: zodResolver(signUpSchema),
     defaultValues: {
       email: "cristian@fludge.dev",
       password: "holiwiss",
+      firstName: "Cristian",
+      lastName: "Gonzalez",
+      phone: "3206247918",
     },
   });
 
   const onSubmit = form.handleSubmit((data) => {
-    signIn.mutate(data, {
+    signUp.mutate(data, {
+      onSuccess: () => {
+        router.replace("/auth/sign-in");
+      },
       onError: (err) => {
         form.setError("root", {
-          message: err.message ?? "Error al iniciar sesión",
+          message: err.message ?? "Error al crear la cuenta",
         });
       },
     });
   });
 
   return (
-    <SignInFormContext.Provider
+    <SignUpFormContext.Provider
       value={{
         form,
-        isPending: signIn.isPending,
+        isPending: signUp.isPending,
         onSubmit,
       }}
     >
       {children}
-    </SignInFormContext.Provider>
+    </SignUpFormContext.Provider>
   );
 }
 
 function RootError() {
-  const { form } = useSignInForm();
+  const { form } = useSignUpForm();
 
   if (!form.formState.errors.root?.message) {
     return null;
@@ -88,21 +97,53 @@ function RootError() {
 }
 
 function EmailInput() {
-  const { form } = useSignInForm();
+  const { form } = useSignUpForm();
 
-  return <FormInput form={form} name="email" label="Correo electrónico" />;
+  return (
+    <FormInput
+      form={form}
+      name="email"
+      label="Correo electrónico"
+      keyboardType="email-address"
+    />
+  );
 }
 
 function PasswordInput() {
-  const { form } = useSignInForm();
+  const { form } = useSignUpForm();
 
   return (
     <FormInput form={form} name="password" label="Contraseña" secureTextEntry />
   );
 }
 
+function FirstNameInput() {
+  const { form } = useSignUpForm();
+
+  return <FormInput form={form} name="firstName" label="Nombre" />;
+}
+
+function LastNameInput() {
+  const { form } = useSignUpForm();
+
+  return <FormInput form={form} name="lastName" label="Apellido" />;
+}
+
+function PhoneInput() {
+  const { form } = useSignUpForm();
+
+  return (
+    <FormInput
+      form={form}
+      name="phone"
+      label="Teléfono"
+      keyboardType="number-pad"
+    />
+  );
+}
+
 function Submit() {
-  const { onSubmit, isPending } = useSignInForm();
+  const { onSubmit, isPending } = useSignUpForm();
 
   return (
     <Button onPress={onSubmit}>
@@ -112,11 +153,14 @@ function Submit() {
   );
 }
 
-export const SignInForm = {
+export const SignUpForm = {
   Root,
-  useSignInForm,
+  useSignUpForm,
   EmailInput,
   PasswordInput,
   Submit,
   RootError,
+  FirstNameInput,
+  LastNameInput,
+  PhoneInput,
 };

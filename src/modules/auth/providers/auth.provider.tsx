@@ -1,19 +1,15 @@
 import {
   api,
+  authActions,
   authMutationsOptions,
-  authQueriesOptions,
 } from "@/integrations/query/query-container";
 import { LoadingScreen } from "@/modules/shared/components/loading-screen";
 import { secureStorage } from "@/modules/shared/lib/secure-storage";
+import { sleep } from "@/modules/shared/lib/utils";
 import type { CommonResponse } from "@/shared/api-utils/http/common-response";
 import type { SessionSummary } from "@/shared/entities/session.entity";
-import type { UserDetail } from "@/shared/entities/user.entity";
-import {
-  useMutation,
-  useQuery,
-  type UseMutationResult,
-  type UseQueryResult,
-} from "@tanstack/react-query";
+import { UserDetail } from "@/shared/entities/user.entity";
+import { useMutation, type UseMutationResult } from "@tanstack/react-query";
 import { createContext, use, useEffect, useState } from "react";
 
 interface Context {
@@ -45,7 +41,8 @@ interface Context {
     void,
     unknown
   >;
-  user: UseQueryResult<UserDetail | null, Error>;
+  user: UserDetail | null;
+  isFetchingSession: boolean;
 }
 
 const AuthContext = createContext<null | Context>(null);
@@ -63,40 +60,101 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [loadingToken, setLoadingToken] = useState(true);
-  const [authToken, setAuthToken] = useState<string | undefined>();
-  const user = useQuery({ ...authQueriesOptions.me(), enabled: !!authToken });
+  const [user, setUser] = useState<UserDetail | null>(null);
+  const [isRestoringSession, setIsRestoringSession] = useState(true);
+  const [isFetchingSession, setIsFetchingSession] = useState(false);
+
+  // mutations
   const signUp = useMutation(authMutationsOptions.signUp());
-  const signOut = useMutation(authMutationsOptions.signOut());
   const closeAllSessions = useMutation(authMutationsOptions.closeAllSessions());
+
+  const signOut = useMutation({
+    ...authMutationsOptions.signOut(),
+    onSuccess: async () => {
+      await secureStorage.remove(AuthTokenKey);
+      setUser(null);
+    },
+  });
+
   const signIn = useMutation({
     ...authMutationsOptions.signIn(),
-    onSuccess: (data) => {
-      if (data.data?.token) {
-        const token = data.data?.token;
+    onSuccess: async ({ data }) => {
+      try {
+        if (!data?.token) return;
 
-        api.applyAuthInterceptor(token).then(() => {
-          setAuthToken(token);
-        });
-        secureStorage.save(AuthTokenKey, token);
+        api.applyAuthInterceptor(data.token);
+
+        setIsFetchingSession(true);
+        await sleep(2000);
+        const userResponse = await authActions.me();
+
+        if (userResponse.error || !userResponse.data) {
+          throw new Error("Failed to fetch user data");
+        }
+
+        await secureStorage.save(AuthTokenKey, data.token);
+        setUser(userResponse.data);
+      } catch (error) {
+        console.error("Error during sign in:", error);
+        // Opcional: puedes limpiar el token si falla
+        await secureStorage.remove(AuthTokenKey);
+      } finally {
+        setIsFetchingSession(false);
       }
+    },
+    onError: async () => {
+      await secureStorage.remove(AuthTokenKey);
     },
   });
 
   useEffect(() => {
-    secureStorage
-      .getValueFor(AuthTokenKey)
-      .then((token) => {
-        if (!token) return;
-        api.applyAuthInterceptor(token).then(() => {
-          setAuthToken(token);
-        });
-      })
-      .finally(() => setLoadingToken(false));
+    let isMounted = true;
+
+    const restoreSession = async () => {
+      try {
+        const token = await secureStorage.getValueFor(AuthTokenKey);
+
+        if (!token) {
+          // No hay sesión que restaurar
+          setIsRestoringSession(false);
+          return;
+        }
+
+        // Verificar si el componente sigue montado
+        if (!isMounted) return;
+
+        api.applyAuthInterceptor(token);
+        const userResponse = await authActions.me();
+
+        if (!isMounted) return;
+
+        if (userResponse.error || !userResponse.data) {
+          // Token inválido o expirado, limpiar
+          await secureStorage.remove(AuthTokenKey);
+          console.warn("Invalid or expired token");
+        } else {
+          setUser(userResponse.data);
+        }
+      } catch (error) {
+        console.error("Error restoring session:", error);
+        // Limpiar token corrupto
+        await secureStorage.remove(AuthTokenKey);
+      } finally {
+        if (isMounted) {
+          setIsRestoringSession(false);
+        }
+      }
+    };
+
+    restoreSession();
+
+    // Cleanup function
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
-  if (loadingToken)
-    return <LoadingScreen message="Obteniendo datos del usuario..." />;
+  if (isRestoringSession) return <LoadingScreen message="Obteniendo sesión" />;
 
   return (
     <AuthContext.Provider
@@ -106,6 +164,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         signOut,
         closeAllSessions,
         user,
+        isFetchingSession,
       }}
     >
       {children}

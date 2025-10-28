@@ -13,6 +13,7 @@ export function initApi(baseURL: string) {
 
 export class API {
   private api: ReturnType<typeof initApi>;
+  private authInterceptorId: number | null = null;
 
   constructor(baseURL: string) {
     const api = initApi(baseURL);
@@ -20,8 +21,12 @@ export class API {
     this.api = api;
   }
 
-  public async applyAuthInterceptor(token: string) {
-    this.api.interceptors.request.use(
+  public applyAuthInterceptor(token: string) {
+    if (this.authInterceptorId !== null) {
+      this.api.interceptors.request.eject(this.authInterceptorId);
+    }
+
+    this.authInterceptorId = this.api.interceptors.request.use(
       (config) => {
         config.headers.Authorization = `Bearer ${token}`;
         return config;

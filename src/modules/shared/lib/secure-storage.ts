@@ -8,7 +8,12 @@ function getValueFor(key: string) {
   return SecureStore.getItemAsync(key);
 }
 
+function remove(key: string) {
+  return SecureStore.deleteItemAsync(key);
+}
+
 export const secureStorage = {
   save,
   getValueFor,
+  remove,
 };
