@@ -39,10 +39,10 @@ export function BusinessHeaderSection({ business }: Props) {
         </Avatar>
         <CardHeader className="mt-10">
           <View>
-            <CardTitle className="text-2xl text-center">
+            <CardTitle className="text-2xl text-center text-primary">
               {business.name}
             </CardTitle>
-            <Text className="text-center text-muted-foreground">
+            <Text className="text-center text-muted-foreground text-sm">
               Propietario:{" "}
               <Text>
                 {business.rootUser.firstName} {business.rootUser.lastName}
