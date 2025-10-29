@@ -29,7 +29,7 @@ export function BusinessHeader({ options }: BottomTabHeaderProps) {
   return (
     <View
       style={{ top: top }}
-      className="flex flex-row items-center justify-between pr-4 bg-card"
+      className="flex flex-row items-center justify-between pr-4"
     >
       <DropdownMenu>
         <DropdownMenuTrigger asChild>

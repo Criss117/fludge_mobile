@@ -3,7 +3,7 @@ import { MaterialTopTabs } from "@/modules/shared/lib/material-top-tabs";
 import { NAV_THEME } from "@/modules/shared/lib/theme";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-export default function ProductsLayout() {
+export default function ManagementLayout() {
   const { theme } = useTheme();
   const { top } = useSafeAreaInsets();
 
@@ -18,24 +18,8 @@ export default function ProductsLayout() {
         },
       }}
     >
-      <MaterialTopTabs.Screen
-        name="index"
-        options={{
-          title: "Productos",
-        }}
-      />
-      <MaterialTopTabs.Screen
-        name="categories"
-        options={{
-          title: "Categorias",
-        }}
-      />
-      <MaterialTopTabs.Screen
-        name="providers"
-        options={{
-          title: "Proveedores",
-        }}
-      />
+      <MaterialTopTabs.Screen name="index" options={{ title: "Empleados" }} />
+      <MaterialTopTabs.Screen name="groups" options={{ title: "Grupos" }} />
     </MaterialTopTabs>
   );
 }
