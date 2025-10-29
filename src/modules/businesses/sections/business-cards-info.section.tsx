@@ -28,13 +28,15 @@ function CardInfo({ amount, icon, title, href }: CardInfoProps) {
 
   return (
     <TouchableOpacity onPress={() => router.push(href)}>
-      <Card className="flex-1 w-40">
-        <CardContent className="flex items-center">
+      <Card className="flex-1 size-44 flex items-center justify-center">
+        <CardContent className="flex items-center gap-y-2">
           <Icon as={icon} size={32} className="text-primary" />
-          <Text className="text-xl font-black text-center">{title}</Text>
-          <Text className="text-xl font-semibold text-muted-foreground">
-            {amount}
-          </Text>
+          <View>
+            <Text className="text-xl font-black text-center">{title}</Text>
+            <Text className="text-xl font-semibold text-muted-foreground text-center">
+              {amount}
+            </Text>
+          </View>
         </CardContent>
       </Card>
     </TouchableOpacity>

@@ -1,9 +1,9 @@
 import { businessQueriesOptions } from "@/integrations/query/query-container";
+import { GroupsScreen } from "@/modules/groups/screens/groups.screen";
 import { Text } from "@/modules/shared/components/ui/text";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useGlobalSearchParams } from "expo-router";
 import React, { Suspense } from "react";
-import { ScrollView } from "react-native";
 
 interface Props {
   businessSlug: string;
@@ -14,11 +14,7 @@ export function GroupsSuspense({ businessSlug }: Props) {
     businessQueriesOptions.findOne(businessSlug)
   );
 
-  return (
-    <ScrollView>
-      <Text>{JSON.stringify(business.groups, null, 2)}</Text>
-    </ScrollView>
-  );
+  return <GroupsScreen businessSlug={businessSlug} groups={business.groups} />;
 }
 
 export default function Groups() {
