@@ -10,14 +10,18 @@ interface Props {
 }
 
 export function EmployeesSuspense({ businessSlug }: Props) {
-  const { data: business } = useSuspenseQuery(
-    businessQueriesOptions.findOne(businessSlug)
-  );
+  const {
+    data: business,
+    refetch,
+    isPending,
+  } = useSuspenseQuery(businessQueriesOptions.findOne(businessSlug));
 
   return (
     <EmployeesScreen
       businessSlug={businessSlug}
       employees={business.employees}
+      refetch={() => refetch()}
+      isPending={isPending}
     />
   );
 }

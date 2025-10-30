@@ -44,11 +44,7 @@ export function GroupCard({ group, businessSlug }: Props) {
           </View>
           <View>
             <Button variant="outline" size="icon" className="rounded-full">
-              <Icon
-                as={MoreVerticalIcon}
-                size={24}
-                onPress={() => console.log("Press Icon")}
-              />
+              <Icon as={MoreVerticalIcon} size={24} />
             </Button>
           </View>
         </CardHeader>

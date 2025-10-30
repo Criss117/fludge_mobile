@@ -11,14 +11,20 @@ interface Props {
 }
 
 function GroupSuspense({ businessSlug, groupId }: Props) {
-  const { data: group } = useSuspenseQuery(
-    groupsQueriesOptions.findOne(businessSlug, groupId)
-  );
+  const {
+    data: group,
+    refetch,
+    isPending,
+  } = useSuspenseQuery(groupsQueriesOptions.findOne(businessSlug, groupId));
 
   return (
     <>
       <Stack.Screen options={{ title: group.name }} />
-      <GroupScreen group={group} />
+      <GroupScreen
+        group={group}
+        refetch={() => refetch()}
+        isPending={isPending}
+      />
     </>
   );
 }

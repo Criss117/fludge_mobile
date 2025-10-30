@@ -26,11 +26,7 @@ export function BusinessHeaderSection({ business }: Props) {
           alt={business.name}
           className="h-32 w-32 absolute bottom-44 left-1/3 bg-secondary z-50"
         >
-          <AvatarImage
-            source={{
-              uri: "https://picsum.photos/200",
-            }}
-          />
+          <AvatarImage source={require("@/assets/placeholder.png")} />
           <AvatarFallback className="bg-primary">
             <Text className="text-5xl">
               {firstLetterToUpperCase(business.name)}

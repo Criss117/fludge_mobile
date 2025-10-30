@@ -1,4 +1,8 @@
-import { Avatar, AvatarFallback } from "@/modules/shared/components/ui/avatar";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/modules/shared/components/ui/avatar";
 import {
   Card,
   CardDescription,
@@ -43,6 +47,9 @@ export function EmployeesList({ employees }: Props) {
                 alt={`Imagen del empleado ${employee.user.firstName} ${employee.user.lastName}`}
                 className="size-14"
               >
+                <AvatarImage
+                  source={require("@/assets/user_placeholder.jpg")}
+                />
                 <AvatarFallback className="size-14">
                   <Text className="text-2xl">
                     {firstLetterToUpperCase(

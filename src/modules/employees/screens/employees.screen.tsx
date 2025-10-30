@@ -4,15 +4,22 @@ import { Text } from "@/modules/shared/components/ui/text";
 import type { EmployeeSummary } from "@/shared/entities/employee.entity";
 import { SearchIcon } from "lucide-react-native";
 import { useState } from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, RefreshControl, View } from "react-native";
 import { EmployeeCard } from "../components/employee-card";
 
 interface Props {
   businessSlug: string;
   employees: EmployeeSummary[];
+  refetch: () => void;
+  isPending: boolean;
 }
 
-export function EmployeesScreen({ businessSlug, employees }: Props) {
+export function EmployeesScreen({
+  businessSlug,
+  employees,
+  isPending,
+  refetch,
+}: Props) {
   const [filteredEmployees, setFilteredEmployees] = useState(employees);
 
   const onTextChange = (text: string) => {
@@ -47,6 +54,9 @@ export function EmployeesScreen({ businessSlug, employees }: Props) {
         />
       </View>
       <FlatList
+        refreshControl={
+          <RefreshControl refreshing={isPending} onRefresh={refetch} />
+        }
         data={filteredEmployees}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <EmployeeCard employee={item} />}

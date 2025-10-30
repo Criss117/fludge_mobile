@@ -10,11 +10,22 @@ interface Props {
 }
 
 export function GroupsSuspense({ businessSlug }: Props) {
-  const { data: business } = useSuspenseQuery(
-    businessQueriesOptions.findOne(businessSlug)
-  );
+  const {
+    data: business,
+    isPending,
+    refetch,
+  } = useSuspenseQuery(businessQueriesOptions.findOne(businessSlug));
 
-  return <GroupsScreen businessSlug={businessSlug} groups={business.groups} />;
+  return (
+    <>
+      <GroupsScreen
+        businessSlug={businessSlug}
+        groups={business.groups}
+        isPending={isPending}
+        refetch={() => refetch()}
+      />
+    </>
+  );
 }
 
 export default function Groups() {

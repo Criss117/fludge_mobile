@@ -9,17 +9,24 @@ import { Text } from "@/modules/shared/components/ui/text";
 import type { GroupDetail } from "@/shared/entities/group.entity";
 import { formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale/es";
-import { ScrollView, View } from "react-native";
+import { RefreshControl, ScrollView, View } from "react-native";
 import { GroupHeaderSection } from "../sections/group-header.section";
 import { GroupListsSection } from "../sections/group-lists.section";
 
 interface Props {
   group: GroupDetail;
+  refetch: () => void;
+  isPending: boolean;
 }
 
-export function GroupScreen({ group }: Props) {
+export function GroupScreen({ group, isPending, refetch }: Props) {
   return (
-    <ScrollView className="flex-1">
+    <ScrollView
+      className="flex-1"
+      refreshControl={
+        <RefreshControl refreshing={isPending} onRefresh={refetch} />
+      }
+    >
       <View className="flex-1 flex gap-y-4 mt-4 mb-10 px-4">
         <GroupHeaderSection group={group} />
         <GroupListsSection group={group} />

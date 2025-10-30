@@ -4,15 +4,22 @@ import { Text } from "@/modules/shared/components/ui/text";
 import type { GroupSummary } from "@/shared/entities/group.entity";
 import { SearchIcon } from "lucide-react-native";
 import { useState } from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, RefreshControl, View } from "react-native";
 import { GroupCard } from "../components/group-card";
 
 interface Props {
   businessSlug: string;
   groups: GroupSummary[];
+  isPending: boolean;
+  refetch: () => void;
 }
 
-export function GroupsScreen({ businessSlug, groups }: Props) {
+export function GroupsScreen({
+  businessSlug,
+  groups,
+  isPending,
+  refetch,
+}: Props) {
   const [filteredGroups, setFilteredGroups] = useState(groups);
 
   const onTextChange = (text: string) => {
@@ -54,6 +61,9 @@ export function GroupsScreen({ businessSlug, groups }: Props) {
             <Text>No hay grupos</Text>
           </View>
         )}
+        refreshControl={
+          <RefreshControl refreshing={isPending} onRefresh={refetch} />
+        }
       />
     </View>
   );

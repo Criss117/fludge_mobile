@@ -1,4 +1,8 @@
-import { Avatar, AvatarFallback } from "@/modules/shared/components/ui/avatar";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/modules/shared/components/ui/avatar";
 import { Button } from "@/modules/shared/components/ui/button";
 import {
   Card,
@@ -31,6 +35,7 @@ export function EmployeeCard({ employee }: Props) {
               alt={`Imagen del empleado ${employee.user.firstName} ${employee.user.lastName}`}
               className="size-14"
             >
+              <AvatarImage source={require("@/assets/user_placeholder.jpg")} />
               <AvatarFallback className="size-14">
                 <Text className="text-2xl">
                   {firstLetterToUpperCase(
@@ -49,11 +54,7 @@ export function EmployeeCard({ employee }: Props) {
           </View>
           <View>
             <Button variant="outline" size="icon" className="rounded-full">
-              <Icon
-                as={MoreVerticalIcon}
-                size={24}
-                onPress={() => console.log("Press Icon")}
-              />
+              <Icon as={MoreVerticalIcon} size={24} />
             </Button>
           </View>
         </CardHeader>
