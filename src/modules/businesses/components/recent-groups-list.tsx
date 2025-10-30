@@ -1,0 +1,62 @@
+import { Badge } from "@/modules/shared/components/ui/badge";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/modules/shared/components/ui/card";
+import { Text } from "@/modules/shared/components/ui/text";
+import type { GroupSummary } from "@/shared/entities/group.entity";
+import { useRouter } from "expo-router";
+import { TouchableOpacity } from "react-native";
+
+interface Props {
+  groups: GroupSummary[];
+  businessSlug: string;
+}
+
+export function RecentGroupsList({ groups, businessSlug }: Props) {
+  const router = useRouter();
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Grupos recientes</CardTitle>
+        <CardDescription>Grupos de permisos configurados</CardDescription>
+      </CardHeader>
+      <CardContent className="flex gap-y-2">
+        {groups.map((group) => (
+          <TouchableOpacity
+            key={group.id}
+            onPress={() =>
+              router.push({
+                pathname: "/businesses/[businessSlug]/groups/[groupId]",
+                params: {
+                  businessSlug,
+                  groupId: group.id,
+                },
+              })
+            }
+          >
+            <Card className="flex flex-row">
+              <CardHeader>
+                <CardTitle>{group.name}</CardTitle>
+                <CardDescription>
+                  {group.permissions.length} Permisos
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {group.isDefault && (
+                  <Badge>
+                    <Text>Por defecto</Text>
+                  </Badge>
+                )}
+              </CardContent>
+            </Card>
+          </TouchableOpacity>
+        ))}
+      </CardContent>
+    </Card>
+  );
+}

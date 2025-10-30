@@ -1,17 +1,15 @@
 import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/modules/shared/components/ui/avatar";
-import {
   Card,
+  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/modules/shared/components/ui/card";
+import { Icon } from "@/modules/shared/components/ui/icon";
 import { Text } from "@/modules/shared/components/ui/text";
-import { firstLetterToUpperCase } from "@/modules/shared/lib/utils";
+import { cn } from "@/modules/shared/lib/utils";
 import type { BusinessDetail } from "@/shared/entities/business.entity";
+import { Building2 } from "lucide-react-native";
 import { View } from "react-native";
 
 interface Props {
@@ -20,67 +18,38 @@ interface Props {
 
 export function BusinessHeaderSection({ business }: Props) {
   return (
-    <View>
-      <Card className="relative overflow-visible mt-24">
-        <Avatar
-          alt={business.name}
-          className="h-32 w-32 absolute bottom-44 left-1/3 bg-secondary z-50"
-        >
-          <AvatarImage source={require("@/assets/placeholder.png")} />
-          <AvatarFallback className="bg-primary">
-            <Text className="text-5xl">
-              {firstLetterToUpperCase(business.name)}
-            </Text>
-          </AvatarFallback>
-        </Avatar>
-        <CardHeader className="mt-10">
-          <View>
-            <CardTitle className="text-2xl text-center text-primary">
-              {business.name}
-            </CardTitle>
-            <Text className="text-center text-muted-foreground text-sm">
-              Propietario:{" "}
-              <Text>
-                {business.rootUser.firstName} {business.rootUser.lastName}
-              </Text>
-            </Text>
-          </View>
-
-          <View className="flex justify-between flex-row">
-            <CardDescription>NIT: {business.nit}</CardDescription>
-            <CardDescription>
-              Teléfono:{" "}
-              {business.phone ? (
-                business.phone
-              ) : (
-                <Text className="text-sm text-muted-foreground italic">
-                  -Sin teléfono-
-                </Text>
-              )}
-            </CardDescription>
-          </View>
-          <CardDescription>
-            Dirección:{" "}
-            {business.address ? (
-              business.address
-            ) : (
-              <Text className="text-sm text-muted-foreground italic">
-                -Sin dirección-
-              </Text>
-            )}
+    <Card>
+      <CardHeader className="flex flex-row items-center gap-x-2">
+        <View className="bg-primary p-2 rounded-lg">
+          <Icon as={Building2} size={32} className="text-white" />
+        </View>
+        <View>
+          <CardTitle className="text-3xl">{business.name}</CardTitle>
+          <CardDescription className={cn(!business.legalName && "italic")}>
+            {business.legalName ?? "Sin nombre legal"}
           </CardDescription>
-          <CardDescription>
-            Correo electrónico:{" "}
-            {business.email ? (
-              business.email
-            ) : (
-              <Text className="text-sm text-muted-foreground italic">
-                -Sin correo electrónico-
-              </Text>
-            )}
-          </CardDescription>
-        </CardHeader>
-      </Card>
-    </View>
+        </View>
+      </CardHeader>
+      <CardContent className="flex gap-y-2">
+        <View className="flex flex-row">
+          <View className="flex-1">
+            <Text className="text-sm text-muted-foreground">NIT</Text>
+            <Text>{business.nit}</Text>
+          </View>
+          <View className="flex-1">
+            <Text className="text-sm text-muted-foreground">Email</Text>
+            <Text>{business.email ?? "-"}</Text>
+          </View>
+        </View>
+        <View>
+          <Text className="text-sm text-muted-foreground">Teléfono</Text>
+          <Text>{business.phone ?? "-"}</Text>
+        </View>
+        <View>
+          <Text className="text-sm text-muted-foreground">Dirección</Text>
+          <Text>{business.address ?? "-"}</Text>
+        </View>
+      </CardContent>
+    </Card>
   );
 }

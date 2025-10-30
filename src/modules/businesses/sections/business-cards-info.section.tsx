@@ -1,4 +1,8 @@
-import { Card, CardContent } from "@/modules/shared/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+} from "@/modules/shared/components/ui/card";
 import { Icon } from "@/modules/shared/components/ui/icon";
 import { Text } from "@/modules/shared/components/ui/text";
 import type { BusinessDetail } from "@/shared/entities/business.entity";
@@ -18,25 +22,23 @@ interface Props {
 
 interface CardInfoProps {
   icon: LucideIcon;
-  title: string;
+  description: string;
   amount: number;
   href: Href;
 }
 
-function CardInfo({ amount, icon, title, href }: CardInfoProps) {
+function CardInfo({ amount, icon, description, href }: CardInfoProps) {
   const router = useRouter();
 
   return (
     <TouchableOpacity onPress={() => router.push(href)}>
-      <Card className="flex-1 size-44 flex items-center justify-center">
-        <CardContent className="flex items-center gap-y-2">
+      <Card className="flex-1 size-40">
+        <CardHeader>
           <Icon as={icon} size={32} className="text-primary" />
-          <View>
-            <Text className="text-xl font-black text-center">{title}</Text>
-            <Text className="text-xl font-semibold text-muted-foreground text-center">
-              {amount}
-            </Text>
-          </View>
+        </CardHeader>
+        <CardContent className="flex-1 flex justify-end">
+          <Text className="font-semibold text-2xl">{amount}</Text>
+          <Text className="text-sm text-muted-foreground">{description}</Text>
         </CardContent>
       </Card>
     </TouchableOpacity>
@@ -47,7 +49,7 @@ export function BusinessCardsInfoSection({ business }: Props) {
   const cardsInfo = [
     {
       icon: Users2Icon,
-      title: "Clientes",
+      description: "Clientes registrados",
       amount: 0,
       href: {
         pathname: "/businesses/[businessSlug]/(tabs)/clients",
@@ -58,7 +60,7 @@ export function BusinessCardsInfoSection({ business }: Props) {
     },
     {
       icon: PackageSearch,
-      title: "Productos",
+      description: "Productos registrados",
       amount: 0,
       href: {
         pathname: "/businesses/[businessSlug]/(tabs)/products",
@@ -69,7 +71,7 @@ export function BusinessCardsInfoSection({ business }: Props) {
     },
     {
       icon: IdCardLanyard,
-      title: "Empleados",
+      description: "Empleados totales",
       amount: business.employees.length,
       href: {
         pathname: "/businesses/[businessSlug]/(tabs)/management",
@@ -80,7 +82,7 @@ export function BusinessCardsInfoSection({ business }: Props) {
     },
     {
       icon: UngroupIcon,
-      title: "Grupos",
+      description: "Grupos de permisos",
       amount: business.employees.length,
       href: {
         pathname: "/businesses/[businessSlug]/(tabs)/management/groups",
@@ -94,7 +96,7 @@ export function BusinessCardsInfoSection({ business }: Props) {
   return (
     <FlatList
       data={cardsInfo}
-      keyExtractor={(item) => item.title}
+      keyExtractor={(item, index) => `${index}-${item.description}`}
       renderItem={({ item }) => <CardInfo {...item} />}
       ItemSeparatorComponent={() => <View className="w-4" />}
       showsHorizontalScrollIndicator={false}

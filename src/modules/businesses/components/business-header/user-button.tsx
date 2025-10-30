@@ -1,6 +1,10 @@
 import { useAuth } from "@/modules/auth/providers/auth.provider";
 import { ToggleTheme } from "@/modules/shared/components/toggle-theme";
-import { Avatar, AvatarFallback } from "@/modules/shared/components/ui/avatar";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/modules/shared/components/ui/avatar";
 import { Button } from "@/modules/shared/components/ui/button";
 import {
   DropdownMenu,
@@ -28,6 +32,7 @@ export function UserButton() {
             alt={`${user.firstName} ${user.lastName}`}
             className="border-background web:border-0 web:ring-2 web:ring-background rounded-full border-2"
           >
+            <AvatarImage source={require("@/assets/user_placeholder.jpg")} />
             <AvatarFallback>
               <Text>
                 {firstLetterToUpperCase(user.firstName, user.lastName)}
