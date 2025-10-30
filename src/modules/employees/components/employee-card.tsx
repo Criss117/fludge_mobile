@@ -2,6 +2,7 @@ import { Avatar, AvatarFallback } from "@/modules/shared/components/ui/avatar";
 import { Button } from "@/modules/shared/components/ui/button";
 import {
   Card,
+  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
@@ -11,7 +12,9 @@ import { Separator } from "@/modules/shared/components/ui/separator";
 import { Text } from "@/modules/shared/components/ui/text";
 import { firstLetterToUpperCase } from "@/modules/shared/lib/utils";
 import type { EmployeeSummary } from "@/shared/entities/employee.entity";
-import { MoreVerticalIcon } from "lucide-react-native";
+import { formatDistanceToNow } from "date-fns";
+import { es } from "date-fns/locale/es";
+import { Calendar, MoreVerticalIcon } from "lucide-react-native";
 import { TouchableOpacity, View } from "react-native";
 
 interface Props {
@@ -55,6 +58,18 @@ export function EmployeeCard({ employee }: Props) {
           </View>
         </CardHeader>
         <Separator />
+        <CardContent>
+          <View className="flex flex-row gap-x-2 items-center">
+            <Icon as={Calendar} size={24} />
+            <Text>
+              Ingresado{" "}
+              {formatDistanceToNow(employee.createdAt, {
+                addSuffix: true,
+                locale: es,
+              })}
+            </Text>
+          </View>
+        </CardContent>
       </Card>
     </TouchableOpacity>
   );

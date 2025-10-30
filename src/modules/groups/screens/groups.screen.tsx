@@ -45,7 +45,9 @@ export function GroupsScreen({ businessSlug, groups }: Props) {
       <FlatList
         data={filteredGroups}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <GroupCard group={item} />}
+        renderItem={({ item }) => (
+          <GroupCard group={item} businessSlug={businessSlug} />
+        )}
         ItemSeparatorComponent={() => <View className="h-4" />}
         ListEmptyComponent={() => (
           <View>

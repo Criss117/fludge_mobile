@@ -15,7 +15,7 @@ export default function BusinessesLayout() {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="[businessSlug]/(tabs)" />
+      <Stack.Screen name="[businessSlug]" />
       <Stack.Screen name="register" />
       <Stack.Screen name="select" />
     </Stack>

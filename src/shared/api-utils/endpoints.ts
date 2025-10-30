@@ -10,5 +10,17 @@ export const ENDPOINTS = {
     CREATE: "/businesses",
     FIND_ONE: (businessSlug: string) =>
       `/businesses/${businessSlug}` as `/businesses/${string}`,
+    GROUPS: {
+      CREATE: (businessSlig: string) =>
+        `/businesses/${businessSlig}/groups` as `/businesses/${string}/groups`,
+      FIND_ONE: (businessSlug: string, groupId: string) =>
+        `/businesses/${businessSlug}/groups/${groupId}` as `/businesses/${string}/groups/${string}`,
+    },
+    EMPLOYEES: {
+      CREATE: (businessSlug: string) =>
+        `/businesses/${businessSlug}/employees` as `/businesses/${string}/employees`,
+      FIND_ONE: (businessSlug: string, employeeId: string) =>
+        `/businesses/${businessSlug}/employees/${employeeId}` as `/businesses/${string}/employees/${string}`,
+    },
   },
 } as const;

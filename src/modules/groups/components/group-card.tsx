@@ -10,16 +10,30 @@ import {
 import { Icon } from "@/modules/shared/components/ui/icon";
 import { Separator } from "@/modules/shared/components/ui/separator";
 import type { GroupSummary } from "@/shared/entities/group.entity";
+import { useRouter } from "expo-router";
 import { MoreVerticalIcon } from "lucide-react-native";
 import { FlatList, TouchableOpacity, View } from "react-native";
 
 interface Props {
   group: GroupSummary;
+  businessSlug: string;
 }
 
-export function GroupCard({ group }: Props) {
+export function GroupCard({ group, businessSlug }: Props) {
+  const router = useRouter();
+
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() =>
+        router.push({
+          pathname: "/businesses/[businessSlug]/groups/[groupId]",
+          params: {
+            businessSlug,
+            groupId: group.id,
+          },
+        })
+      }
+    >
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <View>
