@@ -19,6 +19,10 @@ export const ENDPOINTS = {
         `/businesses/${businessSlug}/groups/${groupId}/permissions` as `/businesses/${string}/groups/${string}/permissions`,
       REMOVE_PERMISSION: (businessSlug: string, groupId: string) =>
         `/businesses/${businessSlug}/groups/${groupId}/permissions` as `/businesses/${string}/groups/${string}/permissions`,
+      ASSING_EMPLOYEES: (businessSlug: string, groupId: string) =>
+        `/businesses/${businessSlug}/groups/${groupId}/employees` as `/businesses/${string}/groups/${string}/employees`,
+      REMOVE_EMPLOYEES: (businessSlug: string, groupId: string) =>
+        `/businesses/${businessSlug}/groups/${groupId}/employees` as `/businesses/${string}/groups/${string}/employees`,
     },
     EMPLOYEES: {
       CREATE: (businessSlug: string) =>

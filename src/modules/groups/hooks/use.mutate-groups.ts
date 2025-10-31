@@ -43,9 +43,29 @@ export function useMutateGroups() {
     },
   });
 
+  const assignEmployees = useMutation({
+    ...groupsMutationsOptions.assignEmployees(),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries(
+        groupsQueriesOptions.findOne(variables.businessSlug, variables.groupId)
+      );
+    },
+  });
+
+  const removeEmployees = useMutation({
+    ...groupsMutationsOptions.removeEmployees(),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries(
+        groupsQueriesOptions.findOne(variables.businessSlug, variables.groupId)
+      );
+    },
+  });
+
   return {
     create,
     addPermissions,
     removePermissions,
+    assignEmployees,
+    removeEmployees,
   };
 }

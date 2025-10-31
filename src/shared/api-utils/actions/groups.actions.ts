@@ -1,5 +1,6 @@
 import type { GroupDetail, GroupSummary } from "@/shared/entities/group.entity";
 import type { CreateGroupSchema } from "@/shared/schemas/groups/create-group.schema";
+import { EnsureEmployeeIdsSchema } from "@/shared/schemas/groups/ensure-employee-ids.schema";
 import type { EnsurePermissionsSchema } from "@/shared/schemas/groups/ensure-permissions.schema";
 import { API } from "../api";
 import { ENDPOINTS } from "../endpoints";
@@ -43,6 +44,7 @@ export class GroupsActions {
 
     return response;
   }
+
   public async removePermissions(
     businessSlug: string,
     groupId: string,
@@ -51,6 +53,36 @@ export class GroupsActions {
     const response = await safeAction(() =>
       this.api.delete<null, EnsurePermissionsSchema>(
         ENDPOINTS.BUSINESSES.GROUPS.REMOVE_PERMISSION(businessSlug, groupId),
+        values
+      )
+    );
+
+    return response;
+  }
+
+  public async assignEmployees(
+    businessSlug: string,
+    groupId: string,
+    values: EnsureEmployeeIdsSchema
+  ) {
+    const response = await safeAction(() =>
+      this.api.post<null, EnsureEmployeeIdsSchema>(
+        ENDPOINTS.BUSINESSES.GROUPS.ASSING_EMPLOYEES(businessSlug, groupId),
+        values
+      )
+    );
+
+    return response;
+  }
+
+  public async removeEmployees(
+    businessSlug: string,
+    groupId: string,
+    values: EnsureEmployeeIdsSchema
+  ) {
+    const response = await safeAction(() =>
+      this.api.delete<null, EnsureEmployeeIdsSchema>(
+        ENDPOINTS.BUSINESSES.GROUPS.REMOVE_EMPLOYEES(businessSlug, groupId),
         values
       )
     );
