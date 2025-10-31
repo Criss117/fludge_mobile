@@ -17,7 +17,7 @@ import type { GroupDetail } from "@/shared/entities/group.entity";
 import { useState } from "react";
 import { ScrollView, View } from "react-native";
 import { EmployeesList } from "../components/employees-list";
-import { PermissionList } from "../components/permission-list";
+import { PermissionsList } from "../components/permission-list";
 
 interface Props {
   group: GroupDetail;
@@ -72,14 +72,21 @@ export function GroupListsSection({ group }: Props) {
                 grupo.
               </CardDescription>
             </CardHeader>
-            <CardContent className="gap-6 max-h-96">
-              <ScrollView nestedScrollEnabled>
-                <View className="flex gap-y-2">
-                  <PermissionList permissions={group.permissions} />
-                </View>
-              </ScrollView>
-            </CardContent>
-            <CardFooter></CardFooter>
+            <PermissionsList.Root permissions={group.permissions}>
+              <CardContent className="gap-6 max-h-96">
+                <ScrollView nestedScrollEnabled>
+                  <View className="flex gap-y-2">
+                    <PermissionsList.List />
+                  </View>
+                </ScrollView>
+              </CardContent>
+              <CardFooter>
+                <PermissionsList.RemovePermissionsAlert
+                  businessSlug={group.business.slug}
+                  groupId={group.id}
+                />
+              </CardFooter>
+            </PermissionsList.Root>
           </Card>
         </TabsContent>
       </Tabs>

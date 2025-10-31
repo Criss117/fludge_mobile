@@ -15,6 +15,10 @@ export const ENDPOINTS = {
         `/businesses/${businessSlig}/groups` as `/businesses/${string}/groups`,
       FIND_ONE: (businessSlug: string, groupId: string) =>
         `/businesses/${businessSlug}/groups/${groupId}` as `/businesses/${string}/groups/${string}`,
+      ADD_PERMISSION: (businessSlug: string, groupId: string) =>
+        `/businesses/${businessSlug}/groups/${groupId}/permissions` as `/businesses/${string}/groups/${string}/permissions`,
+      REMOVE_PERMISSION: (businessSlug: string, groupId: string) =>
+        `/businesses/${businessSlug}/groups/${groupId}/permissions` as `/businesses/${string}/groups/${string}/permissions`,
     },
     EMPLOYEES: {
       CREATE: (businessSlug: string) =>
