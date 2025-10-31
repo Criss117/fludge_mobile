@@ -10,19 +10,13 @@ import {
   AlertDialogTrigger,
 } from "@/modules/shared/components/ui/alert-dialog";
 import { Button } from "@/modules/shared/components/ui/button";
-import { Card, CardContent } from "@/modules/shared/components/ui/card";
-import { Checkbox } from "@/modules/shared/components/ui/checkbox";
 import { Text } from "@/modules/shared/components/ui/text";
-import { cn } from "@/modules/shared/lib/utils";
-import { Permission, translatePermission } from "@/shared/entities/permissions";
+import { Permission } from "@/shared/entities/permissions";
 import * as Haptics from "expo-haptics";
 import { createContext, use, useState } from "react";
-import {
-  ActivityIndicator,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native";
+import { ActivityIndicator } from "react-native";
 import { useMutateGroups } from "../hooks/use.mutate-groups";
+import { PermissionCard } from "./permission-card";
 
 interface RootProps {
   permissions: Permission[];
@@ -38,6 +32,7 @@ interface Context {
   selectedPermissions: Permission[];
   permissions: Permission[];
   handlePermissionSelect: (permission: Permission) => void;
+  clearState: () => void;
 }
 
 const PermissionsListContext = createContext<Context | null>(null);
@@ -66,9 +61,18 @@ function Root({ children, permissions }: RootProps) {
     }
   };
 
+  const clearState = () => {
+    setSelectedPermissions([]);
+  };
+
   return (
     <PermissionsListContext.Provider
-      value={{ selectedPermissions, handlePermissionSelect, permissions }}
+      value={{
+        selectedPermissions,
+        handlePermissionSelect,
+        clearState,
+        permissions,
+      }}
     >
       {children}
     </PermissionsListContext.Provider>
@@ -81,7 +85,7 @@ function RemovePermissionsAlert({
 }: RemovePermissionsAlertProps) {
   const [open, setOpen] = useState(false);
   const { removePermissions } = useMutateGroups();
-  const { selectedPermissions } = usePermissionsListContext();
+  const { selectedPermissions, clearState } = usePermissionsListContext();
 
   const handleRemovePermissions = () => {
     if (selectedPermissions.length === 0) return;
@@ -97,6 +101,7 @@ function RemovePermissionsAlert({
       {
         onSuccess: () => {
           setOpen(false);
+          clearState();
         },
       }
     );
@@ -147,31 +152,12 @@ function List() {
   return (
     <>
       {permissions.map((permission) => (
-        <TouchableWithoutFeedback
+        <PermissionCard
           key={permission}
-          onPress={() => handlePermissionSelect(permission)}
-        >
-          <Card
-            className={cn(
-              selectedPermissions.includes(permission) &&
-                "border-primary bg-primary/10"
-            )}
-          >
-            <CardContent className="flex flex-row gap-x-2">
-              <Checkbox
-                checked={selectedPermissions.includes(permission)}
-                onCheckedChange={() => handlePermissionSelect(permission)}
-                className="size-5 mt-1"
-              />
-              <View>
-                <Text>{translatePermission(permission).es}</Text>
-                <Text className="text-sm text-muted-foreground">
-                  {permission}
-                </Text>
-              </View>
-            </CardContent>
-          </Card>
-        </TouchableWithoutFeedback>
+          permission={permission}
+          isSelected={selectedPermissions.includes(permission)}
+          onPress={handlePermissionSelect}
+        />
       ))}
     </>
   );

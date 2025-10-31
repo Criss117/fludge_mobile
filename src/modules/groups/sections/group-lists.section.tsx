@@ -16,6 +16,7 @@ import { Text } from "@/modules/shared/components/ui/text";
 import type { GroupDetail } from "@/shared/entities/group.entity";
 import { useState } from "react";
 import { ScrollView, View } from "react-native";
+import { AddPermissionsDialog } from "../components/add-permissions-dialog";
 import { EmployeesList } from "../components/employees-list";
 import { PermissionsList } from "../components/permission-list";
 
@@ -80,11 +81,12 @@ export function GroupListsSection({ group }: Props) {
                   </View>
                 </ScrollView>
               </CardContent>
-              <CardFooter>
+              <CardFooter className="flex justify-between">
                 <PermissionsList.RemovePermissionsAlert
                   businessSlug={group.business.slug}
                   groupId={group.id}
                 />
+                <AddPermissionsDialog group={group} />
               </CardFooter>
             </PermissionsList.Root>
           </Card>
