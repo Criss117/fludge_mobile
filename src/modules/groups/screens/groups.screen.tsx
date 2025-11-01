@@ -1,8 +1,10 @@
+import { Button } from "@/modules/shared/components/ui/button";
 import { Icon } from "@/modules/shared/components/ui/icon";
 import { Input } from "@/modules/shared/components/ui/input";
 import { Text } from "@/modules/shared/components/ui/text";
 import type { GroupSummary } from "@/shared/entities/group.entity";
-import { SearchIcon } from "lucide-react-native";
+import { Link } from "expo-router";
+import { PlusIcon, SearchIcon } from "lucide-react-native";
 import { useState } from "react";
 import { FlatList, RefreshControl, View } from "react-native";
 import { GroupCard } from "../components/group-card";
@@ -33,7 +35,7 @@ export function GroupsScreen({
   };
 
   return (
-    <View className="mt-4 px-4 flex gap-y-4">
+    <View className="mt-4 px-4 flex gap-y-4 flex-1">
       <View className="relative">
         <Input placeholder="buscar grupos" onChangeText={onTextChange} />
         <Icon
@@ -65,6 +67,22 @@ export function GroupsScreen({
           <RefreshControl refreshing={isPending} onRefresh={refetch} />
         }
       />
+      <View className="absolute bottom-4 right-4">
+        <Link
+          href={{
+            pathname: "/businesses/[businessSlug]/groups/create",
+            params: {
+              businessSlug,
+            },
+          }}
+          asChild
+          push
+        >
+          <Button size="icon" className="rounded-full">
+            <Icon as={PlusIcon} size={24} />
+          </Button>
+        </Link>
+      </View>
     </View>
   );
 }

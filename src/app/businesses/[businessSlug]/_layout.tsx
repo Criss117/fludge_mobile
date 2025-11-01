@@ -15,6 +15,12 @@ export default function BusinessesLayout() {
           title: "Grupo ...",
         }}
       />
+      <Stack.Screen
+        name="groups/create"
+        options={{
+          title: "Nuevo grupo",
+        }}
+      />
     </Stack>
   );
 }

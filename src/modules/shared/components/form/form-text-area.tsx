@@ -7,6 +7,7 @@ import {
 } from "react-hook-form";
 import { Field, FieldDescription, FieldError, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
+import { Text } from "../ui/text";
 import { Textarea } from "../ui/textarea";
 
 interface Props<T extends FieldValues>
@@ -38,7 +39,14 @@ export function FormTextArea<T extends FieldValues>({
             <FieldLabel
               className={cn(fieldState.invalid && "text-destructive")}
             >
-              {label}
+              {label}{" "}
+              {required ? (
+                <Text className="text-destructive">*</Text>
+              ) : (
+                <Text className="text-sm text-muted-foreground italic">
+                  (opcional)
+                </Text>
+              )}
             </FieldLabel>
           )}
           <Textarea

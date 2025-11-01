@@ -48,7 +48,7 @@ export default function SignUpScreen() {
         <CardFooter className="flex justify-center items-center flex-col">
           <Link href="/auth/sign-in" asChild replace>
             <Button variant="link">
-              <Text>Ta tienes una cuenta?</Text>
+              <Text>Ya tienes una cuenta?</Text>
             </Button>
           </Link>
           <Link href="/auth/sign-in" asChild replace>

@@ -105,6 +105,7 @@ function EmailInput() {
       name="email"
       label="Correo electrónico"
       keyboardType="email-address"
+      required
     />
   );
 }
@@ -113,20 +114,26 @@ function PasswordInput() {
   const { form } = useSignUpForm();
 
   return (
-    <FormInput form={form} name="password" label="Contraseña" secureTextEntry />
+    <FormInput
+      form={form}
+      name="password"
+      label="Contraseña"
+      secureTextEntry
+      required
+    />
   );
 }
 
 function FirstNameInput() {
   const { form } = useSignUpForm();
 
-  return <FormInput form={form} name="firstName" label="Nombre" />;
+  return <FormInput form={form} name="firstName" label="Nombre" required />;
 }
 
 function LastNameInput() {
   const { form } = useSignUpForm();
 
-  return <FormInput form={form} name="lastName" label="Apellido" />;
+  return <FormInput form={form} name="lastName" label="Apellido" required />;
 }
 
 function PhoneInput() {
@@ -147,7 +154,7 @@ function Submit() {
 
   return (
     <Button onPress={onSubmit}>
-      {!isPending && <Text>Iniciar sesión</Text>}
+      {!isPending && <Text>Crear cuenta</Text>}
       {isPending && <ActivityIndicator className="text-white" />}
     </Button>
   );

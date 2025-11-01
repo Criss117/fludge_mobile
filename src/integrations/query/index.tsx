@@ -31,7 +31,13 @@ export function TanstackQueryProvider({
   return (
     <QueryClientProvider client={queryClient}>
       {children}
-      <DevToolsBubble onCopy={onCopy} queryClient={queryClient} />
+      <DevToolsBubble
+        onCopy={onCopy}
+        queryClient={queryClient}
+        bubbleStyle={{
+          left: 0,
+        }}
+      />
     </QueryClientProvider>
   );
 }

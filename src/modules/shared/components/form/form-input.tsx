@@ -7,6 +7,7 @@ import {
 } from "react-hook-form";
 import { Field, FieldDescription, FieldError, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
+import { Text } from "../ui/text";
 
 interface Props<T extends FieldValues>
   extends React.ComponentProps<typeof Input> {
@@ -37,7 +38,12 @@ export function FormInput<T extends FieldValues>({
             <FieldLabel
               className={cn(fieldState.invalid && "text-destructive")}
             >
-              {label}
+              {label} {required && <Text className="text-destructive">*</Text>}
+              {!required && (
+                <Text className="text-sm text-muted-foreground">
+                  (opcional)
+                </Text>
+              )}
             </FieldLabel>
           )}
           <Input

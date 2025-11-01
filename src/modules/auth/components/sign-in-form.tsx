@@ -90,14 +90,22 @@ function RootError() {
 function EmailInput() {
   const { form } = useSignInForm();
 
-  return <FormInput form={form} name="email" label="Correo electrónico" />;
+  return (
+    <FormInput form={form} name="email" label="Correo electrónico" required />
+  );
 }
 
 function PasswordInput() {
   const { form } = useSignInForm();
 
   return (
-    <FormInput form={form} name="password" label="Contraseña" secureTextEntry />
+    <FormInput
+      form={form}
+      name="password"
+      label="Contraseña"
+      secureTextEntry
+      required
+    />
   );
 }
 

@@ -17,14 +17,12 @@ export function GroupsSuspense({ businessSlug }: Props) {
   } = useSuspenseQuery(businessQueriesOptions.findOne(businessSlug));
 
   return (
-    <>
-      <GroupsScreen
-        businessSlug={businessSlug}
-        groups={business.groups}
-        isPending={isPending}
-        refetch={() => refetch()}
-      />
-    </>
+    <GroupsScreen
+      businessSlug={businessSlug}
+      groups={business.groups}
+      isPending={isPending}
+      refetch={() => refetch()}
+    />
   );
 }
 
