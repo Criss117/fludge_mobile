@@ -19,7 +19,8 @@
         "monochromeImage": "./src/assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.crisviveros.fludge"
     },
     "web": {
       "output": "static",
@@ -46,17 +47,18 @@
           "configureAndroidBackup": true,
           "faceIDPermission": "Allow Fludge to access your Face ID biometric data."
         }
-      ],
-      [
-        "expo-screen-orientation",
-        {
-          "initialOrientation": "DEFAULT"
-        }
       ]
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "38cb212d-b779-480b-ba57-fb916709e770"
+      }
+    },
+    "owner": "crisviveros"
   }
 }

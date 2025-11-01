@@ -11,17 +11,18 @@ import {
 import { Text } from "@/modules/shared/components/ui/text";
 import { Link } from "expo-router";
 import { View } from "react-native";
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SignUpForm } from "../components/sign-up-form";
 
 export default function SignUpScreen() {
   const { top } = useSafeAreaInsets();
 
   return (
-    <SafeAreaView className="flex-1 flex justify-center items-center gap-y-2 relative">
+    <KeyboardAwareScrollView
+      bottomOffset={100}
+      contentContainerClassName="flex items-center justify-center flex-1 relative"
+    >
       <View className="absolute right-5" style={{ top: top + 10 }}>
         <ToggleTheme />
       </View>
@@ -57,6 +58,6 @@ export default function SignUpScreen() {
           </Link>
         </CardFooter>
       </Card>
-    </SafeAreaView>
+    </KeyboardAwareScrollView>
   );
 }
