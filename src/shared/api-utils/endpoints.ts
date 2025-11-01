@@ -13,6 +13,8 @@ export const ENDPOINTS = {
     GROUPS: {
       CREATE: (businessSlig: string) =>
         `/businesses/${businessSlig}/groups` as `/businesses/${string}/groups`,
+      UPDATE: (businessSlug: string, groupId: string) =>
+        `/businesses/${businessSlug}/groups/${groupId}` as `/businesses/${string}/groups/${string}`,
       FIND_ONE: (businessSlug: string, groupId: string) =>
         `/businesses/${businessSlug}/groups/${groupId}` as `/businesses/${string}/groups/${string}`,
       ADD_PERMISSION: (businessSlug: string, groupId: string) =>

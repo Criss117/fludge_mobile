@@ -7,6 +7,7 @@ import {
 } from "react-hook-form";
 import { Field, FieldDescription, FieldError, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
 
 interface Props<T extends FieldValues>
   extends React.ComponentProps<typeof Input> {
@@ -18,7 +19,7 @@ interface Props<T extends FieldValues>
   fieldClassName?: string;
 }
 
-export function FormInput<T extends FieldValues>({
+export function FormTextArea<T extends FieldValues>({
   form,
   name,
   description,
@@ -40,7 +41,7 @@ export function FormInput<T extends FieldValues>({
               {label}
             </FieldLabel>
           )}
-          <Input
+          <Textarea
             {...props}
             onBlur={field.onBlur}
             onChangeText={field.onChange}

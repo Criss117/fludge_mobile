@@ -17,6 +17,19 @@ export function useMutateGroups() {
     },
   });
 
+  const update = useMutation({
+    ...groupsMutationsOptions.update(),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries(
+        businessQueriesOptions.findOne(variables.businessSlug)
+      );
+
+      queryClient.invalidateQueries(
+        groupsQueriesOptions.findOne(variables.businessSlug, variables.groupId)
+      );
+    },
+  });
+
   const addPermissions = useMutation({
     ...groupsMutationsOptions.addPermissions(),
     onSuccess: (_, variables) => {
@@ -63,6 +76,7 @@ export function useMutateGroups() {
 
   return {
     create,
+    update,
     addPermissions,
     removePermissions,
     assignEmployees,

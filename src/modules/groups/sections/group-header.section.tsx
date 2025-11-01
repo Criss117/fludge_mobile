@@ -15,6 +15,7 @@ import { formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale/es";
 import { Calendar1Icon } from "lucide-react-native";
 import { View } from "react-native";
+import { UpdateGroupFormDialog } from "../components/update-group-form-dialog";
 
 interface Props {
   group: GroupDetail;
@@ -23,7 +24,13 @@ interface Props {
 export function GroupHeaderSection({ group }: Props) {
   return (
     <View>
-      <Card>
+      <Card className="relative">
+        <View className="absolute right-1 top-1">
+          <UpdateGroupFormDialog
+            group={group}
+            businessSlug={group.business.slug}
+          />
+        </View>
         <CardHeader>
           <View className="flex flex-row items-center gap-x-4">
             <CardTitle className="text-2xl">{group.name}</CardTitle>

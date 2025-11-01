@@ -2,6 +2,7 @@ import type { GroupDetail, GroupSummary } from "@/shared/entities/group.entity";
 import type { CreateGroupSchema } from "@/shared/schemas/groups/create-group.schema";
 import { EnsureEmployeeIdsSchema } from "@/shared/schemas/groups/ensure-employee-ids.schema";
 import type { EnsurePermissionsSchema } from "@/shared/schemas/groups/ensure-permissions.schema";
+import { UpdateGroupSchema } from "@/shared/schemas/groups/update-group.scheam";
 import { API } from "../api";
 import { ENDPOINTS } from "../endpoints";
 import { safeAction } from "../http/safe-action";
@@ -14,6 +15,21 @@ export class GroupsActions {
       this.api.post<GroupSummary, CreateGroupSchema>(
         ENDPOINTS.BUSINESSES.GROUPS.CREATE(businessSlug),
         data
+      )
+    );
+
+    return response;
+  }
+
+  public async update(
+    businessSlug: string,
+    groupId: string,
+    values: UpdateGroupSchema
+  ) {
+    const response = await safeAction(() =>
+      this.api.patch<null, UpdateGroupSchema>(
+        ENDPOINTS.BUSINESSES.GROUPS.UPDATE(businessSlug, groupId),
+        values
       )
     );
 
