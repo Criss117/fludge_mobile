@@ -13,7 +13,7 @@ export function EmployeesSuspense({ businessSlug }: Props) {
   const {
     data: business,
     refetch,
-    isPending,
+    isRefetching,
   } = useSuspenseQuery(businessQueriesOptions.findOne(businessSlug));
 
   return (
@@ -21,7 +21,8 @@ export function EmployeesSuspense({ businessSlug }: Props) {
       businessSlug={businessSlug}
       employees={business.employees}
       refetch={() => refetch()}
-      isPending={isPending}
+      isPending={isRefetching}
+      key={isRefetching ? "pending" : "ready"}
     />
   );
 }

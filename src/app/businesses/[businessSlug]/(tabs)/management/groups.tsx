@@ -12,7 +12,7 @@ interface Props {
 export function GroupsSuspense({ businessSlug }: Props) {
   const {
     data: business,
-    isPending,
+    isRefetching,
     refetch,
   } = useSuspenseQuery(businessQueriesOptions.findOne(businessSlug));
 
@@ -20,8 +20,9 @@ export function GroupsSuspense({ businessSlug }: Props) {
     <GroupsScreen
       businessSlug={businessSlug}
       groups={business.groups}
-      isPending={isPending}
+      isPending={isRefetching}
       refetch={() => refetch()}
+      key={isRefetching ? "pending" : "ready"}
     />
   );
 }
