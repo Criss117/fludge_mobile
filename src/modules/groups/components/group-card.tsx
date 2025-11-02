@@ -36,13 +36,13 @@ export function GroupCard({ group, businessSlug }: Props) {
     >
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
-          <View>
+          <View className="flex flex-1">
             <CardTitle className="text-xl">{group.name}</CardTitle>
             <CardDescription>
               {group.description ?? "Sin descripción"}
             </CardDescription>
           </View>
-          <View>
+          <View className="flex-shrink-0">
             <Button variant="outline" size="icon" className="rounded-full">
               <Icon as={MoreVerticalIcon} size={24} />
             </Button>

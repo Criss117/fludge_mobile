@@ -33,9 +33,9 @@ export function GroupHeaderSection({ group }: Props) {
         </View>
         <CardHeader>
           <View className="flex flex-row items-center gap-x-4">
-            <CardTitle className="text-2xl">{group.name}</CardTitle>
+            <CardTitle className="text-2xl flex-1">{group.name}</CardTitle>
             {group.isDefault && (
-              <Badge variant="outline" className="rounded-full">
+              <Badge variant="outline" className="rounded-full flex-shrink-0">
                 <Text>Por defecto</Text>
               </Badge>
             )}
