@@ -1,22 +1,14 @@
-import { PermissionBadge } from "@/modules/shared/components/permission-badge";
+import { GroupCardWithCheck } from "@/modules/groups/components/group-card-whit-check";
 import { Button } from "@/modules/shared/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/modules/shared/components/ui/card";
-import { Checkbox } from "@/modules/shared/components/ui/checkbox";
+import { Card, CardContent } from "@/modules/shared/components/ui/card";
 import { Icon } from "@/modules/shared/components/ui/icon";
 import { Text } from "@/modules/shared/components/ui/text";
-import { cn, spliText } from "@/modules/shared/lib/utils";
 import type { EmployeeDetail } from "@/shared/entities/employee.entity";
 import * as Haptics from "expo-haptics";
-import { PlusIcon, Trash2Icon } from "lucide-react-native";
+import { Trash2Icon } from "lucide-react-native";
 import { useState } from "react";
-import { FlatList, TouchableOpacity, View } from "react-native";
+import { View } from "react-native";
+import { AssignGroupsDialog } from "../components/assign-groups-dialog";
 
 interface Props {
   employee: EmployeeDetail;
@@ -44,9 +36,7 @@ export function AssignedGroupsSection({ employee, businessSlug }: Props) {
           {employee.groups.length})
         </Text>
         <View className="flex flex-row gap-x-2">
-          <Button className="rounded-full" size="icon">
-            <Icon as={PlusIcon} size={24} />
-          </Button>
+          <AssignGroupsDialog businessSlug={businessSlug} employee={employee} />
           <Button
             className="rounded-full"
             variant={selectedGroupIds.length === 0 ? "outline" : "destructive"}
@@ -59,44 +49,14 @@ export function AssignedGroupsSection({ employee, businessSlug }: Props) {
       </View>
       <Card>
         <CardContent className="flex gap-y-2">
+          {!employee.groups.length && <Text>No hay grupos asignados</Text>}
           {employee.groups.map((group) => (
-            <TouchableOpacity
+            <GroupCardWithCheck
               key={group.id}
+              isSelected={selectedGroupIds.includes(group.id)}
+              group={group}
               onPress={() => onGroupSelected(group.id)}
-            >
-              <Card
-                className={cn(
-                  selectedGroupIds.includes(group.id) &&
-                    "border-primary bg-primary/10"
-                )}
-              >
-                <CardHeader className="flex items-start flex-row">
-                  <Checkbox
-                    checked={selectedGroupIds.includes(group.id)}
-                    onCheckedChange={() => onGroupSelected(group.id)}
-                    className="size-5"
-                  />
-                  <View>
-                    <CardTitle>{spliText(group.name, 25)}</CardTitle>
-                    <CardDescription>
-                      {group.description ? spliText(group.description, 30) : ""}
-                    </CardDescription>
-                  </View>
-                </CardHeader>
-                <CardFooter>
-                  <FlatList
-                    data={group.permissions}
-                    keyExtractor={(item) => item}
-                    renderItem={({ item }) => (
-                      <PermissionBadge permission={item} />
-                    )}
-                    ItemSeparatorComponent={() => <View className="w-2" />}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                  />
-                </CardFooter>
-              </Card>
-            </TouchableOpacity>
+            />
           ))}
         </CardContent>
       </Card>

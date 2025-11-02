@@ -17,7 +17,7 @@ import type { GroupDetail } from "@/shared/entities/group.entity";
 import { useState } from "react";
 import { ScrollView, View } from "react-native";
 import { AddPermissionsDialog } from "../components/add-permissions-dialog";
-import { AssignEmployeesDialog } from "../components/assign-employee-dialog";
+import { AssignEmployeesDialog } from "../components/assign-employees-dialog";
 import { EmployeesList } from "../components/employees-list";
 import { PermissionsList } from "../components/permission-list";
 

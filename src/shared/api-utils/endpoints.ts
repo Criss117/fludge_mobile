@@ -31,6 +31,10 @@ export const ENDPOINTS = {
         `/businesses/${businessSlug}/employees` as `/businesses/${string}/employees`,
       FIND_ONE: (businessSlug: string, employeeId: string) =>
         `/businesses/${businessSlug}/employees/${employeeId}` as `/businesses/${string}/employees/${string}`,
+      ASSIGN_GROUP: (businessSlug: string, employeeId: string) =>
+        `/businesses/${businessSlug}/employees/${employeeId}/groups` as `/businesses/${string}/employees/${string}/groups`,
+      REMOVE_GROUP: (businessSlug: string, employeeId: string) =>
+        `/businesses/${businessSlug}/employees/${employeeId}/groups` as `/businesses/${string}/employees/${string}/groups`,
     },
   },
 } as const;

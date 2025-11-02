@@ -22,7 +22,7 @@ export default function BusinessesLayout() {
         }}
       />
       <Stack.Screen
-        name="employees/[employeeId]"
+        name="employees/[employeeId]/index"
         options={{
           title: "Empleado ...",
         }}
