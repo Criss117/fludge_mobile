@@ -18,16 +18,30 @@ import { firstLetterToUpperCase } from "@/modules/shared/lib/utils";
 import type { EmployeeSummary } from "@/shared/entities/employee.entity";
 import { formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale/es";
+import { useRouter } from "expo-router";
 import { Calendar, MoreVerticalIcon } from "lucide-react-native";
 import { TouchableOpacity, View } from "react-native";
 
 interface Props {
   employee: EmployeeSummary;
+  businessSlug: string;
 }
 
-export function EmployeeCard({ employee }: Props) {
+export function EmployeeCard({ employee, businessSlug }: Props) {
+  const router = useRouter();
+
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() =>
+        router.push({
+          pathname: "/businesses/[businessSlug]/employees/[employeeId]",
+          params: {
+            businessSlug,
+            employeeId: employee.id,
+          },
+        })
+      }
+    >
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <View className="flex flex-row items-center gap-x-4">

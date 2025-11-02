@@ -18,3 +18,10 @@ export function spliText(str: string, maxLength = 10) {
 
   return `${str.slice(0, maxLength)}...`;
 }
+
+export function formatCurrency(value: number) {
+  return new Intl.NumberFormat("es-ES", {
+    style: "currency",
+    currency: "COP",
+  }).format(value);
+}

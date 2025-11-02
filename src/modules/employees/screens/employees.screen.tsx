@@ -59,7 +59,9 @@ export function EmployeesScreen({
         }
         data={filteredEmployees}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <EmployeeCard employee={item} />}
+        renderItem={({ item }) => (
+          <EmployeeCard employee={item} businessSlug={businessSlug} />
+        )}
         ItemSeparatorComponent={() => <View className="h-4" />}
         ListEmptyComponent={() => (
           <View>

@@ -21,6 +21,18 @@ export default function BusinessesLayout() {
           title: "Nuevo grupo",
         }}
       />
+      <Stack.Screen
+        name="employees/[employeeId]"
+        options={{
+          title: "Empleado ...",
+        }}
+      />
+      <Stack.Screen
+        name="employees/create"
+        options={{
+          title: "Nuevo empleado",
+        }}
+      />
     </Stack>
   );
 }

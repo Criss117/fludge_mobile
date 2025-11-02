@@ -18,10 +18,6 @@ import { ActivityIndicator } from "react-native";
 import { useMutateGroups } from "../hooks/use.mutate-groups";
 import { EmployeeCard } from "./employee-card";
 
-interface Props {
-  employees: EmployeeSummary[];
-}
-
 interface RootProps {
   employees: EmployeeSummary[];
   children: React.ReactNode;
