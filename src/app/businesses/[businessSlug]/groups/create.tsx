@@ -1,10 +1,10 @@
-import { Text } from "@/modules/shared/components/ui/text";
-import { View } from "react-native";
+import { CreateGroupScreen } from "@/modules/groups/screens/create-group.screen";
+import { useGlobalSearchParams } from "expo-router";
 
 export default function CreateGroup() {
-  return (
-    <View>
-      <Text>Create Group</Text>
-    </View>
-  );
+  const { businessSlug } = useGlobalSearchParams<{
+    businessSlug: string;
+  }>();
+
+  return <CreateGroupScreen businessSlug={businessSlug} />;
 }

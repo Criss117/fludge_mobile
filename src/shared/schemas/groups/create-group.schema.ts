@@ -1,4 +1,4 @@
-import { allPermission, Permission } from "@/shared/entities/permissions";
+import { allPermission } from "@/shared/entities/permissions";
 import { z } from "zod";
 
 export const createGroupSchema = z.object({
@@ -17,7 +17,7 @@ export const createGroupSchema = z.object({
 
   permissions: z
     .array(
-      z.enum(allPermission as [Permission, ...Permission[]], {
+      z.enum(allPermission, {
         message: "Cada permiso debe ser un valor válido",
       })
     )
