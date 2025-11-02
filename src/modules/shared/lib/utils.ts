@@ -13,7 +13,7 @@ export function firstLetterToUpperCase(...str: string[]) {
   return str.map((s) => s.slice(0, 1).toUpperCase());
 }
 
-export function shortString(str: string, maxLength = 10) {
+export function spliText(str: string, maxLength = 10) {
   if (str.length <= maxLength) return str;
 
   return `${str.slice(0, maxLength)}...`;

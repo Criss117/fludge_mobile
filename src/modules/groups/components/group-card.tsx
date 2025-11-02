@@ -9,6 +9,7 @@ import {
 } from "@/modules/shared/components/ui/card";
 import { Icon } from "@/modules/shared/components/ui/icon";
 import { Separator } from "@/modules/shared/components/ui/separator";
+import { spliText } from "@/modules/shared/lib/utils";
 import type { GroupSummary } from "@/shared/entities/group.entity";
 import { useRouter } from "expo-router";
 import { MoreVerticalIcon } from "lucide-react-native";
@@ -37,9 +38,13 @@ export function GroupCard({ group, businessSlug }: Props) {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <View className="flex flex-1">
-            <CardTitle className="text-xl">{group.name}</CardTitle>
+            <CardTitle className="text-xl">
+              {spliText(group.name, 25)}
+            </CardTitle>
             <CardDescription>
-              {group.description ?? "Sin descripción"}
+              {group.description
+                ? spliText(group.description, 35)
+                : "Sin descripción"}
             </CardDescription>
           </View>
           <View className="flex-shrink-0">
