@@ -6,6 +6,7 @@ import { GroupsActions } from "@/shared/api-utils/actions/groups.actions";
 import { API } from "@/shared/api-utils/api";
 import { AuthMutationsOptions } from "@/shared/react-query/auth/mutations";
 import { AuthQueriesOptions } from "@/shared/react-query/auth/queries";
+import { BusinessesMutationsOptions } from "@/shared/react-query/businesses/mutation";
 import { BusinessQueriesOptions } from "@/shared/react-query/businesses/queries";
 import { EmployeesMutationsOptions } from "@/shared/react-query/employees/mutations";
 import { EmployeesQueriesOptions } from "@/shared/react-query/employees/queries";
@@ -26,6 +27,9 @@ export const authMutationsOptions = new AuthMutationsOptions(authActions);
 
 //Business Queries
 export const businessQueriesOptions = new BusinessQueriesOptions(
+  businessesActions
+);
+export const businessesMutationsOptions = new BusinessesMutationsOptions(
   businessesActions
 );
 

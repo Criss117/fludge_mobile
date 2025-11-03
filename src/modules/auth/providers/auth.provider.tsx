@@ -42,6 +42,7 @@ interface Context {
   >;
   user: UserDetail | null;
   isFetchingSession: boolean;
+  refetch: () => Promise<void>;
 }
 
 const AuthContext = createContext<null | Context>(null);
@@ -66,6 +67,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // mutations
   const signUp = useMutation(authMutationsOptions.signUp());
   const closeAllSessions = useMutation(authMutationsOptions.closeAllSessions());
+
+  const refetch = async () => {
+    const res = await authActions.me();
+    setUser(res.data);
+  };
 
   const signOut = useMutation({
     ...authMutationsOptions.signOut(),
@@ -163,6 +169,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         closeAllSessions,
         user,
         isFetchingSession,
+        refetch,
       }}
     >
       {children}
