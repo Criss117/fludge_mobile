@@ -72,6 +72,7 @@ function Root({ children, businessSlug }: RootProps) {
         onSuccess: ({ data: createdGroup }) => {
           if (!createdGroup) return;
 
+          form.reset();
           router.push({
             pathname: "/businesses/[businessSlug]/groups/[groupId]",
             params: {

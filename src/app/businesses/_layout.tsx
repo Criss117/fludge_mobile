@@ -25,7 +25,13 @@ export default function BusinessesLayout() {
           headerRight: () => <UserButton />,
         }}
       />
-      <Stack.Screen name="select" />
+      <Stack.Screen
+        name="select"
+        options={{
+          title: "Selecciona tu negocio",
+          headerRight: () => <UserButton />,
+        }}
+      />
     </Stack>
   );
 }
