@@ -1,9 +1,12 @@
 import { groupsQueriesOptions } from "@/integrations/query/query-container";
+import { usePermissions } from "@/modules/auth/providers/permissions.provider";
 import { GroupScreen } from "@/modules/groups/screens/group.screen";
+import { PermissionsAlert } from "@/modules/shared/components/forbiden-alerts";
 import { Text } from "@/modules/shared/components/ui/text";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Stack, useGlobalSearchParams } from "expo-router";
 import { Suspense } from "react";
+import { View } from "react-native";
 
 interface Props {
   businessSlug: string;
@@ -29,7 +32,7 @@ function GroupSuspense({ businessSlug, groupId }: Props) {
   );
 }
 
-export default function Group() {
+function Screen() {
   const { businessSlug, groupId } = useGlobalSearchParams<{
     businessSlug: string;
     groupId: string;
@@ -40,4 +43,21 @@ export default function Group() {
       <GroupSuspense businessSlug={businessSlug} groupId={groupId} />
     </Suspense>
   );
+}
+
+export default function Group() {
+  const { hasPermission } = usePermissions();
+
+  const userCanReadGroup = hasPermission("groups:read");
+
+  if (!userCanReadGroup)
+    return (
+      <View className="flex-1 px-4 mt-5">
+        <PermissionsAlert
+          descriptions={["No tienes permisos para ver grupos"]}
+        />
+      </View>
+    );
+
+  return <Screen />;
 }

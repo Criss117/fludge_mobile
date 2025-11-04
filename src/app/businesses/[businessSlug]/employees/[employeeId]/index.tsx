@@ -1,9 +1,12 @@
 import { employeesQueriesOptions } from "@/integrations/query/query-container";
+import { usePermissions } from "@/modules/auth/providers/permissions.provider";
 import { EmployeeScreen } from "@/modules/employees/screens/employee.screen";
+import { PermissionsAlert } from "@/modules/shared/components/forbiden-alerts";
 import { Text } from "@/modules/shared/components/ui/text";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Stack, useGlobalSearchParams } from "expo-router";
 import React, { Suspense } from "react";
+import { View } from "react-native";
 
 interface Props {
   businessSlug: string;
@@ -36,7 +39,7 @@ function EmployeeSuspense({ businessSlug, employeeId }: Props) {
   );
 }
 
-export default function Employee() {
+function Screen() {
   const { businessSlug, employeeId } = useGlobalSearchParams<{
     businessSlug: string;
     employeeId: string;
@@ -47,4 +50,21 @@ export default function Employee() {
       <EmployeeSuspense businessSlug={businessSlug} employeeId={employeeId} />
     </Suspense>
   );
+}
+
+export default function Employee() {
+  const { hasPermission } = usePermissions();
+
+  const userCanReadEmployee = hasPermission("employees:read");
+
+  if (!userCanReadEmployee)
+    return (
+      <View className="flex-1 px-4 mt-5">
+        <PermissionsAlert
+          descriptions={["No tienes permisos para ver empleados"]}
+        />
+      </View>
+    );
+
+  return <Screen />;
 }
