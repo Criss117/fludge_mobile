@@ -25,6 +25,7 @@ export function GroupCard({ group, businessSlug }: Props) {
 
   return (
     <TouchableOpacity
+      activeOpacity={0.6}
       onPress={() =>
         router.push({
           pathname: "/businesses/[businessSlug]/groups/[groupId]",

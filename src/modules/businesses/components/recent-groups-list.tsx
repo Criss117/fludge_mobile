@@ -28,6 +28,7 @@ export function RecentGroupsList({ groups, businessSlug }: Props) {
       <CardContent className="flex gap-y-2">
         {groups.map((group) => (
           <TouchableOpacity
+            activeOpacity={0.6}
             key={group.id}
             onPress={() =>
               router.push({

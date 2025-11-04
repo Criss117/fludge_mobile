@@ -32,6 +32,7 @@ export function EmployeeCard({ employee, businessSlug }: Props) {
 
   return (
     <TouchableOpacity
+      activeOpacity={0.6}
       onPress={() =>
         router.push({
           pathname: "/businesses/[businessSlug]/employees/[employeeId]",

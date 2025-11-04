@@ -23,7 +23,11 @@ interface Props {
 
 export function EmployeeCard({ onPress, employee, isSelected }: Props) {
   return (
-    <TouchableOpacity key={employee.id} onPress={() => onPress(employee)}>
+    <TouchableOpacity
+      key={employee.id}
+      onPress={() => onPress(employee)}
+      activeOpacity={0.6}
+    >
       <Card className={cn(isSelected && "bg-primary/10 border-primary")}>
         <CardHeader className="flex flex-row  gap-x-2">
           <Checkbox

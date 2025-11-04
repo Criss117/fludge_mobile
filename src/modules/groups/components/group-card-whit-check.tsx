@@ -18,7 +18,7 @@ interface Props {
 
 export function GroupCardWithCheck({ isSelected, group, onPress }: Props) {
   return (
-    <TouchableOpacity onPress={() => onPress(group)}>
+    <TouchableOpacity onPress={() => onPress(group)} activeOpacity={0.6}>
       <Card className={cn(isSelected && "border-primary bg-primary/10")}>
         <CardHeader className="flex items-start flex-row">
           <Checkbox

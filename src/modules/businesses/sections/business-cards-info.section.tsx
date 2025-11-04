@@ -31,7 +31,7 @@ function CardInfo({ amount, icon, description, href }: CardInfoProps) {
   const router = useRouter();
 
   return (
-    <TouchableOpacity onPress={() => router.push(href)}>
+    <TouchableOpacity activeOpacity={0.6} onPress={() => router.push(href)}>
       <Card className="flex-1 size-40">
         <CardHeader>
           <Icon as={icon} size={32} className="text-primary" />

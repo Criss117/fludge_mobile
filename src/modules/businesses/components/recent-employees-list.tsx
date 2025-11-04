@@ -15,6 +15,7 @@ import { firstLetterToUpperCase } from "@/modules/shared/lib/utils";
 import type { EmployeeSummary } from "@/shared/entities/employee.entity";
 import { formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale/es";
+import { useRouter } from "expo-router";
 import { TouchableOpacity, View } from "react-native";
 
 interface Props {
@@ -23,6 +24,8 @@ interface Props {
 }
 
 export function RecentEmployeesList({ employees, businessSlug }: Props) {
+  const router = useRouter();
+
   return (
     <Card>
       <CardHeader>
@@ -33,7 +36,19 @@ export function RecentEmployeesList({ employees, businessSlug }: Props) {
       </CardHeader>
       <CardContent className="flex gap-y-2">
         {employees.map((employee) => (
-          <TouchableOpacity key={employee.id}>
+          <TouchableOpacity
+            activeOpacity={0.6}
+            key={employee.id}
+            onPress={() => {
+              router.push({
+                pathname: "/businesses/[businessSlug]/employees/[employeeId]",
+                params: {
+                  businessSlug,
+                  employeeId: employee.id,
+                },
+              });
+            }}
+          >
             <Card className="flex flex-row">
               <CardHeader className="flex flex-row items-center">
                 <Avatar
