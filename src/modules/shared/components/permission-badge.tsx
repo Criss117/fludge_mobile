@@ -1,8 +1,6 @@
-import {
-  translatePermission,
-  type Permission,
-} from "@/shared/entities/permissions";
+import { Permission } from "@/shared/entities/permissions";
 import { ComponentProps } from "react";
+import { translatePermission } from "../lib/translate-permissions";
 import { Badge } from "./ui/badge";
 import { Text } from "./ui/text";
 

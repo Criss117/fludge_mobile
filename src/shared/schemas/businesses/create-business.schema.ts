@@ -13,27 +13,18 @@ export const createBusinessSchema = z.object({
 
   email: z
     .email({ error: "Debe proporcionar un correo electrónico válido" })
-    .transform((value) => value?.trim())
-    .nullable()
-    .optional(),
-
+    .transform((value) => value?.trim()),
   phone: z
     .string({ error: "El teléfono debe ser una cadena de texto" })
-    .transform((value) => value?.trim())
-    .nullable()
-    .optional(),
+    .transform((value) => value?.trim()),
 
   legalName: z
     .string({ error: "La razón social debe ser una cadena de texto" })
-    .transform((value) => value?.trim())
-    .nullable()
-    .optional(),
-
+    .transform((value) => value?.trim()),
   address: z
     .string({ error: "La dirección debe ser una cadena de texto" })
     .transform((value) => value?.trim())
-    .nullable()
-    .optional(),
+    .nullish(),
 });
 
 export type CreateBusinessSchema = z.infer<typeof createBusinessSchema>;

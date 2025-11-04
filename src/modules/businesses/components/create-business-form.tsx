@@ -117,6 +117,7 @@ function Email() {
       placeholder="Email"
       form={form}
       keyboardType="email-address"
+      required
     />
   );
 }
@@ -131,6 +132,7 @@ function Phone() {
       placeholder="Teléfono"
       form={form}
       keyboardType="number-pad"
+      required
     />
   );
 }
@@ -144,6 +146,7 @@ function LegalName() {
       name="legalName"
       placeholder="Nombre legal del negocio"
       form={form}
+      required
     />
   );
 }

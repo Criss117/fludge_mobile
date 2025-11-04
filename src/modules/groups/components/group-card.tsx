@@ -48,6 +48,7 @@ export function GroupCard({ group, businessSlug }: Props) {
                 : "Sin descripción"}
             </CardDescription>
           </View>
+          {/* TODO: Implement this */}
           <View className="flex-shrink-0">
             <Button variant="outline" size="icon" className="rounded-full">
               <Icon as={MoreVerticalIcon} size={24} />
