@@ -1,5 +1,6 @@
 import { SessionSummary } from "@/shared/entities/session.entity";
 import { UserDetail } from "@/shared/entities/user.entity";
+import { SignInEmployeeSchema } from "@/shared/schemas/auth/sign-in-employee.schema";
 import { SignInSchema } from "@/shared/schemas/auth/sign-in.schema";
 import { SignUpSchema } from "@/shared/schemas/auth/sign-up.schema";
 import { API } from "../api";
@@ -23,6 +24,19 @@ export class AuthActions {
       () =>
         this.api.post<SessionSummary, SignInSchema>(
           ENDPOINTS.AUTH.SIGN_IN,
+          data
+        ),
+      "Error al iniciar sesión"
+    );
+
+    return res;
+  }
+
+  public async signInEmployee(data: SignInEmployeeSchema) {
+    const res = await safeAction(
+      () =>
+        this.api.post<SessionSummary, SignInEmployeeSchema>(
+          ENDPOINTS.AUTH.SIGN_IN_EMPLOYEE,
           data
         ),
       "Error al iniciar sesión"

@@ -16,7 +16,9 @@ export default function AuthLayout() {
 
   // Si no hay usuario, mostrar pantallas de autenticación
   return (
-    <Stack screenOptions={{ headerShown: false }}>
+    <Stack
+      screenOptions={{ headerShown: false, animation: "slide_from_right" }}
+    >
       <Stack.Screen name="sign-up" />
       <Stack.Screen name="sign-in" />
     </Stack>

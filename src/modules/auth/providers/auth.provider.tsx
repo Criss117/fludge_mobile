@@ -9,7 +9,7 @@ import type { CommonResponse } from "@/shared/api-utils/http/common-response";
 import type { SessionSummary } from "@/shared/entities/session.entity";
 import { UserDetail } from "@/shared/entities/user.entity";
 import { useMutation, type UseMutationResult } from "@tanstack/react-query";
-import { createContext, use, useEffect, useState } from "react";
+import { createContext, use, useCallback, useEffect, useState } from "react";
 
 interface Context {
   signUp: UseMutationResult<
@@ -29,6 +29,15 @@ interface Context {
     Error,
     {
       email: string;
+      password: string;
+    },
+    unknown
+  >;
+  signInEmployee: UseMutationResult<
+    CommonResponse<SessionSummary>,
+    Error,
+    {
+      username: string;
       password: string;
     },
     unknown
@@ -81,30 +90,44 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     },
   });
 
+  const onSignIn = useCallback(async (data: SessionSummary | null) => {
+    try {
+      if (!data?.token) return;
+
+      api.applyAuthInterceptor(data.token);
+
+      setIsFetchingSession(true);
+      const userResponse = await authActions.me();
+
+      if (userResponse.error || !userResponse.data) {
+        throw new Error("Failed to fetch user data");
+      }
+
+      await secureStorage.save(AuthTokenKey, data.token);
+      setUser(userResponse.data);
+    } catch (error) {
+      console.error("Error during sign in:", error);
+      // Opcional: puedes limpiar el token si falla
+      await secureStorage.remove(AuthTokenKey);
+    } finally {
+      setIsFetchingSession(false);
+    }
+  }, []);
+
   const signIn = useMutation({
     ...authMutationsOptions.signIn(),
     onSuccess: async ({ data }) => {
-      try {
-        if (!data?.token) return;
+      onSignIn(data);
+    },
+    onError: async () => {
+      await secureStorage.remove(AuthTokenKey);
+    },
+  });
 
-        api.applyAuthInterceptor(data.token);
-
-        setIsFetchingSession(true);
-        const userResponse = await authActions.me();
-
-        if (userResponse.error || !userResponse.data) {
-          throw new Error("Failed to fetch user data");
-        }
-
-        await secureStorage.save(AuthTokenKey, data.token);
-        setUser(userResponse.data);
-      } catch (error) {
-        console.error("Error during sign in:", error);
-        // Opcional: puedes limpiar el token si falla
-        await secureStorage.remove(AuthTokenKey);
-      } finally {
-        setIsFetchingSession(false);
-      }
+  const signInEmployee = useMutation({
+    ...authMutationsOptions.signInEmployee(),
+    onSuccess: async ({ data }) => {
+      onSignIn(data);
     },
     onError: async () => {
       await secureStorage.remove(AuthTokenKey);
@@ -165,6 +188,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       value={{
         signUp,
         signIn,
+        signInEmployee,
         signOut,
         closeAllSessions,
         user,

@@ -3,6 +3,7 @@ import { mutationOptions } from "@tanstack/react-query";
 
 type SignUpParams = Parameters<AuthActions["signUp"]>[number];
 type SignInParams = Parameters<AuthActions["signIn"]>[number];
+type SignInEmployeeParams = Parameters<AuthActions["signInEmployee"]>[number];
 
 export class AuthMutationsOptions {
   constructor(public readonly authActions: AuthActions) {}
@@ -27,6 +28,22 @@ export class AuthMutationsOptions {
     return mutationOptions({
       mutationFn: async (data: SignInParams) => {
         const res = await this.authActions.signIn(data);
+
+        if (res.error) {
+          throw new Error(res.message, {
+            cause: res.message,
+          });
+        }
+
+        return res;
+      },
+    });
+  }
+
+  public signInEmployee() {
+    return mutationOptions({
+      mutationFn: async (data: SignInEmployeeParams) => {
+        const res = await this.authActions.signInEmployee(data);
 
         if (res.error) {
           throw new Error(res.message, {

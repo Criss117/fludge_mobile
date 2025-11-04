@@ -14,9 +14,9 @@ import {
   SafeAreaView,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
-import { SignInForm } from "../components/sign-in-form";
+import { SignInEmployeeForm } from "../components/sign-in-employee-form";
 
-export default function SignInScreen() {
+export default function SignInEmployeeScreen() {
   const { top } = useSafeAreaInsets();
 
   return (
@@ -27,22 +27,22 @@ export default function SignInScreen() {
       <Text className="text-5xl font-bold h-14">Fludge</Text>
       <Card className="w-11/12">
         <CardHeader>
-          <CardTitle className="text-xl">Inicia Sesíon</CardTitle>
+          <CardTitle className="text-xl">Inicia Sesíon como Empleado</CardTitle>
           <CardDescription>
             Ingresa tus datos para crear tu cuenta en Fludge
           </CardDescription>
         </CardHeader>
         <CardContent className="flex gap-y-4">
-          <SignInForm.Root>
-            <SignInForm.RootError />
-            <SignInForm.EmailInput />
-            <SignInForm.PasswordInput />
-            <SignInForm.Submit />
-          </SignInForm.Root>
+          <SignInEmployeeForm.Root>
+            <SignInEmployeeForm.RootError />
+            <SignInEmployeeForm.Username />
+            <SignInEmployeeForm.Password />
+            <SignInEmployeeForm.Submit />
+          </SignInEmployeeForm.Root>
           <Text className="text-center">ó</Text>
-          <Link href="/auth/sign-in-employee" asChild replace>
+          <Link href="/auth/sign-in" asChild replace>
             <Button variant="link">
-              <Text>Inicia session como empleado</Text>
+              <Text>Inicia session como usuario root</Text>
             </Button>
           </Link>
         </CardContent>
