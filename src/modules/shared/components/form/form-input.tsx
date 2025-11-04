@@ -49,8 +49,24 @@ export function FormInput<T extends FieldValues>({
           <Input
             {...props}
             onBlur={field.onBlur}
-            onChangeText={field.onChange}
-            value={field.value}
+            onChangeText={(e) => {
+              if (
+                props.inputMode === "numeric" ||
+                props.inputMode === "decimal"
+              ) {
+                const value = Number(e);
+
+                if (isNaN(value)) return;
+
+                field.onChange(value);
+
+                return;
+              }
+              field.onChange(e);
+            }}
+            value={
+              field.value?.toString() === "0" ? "" : field.value?.toString()
+            }
             className={cn(
               props.className,
               fieldState.invalid && "border-destructive"

@@ -1,11 +1,9 @@
 import { Card, CardContent } from "@/modules/shared/components/ui/card";
 import { Checkbox } from "@/modules/shared/components/ui/checkbox";
 import { Text } from "@/modules/shared/components/ui/text";
+import { translatePermission } from "@/modules/shared/lib/translate-permissions";
 import { cn } from "@/modules/shared/lib/utils";
-import {
-  type Permission,
-  translatePermission,
-} from "@/shared/entities/permissions";
+import type { Permission } from "@/shared/entities/permissions";
 import { TouchableWithoutFeedback, View } from "react-native";
 
 interface Props {

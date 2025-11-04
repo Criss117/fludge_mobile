@@ -1,4 +1,5 @@
 import {
+  businessQueriesOptions,
   employeesMutationsOptions,
   employeesQueriesOptions,
   groupsQueriesOptions,
@@ -7,6 +8,15 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export function useMutateEmployees() {
   const queryClient = useQueryClient();
+
+  const create = useMutation({
+    ...employeesMutationsOptions.create(),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries(
+        businessQueriesOptions.findOne(variables.businessSlug)
+      );
+    },
+  });
 
   const assignGroups = useMutation({
     ...employeesMutationsOptions.assignGroups(),
@@ -45,6 +55,7 @@ export function useMutateEmployees() {
   });
 
   return {
+    create,
     assignGroups,
     removeGroups,
   };

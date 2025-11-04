@@ -15,8 +15,7 @@ export const signUpSchema = z.object({
     .min(8, "La contraseña debe tener al menos 8 caracteres"),
   phone: z
     .string({ error: "El teléfono debe ser una cadena de texto" })
-    .optional()
-    .nullable(),
+    .nullish(),
 });
 
 export type SignUpSchema = z.infer<typeof signUpSchema>;
