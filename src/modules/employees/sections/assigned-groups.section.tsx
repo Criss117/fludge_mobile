@@ -1,3 +1,4 @@
+import { usePermissions } from "@/modules/auth/providers/permissions.provider";
 import { Card, CardContent } from "@/modules/shared/components/ui/card";
 import { Text } from "@/modules/shared/components/ui/text";
 import type { EmployeeDetail } from "@/shared/entities/employee.entity";
@@ -12,6 +13,9 @@ interface Props {
 
 function Header({ businessSlug, employee }: Props) {
   const { selectedGroupsIds } = GroupsList.useGroupsListContext();
+  const { hasPermission } = usePermissions();
+
+  const userCanUpdateEmployee = hasPermission("employees:update");
 
   return (
     <View className="flex flex-row justify-between items-center">
@@ -21,11 +25,15 @@ function Header({ businessSlug, employee }: Props) {
         {employee.groups.length})
       </Text>
       <View className="flex flex-row gap-x-2">
-        <AssignGroupsDialog businessSlug={businessSlug} employee={employee} />
-        <GroupsList.RemoveGroupsAlert
-          businessSlug={businessSlug}
-          employeeId={employee.id}
-        />
+        {userCanUpdateEmployee && (
+          <AssignGroupsDialog businessSlug={businessSlug} employee={employee} />
+        )}
+        {userCanUpdateEmployee && (
+          <GroupsList.RemoveGroupsAlert
+            businessSlug={businessSlug}
+            employeeId={employee.id}
+          />
+        )}
       </View>
     </View>
   );
