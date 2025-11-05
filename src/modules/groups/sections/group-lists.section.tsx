@@ -1,12 +1,4 @@
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/modules/shared/components/ui/card";
-import {
   Tabs,
   TabsContent,
   TabsList,
@@ -15,91 +7,44 @@ import {
 import { Text } from "@/modules/shared/components/ui/text";
 import type { GroupDetail } from "@/shared/entities/group.entity";
 import { useState } from "react";
-import { ScrollView, View } from "react-native";
-import { AddPermissionsDialog } from "../components/add-permissions-dialog";
-import { AssignEmployeesDialog } from "../components/assign-employees-dialog";
-import { EmployeesList } from "../components/employees-list";
-import { PermissionsList } from "../components/permission-list";
+import { View } from "react-native";
+import { EmployeesTab } from "../components/employees-tab";
+import { PermissionsTab } from "../components/permissions-tab";
 
 interface Props {
   group: GroupDetail;
 }
 
-const values = {
-  employees: "employees",
-  permissions: "permissions",
-} as const;
-type Values = (typeof values)[keyof typeof values];
+const tabs = [
+  {
+    name: "Empleados",
+    Cmp: EmployeesTab,
+  },
+  {
+    name: "Permisos",
+    Cmp: PermissionsTab,
+  },
+] as const;
 
+type Values = (typeof tabs)[number]["name"];
 export function GroupListsSection({ group }: Props) {
-  const [value, setValue] = useState<Values>("employees");
+  const [value, setValue] = useState<Values>("Empleados");
 
   return (
     <View>
       <Tabs value={value} onValueChange={(v) => setValue(v as Values)}>
-        <TabsList className="w-full">
-          <TabsTrigger value={values.employees} className="flex-1">
-            <Text>Empleados</Text>
-          </TabsTrigger>
-          <TabsTrigger value={values.permissions} className="flex-1">
-            <Text>Permisos</Text>
-          </TabsTrigger>
+        <TabsList className="w-full mb-5">
+          {tabs.map(({ name }) => (
+            <TabsTrigger value={name} key={name} className="flex-1">
+              <Text>{name}</Text>
+            </TabsTrigger>
+          ))}
         </TabsList>
-        <TabsContent value={values.employees}>
-          <Card>
-            <CardHeader>
-              <CardTitle>Listado de empleados</CardTitle>
-              <CardDescription>
-                Aquí puedes ver todos los empleados que forman parte de este
-                grupo.
-              </CardDescription>
-            </CardHeader>
-            <EmployeesList.Root employees={group.employees}>
-              <CardContent className="gap-6">
-                <ScrollView nestedScrollEnabled>
-                  <View className="flex gap-y-2">
-                    <EmployeesList.List />
-                  </View>
-                </ScrollView>
-              </CardContent>
-              <CardFooter>
-                <EmployeesList.RemoveEmployeesAlert
-                  businessSlug={group.business.slug}
-                  groupId={group.id}
-                />
-                <AssignEmployeesDialog group={group} />
-              </CardFooter>
-            </EmployeesList.Root>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value={values.permissions}>
-          <Card>
-            <CardHeader>
-              <CardTitle>Listado de permisos</CardTitle>
-              <CardDescription>
-                Aquí puedes ver todas las permisos que tienes asignados a este
-                grupo.
-              </CardDescription>
-            </CardHeader>
-            <PermissionsList.Root permissions={group.permissions}>
-              <CardContent className="gap-6 max-h-96">
-                <ScrollView nestedScrollEnabled>
-                  <View className="flex gap-y-2">
-                    <PermissionsList.List />
-                  </View>
-                </ScrollView>
-              </CardContent>
-              <CardFooter className="flex justify-between">
-                <PermissionsList.RemovePermissionsAlert
-                  businessSlug={group.business.slug}
-                  groupId={group.id}
-                />
-                <AddPermissionsDialog group={group} />
-              </CardFooter>
-            </PermissionsList.Root>
-          </Card>
-        </TabsContent>
+        {tabs.map(({ name, Cmp }) => (
+          <TabsContent value={name} className="flex gap-y-2" key={name}>
+            <Cmp group={group} />
+          </TabsContent>
+        ))}
       </Tabs>
     </View>
   );

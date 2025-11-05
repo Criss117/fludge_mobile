@@ -10,10 +10,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/modules/shared/components/ui/dialog";
+import { Icon } from "@/modules/shared/components/ui/icon";
 import { Text } from "@/modules/shared/components/ui/text";
 import type { GroupDetail } from "@/shared/entities/group.entity";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import * as Haptics from "expo-haptics";
+import { PlusIcon } from "lucide-react-native";
 import { useCallback, useMemo, useState } from "react";
 import { ActivityIndicator, FlatList, View } from "react-native";
 import { useMutateGroups } from "../hooks/use.mutate-groups";
@@ -75,8 +77,8 @@ export function AssignEmployeesDialog({ group }: Props) {
   return (
     <Dialog open={open} onOpenChange={(v) => setOpen(v)}>
       <DialogTrigger asChild>
-        <Button>
-          <Text>Asignar Empleados</Text>
+        <Button className="rounded-full" size="icon">
+          <Icon as={PlusIcon} size={24} />
         </Button>
       </DialogTrigger>
       <DialogContent>

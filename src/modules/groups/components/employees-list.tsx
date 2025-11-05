@@ -10,9 +10,11 @@ import {
   AlertDialogTrigger,
 } from "@/modules/shared/components/ui/alert-dialog";
 import { Button } from "@/modules/shared/components/ui/button";
+import { Icon } from "@/modules/shared/components/ui/icon";
 import { Text } from "@/modules/shared/components/ui/text";
 import { EmployeeSummary } from "@/shared/entities/employee.entity";
 import * as Haptics from "expo-haptics";
+import { Trash2Icon } from "lucide-react-native";
 import { createContext, use, useState } from "react";
 import { ActivityIndicator } from "react-native";
 import { useMutateGroups } from "../hooks/use.mutate-groups";
@@ -37,11 +39,11 @@ interface Context {
 
 const EmployeesListContext = createContext<Context | null>(null);
 
-function useEmployeesListContext() {
+function useEmployeesList() {
   const context = use(EmployeesListContext);
 
   if (context === null) {
-    throw new Error("useEmployeesListContext must be used within a Provider");
+    throw new Error("useEmployeesList must be used within a Provider");
   }
 
   return context;
@@ -83,7 +85,7 @@ function RemoveEmployeesAlert({
 }: RemoveEmployeesAlertProps) {
   const [open, setOpen] = useState(false);
   const { removeEmployees } = useMutateGroups();
-  const { selectedEmployeeIds, clearState } = useEmployeesListContext();
+  const { selectedEmployeeIds, clearState } = useEmployeesList();
 
   const handleRemovePermissions = () => {
     if (selectedEmployeeIds.length === 0) return;
@@ -109,10 +111,12 @@ function RemoveEmployeesAlert({
     <AlertDialog open={open} onOpenChange={(v) => setOpen(v)}>
       <AlertDialogTrigger asChild>
         <Button
-          variant="destructive"
+          variant={selectedEmployeeIds.length === 0 ? "outline" : "destructive"}
+          size="icon"
+          className="rounded-full"
           disabled={selectedEmployeeIds.length === 0}
         >
-          <Text>Eliminar {selectedEmployeeIds.length} empleados</Text>
+          <Icon as={Trash2Icon} size={16} />
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -146,9 +150,10 @@ function RemoveEmployeesAlert({
 
 function List() {
   const { handleEmployeeSelect, employees, selectedEmployeeIds } =
-    useEmployeesListContext();
+    useEmployeesList();
   return (
     <>
+      {employees.length === 0 && <Text>No hay empleados asignados</Text>}
       {employees.map((employee) => (
         <EmployeeCard
           key={employee.id}
@@ -165,5 +170,5 @@ export const EmployeesList = {
   List,
   Root,
   RemoveEmployeesAlert,
-  useEmployeesListContext,
+  useEmployeesList,
 };

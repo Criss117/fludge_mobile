@@ -1,6 +1,9 @@
 import { useAuth } from "@/modules/auth/providers/auth.provider";
 import { PermissionsProvider } from "@/modules/auth/providers/permissions.provider";
+import { Button } from "@/modules/shared/components/ui/button";
+import { Icon } from "@/modules/shared/components/ui/icon";
 import { Stack } from "expo-router";
+import { MoreVerticalIcon } from "lucide-react-native";
 
 export default function BusinessesLayout() {
   const { user } = useAuth();
@@ -20,6 +23,11 @@ export default function BusinessesLayout() {
           name="groups/[groupId]/index"
           options={{
             title: "Grupo ...",
+            headerRight: () => (
+              <Button variant="ghost" size="icon" disabled>
+                <Icon as={MoreVerticalIcon} size={24} />
+              </Button>
+            ),
           }}
         />
         <Stack.Screen
@@ -32,6 +40,11 @@ export default function BusinessesLayout() {
           name="employees/[employeeId]/index"
           options={{
             title: "Empleado ...",
+            headerRight: () => (
+              <Button variant="ghost" size="icon" disabled>
+                <Icon as={MoreVerticalIcon} size={24} />
+              </Button>
+            ),
           }}
         />
         <Stack.Screen

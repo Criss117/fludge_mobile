@@ -1,5 +1,6 @@
 import { groupsQueriesOptions } from "@/integrations/query/query-container";
 import { usePermissions } from "@/modules/auth/providers/permissions.provider";
+import { GroupActions } from "@/modules/groups/components/group-actions";
 import { GroupScreen } from "@/modules/groups/screens/group.screen";
 import { PermissionsAlert } from "@/modules/shared/components/forbiden-alerts";
 import { Text } from "@/modules/shared/components/ui/text";
@@ -22,7 +23,14 @@ function GroupSuspense({ businessSlug, groupId }: Props) {
 
   return (
     <>
-      <Stack.Screen options={{ title: group.name }} />
+      <Stack.Screen
+        options={{
+          title: group.name,
+          headerRight: () => (
+            <GroupActions group={group} businessSlug={businessSlug} />
+          ),
+        }}
+      />
       <GroupScreen
         group={group}
         refetch={() => refetch()}

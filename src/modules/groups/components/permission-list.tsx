@@ -10,9 +10,11 @@ import {
   AlertDialogTrigger,
 } from "@/modules/shared/components/ui/alert-dialog";
 import { Button } from "@/modules/shared/components/ui/button";
+import { Icon } from "@/modules/shared/components/ui/icon";
 import { Text } from "@/modules/shared/components/ui/text";
 import { Permission } from "@/shared/entities/permissions";
 import * as Haptics from "expo-haptics";
+import { Trash2Icon } from "lucide-react-native";
 import { createContext, use, useState } from "react";
 import { ActivityIndicator } from "react-native";
 import { useMutateGroups } from "../hooks/use.mutate-groups";
@@ -37,11 +39,11 @@ interface Context {
 
 const PermissionsListContext = createContext<Context | null>(null);
 
-function usePermissionsListContext() {
+function usePermissionsList() {
   const context = use(PermissionsListContext);
 
   if (context === null) {
-    throw new Error("usePermissionsListContext must be used within a Provider");
+    throw new Error("usePermissionsList must be used within a Provider");
   }
 
   return context;
@@ -85,7 +87,7 @@ function RemovePermissionsAlert({
 }: RemovePermissionsAlertProps) {
   const [open, setOpen] = useState(false);
   const { removePermissions } = useMutateGroups();
-  const { selectedPermissions, clearState } = usePermissionsListContext();
+  const { selectedPermissions, clearState } = usePermissionsList();
 
   const handleRemovePermissions = () => {
     if (selectedPermissions.length === 0) return;
@@ -111,10 +113,12 @@ function RemovePermissionsAlert({
     <AlertDialog open={open} onOpenChange={(v) => setOpen(v)}>
       <AlertDialogTrigger asChild>
         <Button
-          variant="destructive"
+          variant={selectedPermissions.length === 0 ? "outline" : "destructive"}
+          size="icon"
+          className="rounded-full"
           disabled={selectedPermissions.length === 0}
         >
-          <Text>Eliminar {selectedPermissions.length} permisos</Text>
+          <Icon as={Trash2Icon} size={16} />
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -148,7 +152,7 @@ function RemovePermissionsAlert({
 
 function List() {
   const { handlePermissionSelect, permissions, selectedPermissions } =
-    usePermissionsListContext();
+    usePermissionsList();
   return (
     <>
       {permissions.map((permission) => (
@@ -167,5 +171,5 @@ export const PermissionsList = {
   List,
   Root,
   RemovePermissionsAlert,
-  usePermissionsListContext,
+  usePermissionsList,
 };
