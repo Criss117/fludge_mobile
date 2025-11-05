@@ -7,6 +7,7 @@ import {
   CardTitle,
 } from "@/modules/shared/components/ui/card";
 import { Checkbox } from "@/modules/shared/components/ui/checkbox";
+import { Skeleton } from "@/modules/shared/components/ui/skeleton";
 import { cn, spliText } from "@/modules/shared/lib/utils";
 import { GroupSummary } from "@/shared/entities/group.entity";
 import { FlatList, TouchableOpacity, View } from "react-native";
@@ -45,5 +46,29 @@ export function GroupCardWithCheck({ isSelected, group, onPress }: Props) {
         </CardFooter>
       </Card>
     </TouchableOpacity>
+  );
+}
+
+export function GroupCardWithCheckSkeleton() {
+  return (
+    <Card>
+      <CardHeader className="flex items-start flex-row">
+        <Checkbox
+          checked={false}
+          onCheckedChange={() => {}}
+          disabled
+          className="size-5"
+        />
+        <View className="flex gap-y-1">
+          <CardTitle>
+            <Skeleton className="w-56 h-6 bg-muted-foreground" />
+          </CardTitle>
+          <CardDescription>
+            <Skeleton className="w-56 h-4 bg-muted-foreground" />
+          </CardDescription>
+        </View>
+      </CardHeader>
+      <CardFooter></CardFooter>
+    </Card>
   );
 }

@@ -1,8 +1,10 @@
 import { employeesQueriesOptions } from "@/integrations/query/query-container";
 import { usePermissions } from "@/modules/auth/providers/permissions.provider";
-import { EmployeeScreen } from "@/modules/employees/screens/employee.screen";
+import {
+  EmployeeScreen,
+  EmployeeScreenSkeleton,
+} from "@/modules/employees/screens/employee.screen";
 import { PermissionsAlert } from "@/modules/shared/components/forbiden-alerts";
-import { Text } from "@/modules/shared/components/ui/text";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Stack, useGlobalSearchParams } from "expo-router";
 import React, { Suspense } from "react";
@@ -46,7 +48,7 @@ function Screen() {
   }>();
 
   return (
-    <Suspense fallback={<Text>Loading employee...</Text>}>
+    <Suspense fallback={<EmployeeScreenSkeleton />}>
       <EmployeeSuspense businessSlug={businessSlug} employeeId={employeeId} />
     </Suspense>
   );

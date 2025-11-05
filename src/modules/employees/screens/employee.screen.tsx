@@ -1,9 +1,21 @@
 import type { EmployeeDetail } from "@/shared/entities/employee.entity";
 import { RefreshControl, ScrollView, View } from "react-native";
-import { AssignedGroupsSection } from "../sections/assigned-groups.section";
-import { EmployeeHeaderSection } from "../sections/employee-header.section";
-import { EmployeeSystemInformationSection } from "../sections/employee-system-information.section";
-import { LaboralInformationSection } from "../sections/laboral-information.section";
+import {
+  AssignedGroupsSection,
+  AssignedGroupsSectionSkeleton,
+} from "../sections/assigned-groups.section";
+import {
+  EmployeeHeaderSection,
+  EmployeeHeaderSectionSkeleton,
+} from "../sections/employee-header.section";
+import {
+  EmployeeSystemInformationSection,
+  EmployeeSystemInformationSectionSkeleton,
+} from "../sections/employee-system-information.section";
+import {
+  LaboralInformationSection,
+  LaboralInformationSectionSkeleton,
+} from "../sections/laboral-information.section";
 
 interface Props {
   employee: EmployeeDetail;
@@ -32,6 +44,19 @@ export function EmployeeScreen({
           businessSlug={businessSlug}
         />
         <EmployeeSystemInformationSection employee={employee} />
+      </View>
+    </ScrollView>
+  );
+}
+
+export function EmployeeScreenSkeleton() {
+  return (
+    <ScrollView>
+      <View className="flex-1 gap-y-7 px-4 pt-4 pb-8">
+        <EmployeeHeaderSectionSkeleton />
+        <LaboralInformationSectionSkeleton />
+        <AssignedGroupsSectionSkeleton />
+        <EmployeeSystemInformationSectionSkeleton />
       </View>
     </ScrollView>
   );
