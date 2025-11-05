@@ -1,5 +1,6 @@
 import { employeesQueriesOptions } from "@/integrations/query/query-container";
 import { usePermissions } from "@/modules/auth/providers/permissions.provider";
+import { EmployeeActions } from "@/modules/employees/components/employee-actions";
 import {
   EmployeeScreen,
   EmployeeScreenSkeleton,
@@ -7,7 +8,7 @@ import {
 import { PermissionsAlert } from "@/modules/shared/components/forbiden-alerts";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Stack, useGlobalSearchParams } from "expo-router";
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 import { View } from "react-native";
 
 interface Props {
@@ -29,6 +30,9 @@ function EmployeeSuspense({ businessSlug, employeeId }: Props) {
       <Stack.Screen
         options={{
           title: `${employee.user.firstName} ${employee.user.lastName}`,
+          headerRight: () => (
+            <EmployeeActions businessSlug={businessSlug} employee={employee} />
+          ),
         }}
       />
       <EmployeeScreen

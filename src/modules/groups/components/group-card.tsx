@@ -1,5 +1,4 @@
 import { PermissionBadge } from "@/modules/shared/components/permission-badge";
-import { Button } from "@/modules/shared/components/ui/button";
 import {
   Card,
   CardContent,
@@ -7,13 +6,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/modules/shared/components/ui/card";
-import { Icon } from "@/modules/shared/components/ui/icon";
 import { Separator } from "@/modules/shared/components/ui/separator";
 import { spliText } from "@/modules/shared/lib/utils";
 import type { GroupSummary } from "@/shared/entities/group.entity";
 import { useRouter } from "expo-router";
-import { MoreVerticalIcon } from "lucide-react-native";
 import { FlatList, TouchableOpacity, View } from "react-native";
+import { GroupActions } from "./group-actions";
 
 interface Props {
   group: GroupSummary;
@@ -50,9 +48,7 @@ export function GroupCard({ group, businessSlug }: Props) {
           </View>
           {/* TODO: Implement this */}
           <View className="flex-shrink-0">
-            <Button variant="outline" size="icon" className="rounded-full">
-              <Icon as={MoreVerticalIcon} size={24} />
-            </Button>
+            <GroupActions group={group} businessSlug={businessSlug} />
           </View>
         </CardHeader>
         <Separator />

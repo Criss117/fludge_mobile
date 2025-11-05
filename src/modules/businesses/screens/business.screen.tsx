@@ -27,7 +27,7 @@ export function BusinessScreen({ business }: Props) {
       showsVerticalScrollIndicator={false}
       style={{ marginBottom: top }}
     >
-      <View className="flex gap-y-4 mb-4">
+      <View className="flex gap-y-7 mb-4">
         <BusinessHeaderSection business={business} />
         <BusinessCardsInfoSection business={business} />
         <BusinessListsSection business={business} />

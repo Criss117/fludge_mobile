@@ -3,7 +3,6 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@/modules/shared/components/ui/avatar";
-import { Button } from "@/modules/shared/components/ui/button";
 import {
   Card,
   CardContent,
@@ -19,8 +18,9 @@ import type { EmployeeSummary } from "@/shared/entities/employee.entity";
 import { formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale/es";
 import { useRouter } from "expo-router";
-import { Calendar, MoreVerticalIcon } from "lucide-react-native";
+import { Calendar } from "lucide-react-native";
 import { TouchableOpacity, View } from "react-native";
+import { EmployeeActions } from "./employee-actions";
 
 interface Props {
   employee: EmployeeSummary;
@@ -67,11 +67,7 @@ export function EmployeeCard({ employee, businessSlug }: Props) {
               <CardDescription>{employee.user.email}</CardDescription>
             </View>
           </View>
-          <View>
-            <Button variant="outline" size="icon" className="rounded-full">
-              <Icon as={MoreVerticalIcon} size={24} />
-            </Button>
-          </View>
+          <EmployeeActions businessSlug={businessSlug} employee={employee} />
         </CardHeader>
         <Separator />
         <CardContent>
