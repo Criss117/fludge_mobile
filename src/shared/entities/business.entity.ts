@@ -1,7 +1,8 @@
 import type { AuditMetadata } from './audit-metadata';
-import type { EmployeeDetail } from './employee.entity';
-import { GroupSummary } from './group.entity';
+import type { EmployeeSummary } from './employee.entity';
+import type { GroupSummary } from './group.entity';
 import type { UserSummary } from './user.entity';
+import type { CategorySummary } from './categories.entity';
 
 export interface BusinessSummary extends AuditMetadata {
   id: string;
@@ -17,6 +18,7 @@ export interface BusinessSummary extends AuditMetadata {
 
 export interface BusinessDetail extends BusinessSummary {
   rootUser: UserSummary;
-  employees: EmployeeDetail[];
+  employees: EmployeeSummary[];
   groups: GroupSummary[];
+  categories: CategorySummary[];
 }

@@ -31,7 +31,7 @@ export function EmployeesScreen({
       return (
         employee.user.firstName.toLowerCase().includes(textToSearch) ||
         employee.user.lastName.toLowerCase().includes(textToSearch) ||
-        employee.user.email.toLowerCase().includes(textToSearch)
+        employee.user.email?.toLowerCase().includes(textToSearch)
       );
     });
 
