@@ -45,6 +45,9 @@ function Root({ children }: RootProps) {
     defaultValues: {
       name: "",
       nit: "",
+      email: "",
+      phone: "",
+      legalName: "",
     },
     resolver: zodResolver(createBusinessSchema),
   });

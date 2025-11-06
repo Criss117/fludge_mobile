@@ -28,9 +28,9 @@ export function usePermissions() {
 export function PermissionsProvider({ children, user }: RootProps) {
   const userPermissions = useMemo(() => {
     return Array.from(
-      new Set(user.isEmployeeIn?.groups.flatMap((g) => g.permissions) ?? [])
+      new Set(user.employeeDetail?.groups.flatMap((g) => g.permissions) ?? [])
     );
-  }, [user.isEmployeeIn]);
+  }, [user.employeeDetail]);
 
   const hasPermission = useCallback(
     (...permissions: Permission[]) => {

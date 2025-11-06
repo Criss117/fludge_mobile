@@ -41,11 +41,10 @@ function Root({ children, businessSlug }: RootProps) {
   const form = useForm<CreateEmployeeSchema>({
     resolver: zodResolver(createEmployeeSchema),
     defaultValues: {
+      password: "",
       firstName: "",
       lastName: "",
       username: "",
-      password: "",
-      phone: "",
       salary: 0,
     },
   });

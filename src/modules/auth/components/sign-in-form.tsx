@@ -44,8 +44,8 @@ function Root({ children }: RootProps) {
   const form = useForm<SignInSchema>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
-      email: "cristian@fludge.dev",
-      password: "holiwiss",
+      email: "",
+      password: "",
     },
   });
 
@@ -91,7 +91,14 @@ function EmailInput() {
   const { form } = useSignInForm();
 
   return (
-    <FormInput form={form} name="email" label="Correo electrónico" required />
+    <FormInput
+      form={form}
+      name="email"
+      label="Correo electrónico"
+      placeholder="ej: criscvc@fludge.dev"
+      keyboardType="email-address"
+      required
+    />
   );
 }
 
@@ -103,6 +110,7 @@ function PasswordInput() {
       form={form}
       name="password"
       label="Contraseña"
+      placeholder="contraseña"
       secureTextEntry
       required
     />
