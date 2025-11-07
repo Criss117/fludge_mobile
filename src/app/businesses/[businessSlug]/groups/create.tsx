@@ -1,13 +1,15 @@
 import { usePermissions } from "@/modules/auth/providers/permissions.provider";
 import { CreateGroupScreen } from "@/modules/groups/screens/create-group.screen";
 import { PermissionsAlert } from "@/modules/shared/components/forbiden-alerts";
-import { useGlobalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
 
 function Screen() {
-  const { businessSlug } = useGlobalSearchParams<{
-    businessSlug: string;
+  const { businessSlug } = useLocalSearchParams<{
+    businessSlug?: string;
   }>();
+
+  if (!businessSlug) return null;
 
   return <CreateGroupScreen businessSlug={businessSlug} />;
 }

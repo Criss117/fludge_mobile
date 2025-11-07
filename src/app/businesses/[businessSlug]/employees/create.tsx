@@ -1,15 +1,17 @@
 import { usePermissions } from "@/modules/auth/providers/permissions.provider";
 import { CreateEmployeeScreen } from "@/modules/employees/screens/create-employee.screen";
 import { PermissionsAlert } from "@/modules/shared/components/forbiden-alerts";
-import { useGlobalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import React from "react";
 import { View } from "react-native";
 
 export default function CreateEmployee() {
-  const { businessSlug } = useGlobalSearchParams<{
-    businessSlug: string;
+  const { businessSlug } = useLocalSearchParams<{
+    businessSlug?: string;
   }>();
   const { hasPermission } = usePermissions();
+
+  if (!businessSlug) return null;
 
   const userCanCreateEmployee = hasPermission("employees:create");
 

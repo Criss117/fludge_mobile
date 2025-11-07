@@ -47,9 +47,11 @@ function EmployeeSuspense({ businessSlug, employeeId }: Props) {
 
 function Screen() {
   const { businessSlug, employeeId } = useGlobalSearchParams<{
-    businessSlug: string;
-    employeeId: string;
+    businessSlug?: string;
+    employeeId?: string;
   }>();
+
+  if (!businessSlug || !employeeId) return null;
 
   return (
     <Suspense fallback={<EmployeeScreenSkeleton />}>

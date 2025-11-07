@@ -32,8 +32,10 @@ export function EmployeesSuspense({ businessSlug }: Props) {
 
 function Screen() {
   const { businessSlug } = useGlobalSearchParams<{
-    businessSlug: string;
+    businessSlug?: string;
   }>();
+
+  if (!businessSlug) return null;
 
   return (
     <Suspense fallback={<Text>Loading...</Text>}>

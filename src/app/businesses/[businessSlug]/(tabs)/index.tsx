@@ -2,7 +2,7 @@ import { businessQueriesOptions } from "@/integrations/query/query-container";
 import { BusinessScreen } from "@/modules/businesses/screens/business.screen";
 import { Text } from "@/modules/shared/components/ui/text";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { useGlobalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import React, { Suspense } from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -21,9 +21,11 @@ function BusinessHomeSuspense({ businessSlug }: Props) {
 
 export default function BusinessHome() {
   const { top } = useSafeAreaInsets();
-  const { businessSlug } = useGlobalSearchParams<{
-    businessSlug: string;
+  const { businessSlug } = useLocalSearchParams<{
+    businessSlug?: string;
   }>();
+
+  if (!businessSlug) return null;
 
   return (
     <View style={{ top: top, paddingHorizontal: 8 }}>

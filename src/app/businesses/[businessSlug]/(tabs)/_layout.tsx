@@ -11,8 +11,10 @@ import {
 
 export default function BusinessLayout() {
   const { businessSlug } = useLocalSearchParams<{
-    businessSlug: string;
+    businessSlug?: string;
   }>();
+
+  if (!businessSlug) return null;
 
   return (
     <Tabs

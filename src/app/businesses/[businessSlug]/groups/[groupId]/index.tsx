@@ -42,9 +42,11 @@ function GroupSuspense({ businessSlug, groupId }: Props) {
 
 function Screen() {
   const { businessSlug, groupId } = useGlobalSearchParams<{
-    businessSlug: string;
-    groupId: string;
+    businessSlug?: string;
+    groupId?: string;
   }>();
+
+  if (!businessSlug || !groupId) return null;
 
   return (
     <Suspense fallback={<Text>Loading...</Text>}>
