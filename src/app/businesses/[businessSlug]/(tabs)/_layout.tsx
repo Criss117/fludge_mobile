@@ -1,6 +1,6 @@
 import { BusinessHeader } from "@/modules/businesses/components/business-header";
 import { Icon } from "@/modules/shared/components/ui/icon";
-import { Tabs } from "expo-router";
+import { Tabs, useLocalSearchParams } from "expo-router";
 import {
   HomeIcon,
   PackageSearchIcon,
@@ -10,10 +10,19 @@ import {
 } from "lucide-react-native";
 
 export default function BusinessLayout() {
+  const { businessSlug } = useLocalSearchParams<{
+    businessSlug: string;
+  }>();
+
   return (
     <Tabs
       screenOptions={{
-        header: (props) => <BusinessHeader {...props} />,
+        header: (props) => (
+          <BusinessHeader
+            businessSlug={businessSlug}
+            bottomTabHeaderProps={props}
+          />
+        ),
         animation: "shift",
       }}
     >

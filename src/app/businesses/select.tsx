@@ -1,4 +1,5 @@
 import { useAuth } from "@/modules/auth/providers/auth.provider";
+import { Button } from "@/modules/shared/components/ui/button";
 import {
   Card,
   CardContent,
@@ -10,7 +11,7 @@ import { Icon } from "@/modules/shared/components/ui/icon";
 import { Input } from "@/modules/shared/components/ui/input";
 import { Separator } from "@/modules/shared/components/ui/separator";
 import { Text } from "@/modules/shared/components/ui/text";
-import { Redirect, useRouter } from "expo-router";
+import { Link, Redirect, useRouter } from "expo-router";
 import { ChevronRight, MapPin } from "lucide-react-native";
 import React from "react";
 import { FlatList, Pressable, View } from "react-native";
@@ -28,6 +29,19 @@ export default function Select() {
       ListHeaderComponent={() => (
         <View className="py-4">
           <Input placeholder="Buscar por nombre o nit" />
+        </View>
+      )}
+      ListFooterComponent={() => (
+        <View>
+          <Link
+            href={{
+              pathname: "/businesses/register",
+            }}
+          >
+            <Button>
+              <Text>registrar</Text>
+            </Button>
+          </Link>
         </View>
       )}
       renderItem={({ item }) => (

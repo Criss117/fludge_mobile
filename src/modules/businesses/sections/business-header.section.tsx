@@ -24,22 +24,20 @@ export function BusinessHeaderSection({ business }: Props) {
           <Icon as={Building2} size={32} className="text-white" />
         </View>
         <View>
-          <CardTitle className="text-3xl">{business.name}</CardTitle>
+          <CardTitle variant="h3">{business.name}</CardTitle>
           <CardDescription className={cn(!business.legalName && "italic")}>
             {business.legalName ?? "Sin nombre legal"}
           </CardDescription>
         </View>
       </CardHeader>
       <CardContent className="flex gap-y-2">
-        <View className="flex flex-row">
-          <View className="flex-1">
-            <Text className="text-sm text-muted-foreground">NIT</Text>
-            <Text>{business.nit}</Text>
-          </View>
-          <View className="flex-1">
-            <Text className="text-sm text-muted-foreground">Email</Text>
-            <Text>{business.email ?? "-"}</Text>
-          </View>
+        <View className="flex-1">
+          <Text className="text-sm text-muted-foreground">NIT</Text>
+          <Text>{business.nit}</Text>
+        </View>
+        <View className="flex-1">
+          <Text className="text-sm text-muted-foreground">Email</Text>
+          <Text>{business.email ?? "-"}</Text>
         </View>
         <View>
           <Text className="text-sm text-muted-foreground">Teléfono</Text>
