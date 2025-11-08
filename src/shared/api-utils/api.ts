@@ -35,15 +35,18 @@ export class API {
     );
   }
 
-  public async get<T>(endpoint: string, params?: Record<string, string>) {
+  public async get<T>(
+    endpoint: string,
+    params?: Record<string, string | number | undefined>
+  ) {
     const response = await this.api.get<
       CommonResponse<T>,
       AxiosResponse<CommonResponse<T>, unknown>
     >(endpoint, {
-      params,
       headers: {
         "Content-Type": "application/json",
       },
+      params,
     });
 
     return response;

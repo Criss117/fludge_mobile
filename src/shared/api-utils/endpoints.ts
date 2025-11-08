@@ -37,5 +37,17 @@ export const ENDPOINTS = {
       REMOVE_GROUP: (businessSlug: string, employeeId: string) =>
         `/businesses/${businessSlug}/employees/${employeeId}/groups` as `/businesses/${string}/employees/${string}/groups`,
     },
+    PRODUCTS: {
+      CREATE: (businessSlug: string) =>
+        `/businesses/${businessSlug}/products` as `/businesses/${string}/products`,
+      FIND_ONE: (businessSlug: string, productSlug: string) =>
+        `/businesses/${businessSlug}/products/${productSlug}` as `/businesses/${string}/products/${string}`,
+      FIND_MANY: (businessSlug: string) =>
+        `/businesses/${businessSlug}/products` as `/businesses/${string}/products`,
+    },
+    CATEGORIES: {
+      CREATE: (businessSlug: string) =>
+        `/businesses/${businessSlug}/categories` as `/businesses/${string}/categories`,
+    },
   },
 } as const;
