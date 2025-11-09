@@ -33,8 +33,18 @@ export class ProductsQueriesOptions {
   }
 
   public findMany({ businessSlug, params }: FindManyProductsParams) {
+    let queryKey = ["businesses", businessSlug, "products"];
+
+    if (params?.name) {
+      queryKey = [...queryKey, "name", params.name];
+    }
+
+    if (params?.categoryId) {
+      queryKey = [...queryKey, "categoryId", params.categoryId];
+    }
+
     return infiniteQueryOptions({
-      queryKey: ["businesses", businessSlug, "products"],
+      queryKey,
       initialPageParam: params?.base64Cursor,
       queryFn: async ({ pageParam }) => {
         const response = await this.productsActions.findMany({

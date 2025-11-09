@@ -12,6 +12,8 @@ export type FindManyQueryParams = {
   limit?: number;
   base64Cursor?: string;
   nextCursor?: ProductCursor;
+  name?: string;
+  categoryId?: string;
 };
 
 type CreateProduct = {
@@ -58,8 +60,6 @@ export class ProductsActions {
   }
 
   public async findMany({ businessSlug, params }: FindManyProducts) {
-    console.log({ businessSlug, params });
-
     const response = await safeAction(
       () =>
         this.api.get<{
@@ -68,6 +68,8 @@ export class ProductsActions {
         }>(ENDPOINTS.BUSINESSES.PRODUCTS.FIND_MANY(businessSlug), {
           limit: params?.limit,
           nextCursor: params?.base64Cursor,
+          name: params?.name,
+          categoryId: params?.categoryId,
         }),
       "Error al obtener los productos"
     );

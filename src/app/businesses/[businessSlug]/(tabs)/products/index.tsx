@@ -1,7 +1,7 @@
-import { productsQueriesOptions } from "@/integrations/query/query-container";
-import { ProductsScreen } from "@/modules/products/screens/producst.screen";
+import { businessQueriesOptions } from "@/integrations/query/query-container";
+import { ProductsScreen } from "@/modules/products/screens/products.screen";
 import { Text } from "@/modules/shared/components/ui/text";
-import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { useGlobalSearchParams } from "expo-router";
 import { Suspense } from "react";
 
@@ -10,18 +10,16 @@ interface Props {
 }
 
 function SuspenseProducts({ businessSlug }: Props) {
-  const { data } = useSuspenseInfiniteQuery(
-    productsQueriesOptions.findMany({
-      businessSlug,
-      params: {
-        limit: 20,
-      },
-    })
+  const { data: business } = useSuspenseQuery(
+    businessQueriesOptions.findOne(businessSlug)
   );
 
-  const items = data.pages.flatMap((page) => page.items);
-
-  return <ProductsScreen products={items} />;
+  return (
+    <ProductsScreen
+      categories={business.categories}
+      businessSlug={businessSlug}
+    />
+  );
 }
 
 export default function Products() {
