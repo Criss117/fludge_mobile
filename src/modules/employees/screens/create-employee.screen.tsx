@@ -19,7 +19,7 @@ interface Props {
 export function CreateEmployeeScreen({ businessSlug }: Props) {
   return (
     <KeyboardAwareScrollView>
-      <View className="px-4 flex gap-y-4 pt-4 pb-8">
+      <View className="px-2 flex gap-y-4 pt-4 pb-8">
         <Card>
           <CardHeader>
             <CardTitle className="text-xl">Registrar Empleado</CardTitle>

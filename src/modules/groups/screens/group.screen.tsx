@@ -18,7 +18,7 @@ export function GroupScreen({ group, isPending, refetch }: Props) {
         <RefreshControl refreshing={isPending} onRefresh={refetch} />
       }
     >
-      <View className="flex-1 flex gap-y-7 mt-4 mb-10 px-4">
+      <View className="flex-1 flex gap-y-7 mt-4 mb-10 px-2">
         <GroupHeaderSection group={group} />
         <GroupListsSection group={group} />
         <GroupAditionalInfo group={group} />

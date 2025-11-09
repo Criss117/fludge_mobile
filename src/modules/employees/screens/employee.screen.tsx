@@ -36,7 +36,7 @@ export function EmployeeScreen({
         <RefreshControl refreshing={isPending} onRefresh={refetch} />
       }
     >
-      <View className="flex-1 gap-y-7 px-4 pt-4 pb-8">
+      <View className="flex-1 gap-y-7 px-2 pt-4 pb-8">
         <EmployeeHeaderSection employee={employee} />
         <LaboralInformationSection employee={employee} />
         <AssignedGroupsSection

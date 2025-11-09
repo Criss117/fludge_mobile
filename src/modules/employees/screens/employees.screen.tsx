@@ -1,10 +1,10 @@
+import { SearchInput } from "@/modules/shared/components/search-input";
 import { Button } from "@/modules/shared/components/ui/button";
 import { Icon } from "@/modules/shared/components/ui/icon";
-import { Input } from "@/modules/shared/components/ui/input";
 import { Text } from "@/modules/shared/components/ui/text";
 import type { EmployeeSummary } from "@/shared/entities/employee.entity";
 import { Link } from "expo-router";
-import { PlusIcon, SearchIcon } from "lucide-react-native";
+import { PlusIcon } from "lucide-react-native";
 import { useState } from "react";
 import { FlatList, RefreshControl, View } from "react-native";
 import { EmployeeCard } from "../components/employee-card";
@@ -24,7 +24,7 @@ export function EmployeesScreen({
 }: Props) {
   const [filteredEmployees, setFilteredEmployees] = useState(employees);
 
-  const onTextChange = (text: string) => {
+  const onChangeText = (text: string) => {
     const textToSearch = text.trim().toLowerCase();
 
     const filtered = employees.filter((employee) => {
@@ -39,20 +39,11 @@ export function EmployeesScreen({
   };
 
   return (
-    <View className="mt-4 px-4 flex gap-y-4 flex-1">
-      <View className="relative">
-        <Input placeholder="buscar empleados" onChangeText={onTextChange} />
-        <Icon
-          as={SearchIcon}
-          size={24}
-          className="absolute bottom-1/2 right-3"
-          style={{
-            transform: [
-              {
-                translateY: "50%",
-              },
-            ],
-          }}
+    <View className="px-2 flex gap-y-2 flex-1">
+      <View className="py-2">
+        <SearchInput
+          placeholder="Buscar empleados"
+          onChangeText={onChangeText}
         />
       </View>
       <FlatList

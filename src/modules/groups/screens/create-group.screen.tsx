@@ -49,7 +49,7 @@ export function CreateGroupScreen({ businessSlug }: Props) {
   );
 
   return (
-    <ScrollView className="px-4">
+    <ScrollView className="px-2">
       <CreateGroupForm.Root businessSlug={businessSlug}>
         <FieldSet className="flex gap-y-2 pt-4 pb-10">
           <CreateGroupForm.Name />
