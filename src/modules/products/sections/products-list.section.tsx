@@ -5,14 +5,14 @@ import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { Suspense, useMemo } from "react";
 import { ActivityIndicator, FlatList, View } from "react-native";
 import { ProductCard } from "../components/product-card";
-import { useProductsList } from "../hooks/products-filters";
+import { useProductsFilters } from "../hooks/products-filters";
 
 interface Props {
   businessSlug: string;
 }
 
 function ProductsListSectionSuspense({ businessSlug }: Props) {
-  const { filters } = useProductsList();
+  const { filters } = useProductsFilters();
   const bottomTabBarHeight = useBottomTabBarHeight();
 
   const { data, isFetchingNextPage, hasNextPage, fetchNextPage } =

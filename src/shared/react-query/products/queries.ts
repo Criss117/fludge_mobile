@@ -36,7 +36,7 @@ export class ProductsQueriesOptions {
     let queryKey = ["businesses", businessSlug, "products"];
 
     if (params?.name) {
-      queryKey = [...queryKey, "name", params.name];
+      queryKey = [...queryKey, "name", params.name.trim().toLowerCase()];
     }
 
     if (params?.categoryId) {

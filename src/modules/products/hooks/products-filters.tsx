@@ -11,11 +11,6 @@ interface Filters {
   limit: number;
 }
 
-interface Context {
-  filters: Filters;
-  filtersDispatch: React.ActionDispatch<[action: FiltersActions]>;
-}
-
 type FiltersActions =
   | {
       type: "set:name";
@@ -30,17 +25,26 @@ type FiltersActions =
       payload: number;
     }
   | {
+      type: "set:barcode";
+      payload: string | null;
+    }
+  | {
       type: "clear:filters";
     };
 
+interface Context {
+  filters: Filters;
+  filtersDispatch: React.ActionDispatch<[action: FiltersActions]>;
+}
+
 const ProductsFiltersContext = createContext<Context | null>(null);
 
-export function useProductsList() {
+export function useProductsFilters() {
   const context = use(ProductsFiltersContext);
 
   if (!context) {
     throw new Error(
-      "useProductsList must be used within a ProductsListProvider"
+      "useProductsFilters must be used within a ProductsListProvider"
     );
   }
 
@@ -57,7 +61,7 @@ function filtersReducer(state: Filters, action: FiltersActions) {
     case "set:name":
       return {
         ...state,
-        name: action.payload,
+        name: action.payload?.trim().toLowerCase(),
       };
     case "set:categoryId":
       return {
