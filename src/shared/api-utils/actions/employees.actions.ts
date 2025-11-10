@@ -10,7 +10,7 @@ export class EmployeesActions {
 
   public async create(businessSlug: string, data: CreateEmployeeSchema) {
     const response = await safeAction(() =>
-      this.api.post<null, CreateEmployeeSchema>(
+      this.api.post<EmployeeDetail, CreateEmployeeSchema>(
         ENDPOINTS.BUSINESSES.EMPLOYEES.CREATE(businessSlug),
         data
       )

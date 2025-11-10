@@ -1,4 +1,5 @@
-import { CreateCategorySchema } from "@/shared/schemas/products/create-category.schema";
+import type { CategorySummary } from "@/shared/entities/categories.entity";
+import type { CreateCategorySchema } from "@/shared/schemas/products/create-category.schema";
 import { API } from "../api";
 import { ENDPOINTS } from "../endpoints";
 import { safeAction } from "../http/safe-action";
@@ -14,7 +15,7 @@ export class CategoriesActions {
   public async create({ businessSlug, data }: CreateCategory) {
     const response = await safeAction(
       () =>
-        this.api.post<null, CreateCategorySchema>(
+        this.api.post<CategorySummary[], CreateCategorySchema>(
           ENDPOINTS.BUSINESSES.CATEGORIES.CREATE(businessSlug),
           data
         ),

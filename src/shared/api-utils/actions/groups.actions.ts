@@ -27,7 +27,7 @@ export class GroupsActions {
     values: UpdateGroupSchema
   ) {
     const response = await safeAction(() =>
-      this.api.patch<null, UpdateGroupSchema>(
+      this.api.patch<GroupSummary, UpdateGroupSchema>(
         ENDPOINTS.BUSINESSES.GROUPS.UPDATE(businessSlug, groupId),
         values
       )

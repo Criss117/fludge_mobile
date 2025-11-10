@@ -37,7 +37,7 @@ export class ProductsActions {
   public async create({ businessSlug, data }: CreateProduct) {
     const response = await safeAction(
       () =>
-        this.api.post<null, CreateProductSchema>(
+        this.api.post<ProductSummary, CreateProductSchema>(
           ENDPOINTS.BUSINESSES.PRODUCTS.CREATE(businessSlug),
           data
         ),
