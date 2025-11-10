@@ -53,6 +53,13 @@ export default function BusinessesLayout() {
             title: "Nuevo empleado",
           }}
         />
+
+        <Stack.Screen
+          name="categories/create"
+          options={{
+            title: "Nueva categoría",
+          }}
+        />
       </Stack>
     </PermissionsProvider>
   );

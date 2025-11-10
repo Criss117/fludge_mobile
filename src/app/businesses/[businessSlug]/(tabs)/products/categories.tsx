@@ -10,11 +10,21 @@ interface Props {
 }
 
 function CategoriesSuspense({ businessSlug }: Props) {
-  const { data: business } = useSuspenseQuery(
-    businessQueriesOptions.findOne(businessSlug)
-  );
+  const {
+    data: business,
+    isRefetching,
+    refetch,
+  } = useSuspenseQuery(businessQueriesOptions.findOne(businessSlug));
 
-  return <CategoriesScreen categories={business.categories} />;
+  return (
+    <CategoriesScreen
+      categories={business.categories}
+      businessSlug={businessSlug}
+      isPending={isRefetching}
+      refetch={() => refetch()}
+      key={isRefetching ? "pending" : "ready"}
+    />
+  );
 }
 
 export default function Categories() {
