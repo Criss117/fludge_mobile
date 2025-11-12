@@ -60,6 +60,18 @@ export default function BusinessesLayout() {
             title: "Nueva categoría",
           }}
         />
+
+        <Stack.Screen
+          name="products/[productId]/index"
+          options={{
+            title: "Producto ...",
+            headerRight: () => (
+              <Button variant="ghost" size="icon" disabled>
+                <Icon as={MoreVerticalIcon} size={24} />
+              </Button>
+            ),
+          }}
+        />
       </Stack>
     </PermissionsProvider>
   );

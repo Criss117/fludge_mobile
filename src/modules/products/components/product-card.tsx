@@ -6,23 +6,35 @@ import {
 import { Text } from "@/modules/shared/components/ui/text";
 import { cn, formatCurrency } from "@/modules/shared/lib/utils";
 import { ProductSummary } from "@/shared/entities/products.entity";
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Image, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 interface Props {
   product: ProductSummary;
+  businessSlug: string;
   className?: string;
 }
 
-export function ProductCard({ product, className }: Props) {
+export function ProductCard({ product, className, businessSlug }: Props) {
   const [isPressed, setIsPressed] = useState(false);
+  const router = useRouter();
 
   return (
     <Pressable
       className={cn(className)}
       onPressIn={() => setIsPressed(true)}
       onPressOut={() => setIsPressed(false)}
+      onPress={() => {
+        router.push({
+          pathname: "/businesses/[businessSlug]/products/[productSlug]",
+          params: {
+            businessSlug,
+            productSlug: product.slug,
+          },
+        });
+      }}
     >
       <Animated.View
         style={{

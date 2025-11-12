@@ -1,5 +1,6 @@
 import { productsQueriesOptions } from "@/integrations/query/query-container";
 import { Text } from "@/modules/shared/components/ui/text";
+import { completeEvenItems } from "@/modules/shared/lib/complete-even-items";
 import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { Suspense, useMemo } from "react";
@@ -32,8 +33,7 @@ function ProductsListSectionSuspense({ businessSlug }: Props) {
 
     if (!products) return [];
 
-    // return completeEvenItems(products, 2);
-    return products;
+    return completeEvenItems(products, 2);
   }, [data.pages]);
 
   return (
@@ -46,14 +46,16 @@ function ProductsListSectionSuspense({ businessSlug }: Props) {
         maxToRenderPerBatch={2}
         renderItem={({ item }) => (
           <>
-            <ProductCard product={item} className="flex-1 mx-0.5" />
-            {/* {item.empty && <View className="flex-1 mx-0.5" />}
-          {!item.empty && (
-            )} */}
+            <ProductCard
+              product={item}
+              className="flex-1 mx-0.5"
+              businessSlug={businessSlug}
+            />
+            {item.empty && <View className="flex-1 mx-0.5" />}
           </>
         )}
         ListFooterComponent={
-          <View className="h-16 items-center justify-center">
+          <View className="items-center justify-center">
             {isFetchingNextPage && <ActivityIndicator size={32} />}
             {!hasNextPage && <Text>No hay más productos</Text>}
           </View>

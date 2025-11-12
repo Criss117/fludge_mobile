@@ -1,4 +1,8 @@
+import { Button } from "@/modules/shared/components/ui/button";
+import { Icon } from "@/modules/shared/components/ui/icon";
 import type { CategorySummary } from "@/shared/entities/categories.entity";
+import { Link } from "expo-router";
+import { PlusIcon } from "lucide-react-native";
 import { View } from "react-native";
 import { ProductsFiltersProvider } from "../hooks/products-filters";
 import { ProductsHeaderSection } from "../sections/products-header.section";
@@ -15,6 +19,22 @@ export function ProductsScreen({ categories, businessSlug }: Props) {
       <View className="px-1 flex">
         <ProductsHeaderSection categories={categories} />
         <ProductsListSection businessSlug={businessSlug} />
+        <View className="absolute right-4 bottom-20">
+          <Link
+            href={{
+              pathname: "/businesses/[businessSlug]/categories/create",
+              params: {
+                businessSlug,
+              },
+            }}
+            push
+            asChild
+          >
+            <Button size="icon" className="rounded-full">
+              <Icon as={PlusIcon} size={24} className="text-white" />
+            </Button>
+          </Link>
+        </View>
       </View>
     </ProductsFiltersProvider>
   );

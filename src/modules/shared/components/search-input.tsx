@@ -1,29 +1,39 @@
 import { SearchIcon } from "lucide-react-native";
 import { View } from "react-native";
+import { cn } from "../lib/utils";
 import { Icon } from "./ui/icon";
 import { Input } from "./ui/input";
 
 interface Props {
   placeholder: string;
+  value: string;
   onChangeText: (text: string) => void;
+  className?: string;
 }
 
-export function SearchInput({ placeholder, onChangeText }: Props) {
+export function SearchInput({
+  placeholder,
+  value,
+  onChangeText,
+  className,
+}: Props) {
   return (
-    <View className="relative">
-      <Input placeholder={placeholder} onChangeText={onChangeText} />
+    <View className={cn("relative", className)}>
+      <Input
+        className="pl-8"
+        placeholder={placeholder}
+        value={value}
+        onChangeText={onChangeText}
+      />
       <Icon
         as={SearchIcon}
-        size={24}
+        size={18}
+        className="text-muted-foreground"
         style={{
           position: "absolute",
-          top: "20%",
-          right: 16,
-          transform: [
-            {
-              translateX: "50%",
-            },
-          ],
+          left: 8,
+          top: "50%",
+          transform: [{ translateY: "-50%" }],
         }}
       />
     </View>

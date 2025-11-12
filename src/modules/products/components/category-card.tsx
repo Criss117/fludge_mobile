@@ -23,7 +23,7 @@ export function CategoryCard({ category }: Props) {
     <Card>
       <CardHeader>
         <CardTitle variant="h4">{category.name}</CardTitle>
-        <CardDescription>{category.description}</CardDescription>
+        <CardDescription>{category.description ?? "-"}</CardDescription>
       </CardHeader>
       <View className="px-6">
         <Separator />

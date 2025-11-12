@@ -1,6 +1,6 @@
+import { SearchInput } from "@/modules/shared/components/search-input";
 import { Button } from "@/modules/shared/components/ui/button";
 import { Icon } from "@/modules/shared/components/ui/icon";
-import { Input } from "@/modules/shared/components/ui/input";
 import { useDebounce } from "@uidotdev/usehooks";
 import { ArrowLeftRight, CameraIcon } from "lucide-react-native";
 import { useEffect, useState } from "react";
@@ -44,17 +44,20 @@ export function ProductsSearchInput({ onChangeTerm }: Props) {
   return (
     <View className="flex flex-row gap-x-2">
       {searchBy === "name" && (
-        <Input
-          placeholder="Buscar productos por nombre"
+        <SearchInput
           className="flex-1"
+          placeholder="Buscar productos por nombre"
           onChangeText={handleSearch}
+          value={searchTerm}
         />
       )}
       {searchBy === "barcode" && (
         <View className="flex flex-row gap-x-1 flex-1">
-          <Input
-            placeholder="Buscar productos por codigo de barras"
+          <SearchInput
             className="flex-1"
+            placeholder="Buscar productos por codigo de barras"
+            onChangeText={handleSearch}
+            value={searchTerm}
           />
           <Button variant="outline" size="icon">
             <Icon as={CameraIcon} size={18} />
