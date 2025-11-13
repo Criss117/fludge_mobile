@@ -76,7 +76,7 @@ export function ProductCard({ product, className, businessSlug }: Props) {
             )}
           </CardHeader>
           <CardContent className="flex gap-y-2 px-2">
-            <Text>{product.name}</Text>
+            <Text className="line-clamp-1">{product.name}</Text>
             <View>
               <Text variant="muted" className="text-muted-foreground">
                 $ {formatCurrency(product.purchasePrice)}

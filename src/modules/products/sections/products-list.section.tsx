@@ -1,7 +1,6 @@
 import { productsQueriesOptions } from "@/integrations/query/query-container";
 import { Text } from "@/modules/shared/components/ui/text";
 import { completeEvenItems } from "@/modules/shared/lib/complete-even-items";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { Suspense, useMemo } from "react";
 import { ActivityIndicator, FlatList, View } from "react-native";
@@ -14,7 +13,6 @@ interface Props {
 
 function ProductsListSectionSuspense({ businessSlug }: Props) {
   const { filters } = useProductsFilters();
-  const bottomTabBarHeight = useBottomTabBarHeight();
 
   const { data, isFetchingNextPage, hasNextPage, fetchNextPage } =
     useSuspenseInfiniteQuery(
@@ -37,37 +35,34 @@ function ProductsListSectionSuspense({ businessSlug }: Props) {
   }, [data.pages]);
 
   return (
-    <>
-      <FlatList
-        style={{ marginBottom: bottomTabBarHeight, paddingHorizontal: 3 }}
-        numColumns={2}
-        data={items}
-        keyExtractor={(item) => item.id}
-        maxToRenderPerBatch={2}
-        renderItem={({ item }) => (
-          <>
-            <ProductCard
-              product={item}
-              className="flex-1 mx-0.5"
-              businessSlug={businessSlug}
-            />
-            {item.empty && <View className="flex-1 mx-0.5" />}
-          </>
-        )}
-        ListFooterComponent={
-          <View className="items-center justify-center">
-            {isFetchingNextPage && <ActivityIndicator size={32} />}
-            {!hasNextPage && <Text>No hay más productos</Text>}
-          </View>
-        }
-        ItemSeparatorComponent={() => <View className="size-1" />}
-        onEndReachedThreshold={0.5}
-        onEndReached={() => {
-          if (!hasNextPage) return;
-          fetchNextPage();
-        }}
-      />
-    </>
+    <FlatList
+      numColumns={2}
+      data={items}
+      keyExtractor={(item) => item.id}
+      maxToRenderPerBatch={2}
+      renderItem={({ item }) => (
+        <>
+          <ProductCard
+            product={item}
+            className="flex-1 mx-0.5"
+            businessSlug={businessSlug}
+          />
+          {item.empty && <View className="flex-1 mx-0.5" />}
+        </>
+      )}
+      ListFooterComponent={
+        <View className="items-center justify-center h-20">
+          {isFetchingNextPage && <ActivityIndicator size={32} />}
+          {!hasNextPage && <Text>No hay más productos</Text>}
+        </View>
+      }
+      ItemSeparatorComponent={() => <View className="size-1" />}
+      onEndReachedThreshold={0.5}
+      onEndReached={() => {
+        if (!hasNextPage) return;
+        fetchNextPage();
+      }}
+    />
   );
 }
 

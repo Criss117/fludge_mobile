@@ -16,13 +16,13 @@ interface Props {
 export function ProductsScreen({ categories, businessSlug }: Props) {
   return (
     <ProductsFiltersProvider>
-      <View className="px-1 flex">
+      <View className="px-1 flex relative flex-1">
         <ProductsHeaderSection categories={categories} />
         <ProductsListSection businessSlug={businessSlug} />
-        <View className="absolute right-4 bottom-20">
+        <View className="absolute right-4 bottom-4">
           <Link
             href={{
-              pathname: "/businesses/[businessSlug]/categories/create",
+              pathname: "/businesses/[businessSlug]/products/create",
               params: {
                 businessSlug,
               },
