@@ -19,6 +19,7 @@ export default function BusinessesLayout() {
             headerShown: false,
           }}
         />
+
         <Stack.Screen
           name="groups/[groupId]/index"
           options={{
@@ -30,12 +31,14 @@ export default function BusinessesLayout() {
             ),
           }}
         />
+
         <Stack.Screen
           name="groups/create"
           options={{
             title: "Nuevo grupo",
           }}
         />
+
         <Stack.Screen
           name="employees/[employeeId]/index"
           options={{
@@ -47,6 +50,7 @@ export default function BusinessesLayout() {
             ),
           }}
         />
+
         <Stack.Screen
           name="employees/create"
           options={{
@@ -77,6 +81,13 @@ export default function BusinessesLayout() {
           name="products/create"
           options={{
             title: "Nuevo producto",
+          }}
+        />
+
+        <Stack.Screen
+          name="barcode-reader"
+          options={{
+            title: "Leer codigo de barras",
           }}
         />
       </Stack>

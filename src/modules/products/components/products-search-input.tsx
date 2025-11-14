@@ -2,19 +2,28 @@ import { SearchInput } from "@/modules/shared/components/search-input";
 import { Button } from "@/modules/shared/components/ui/button";
 import { Icon } from "@/modules/shared/components/ui/icon";
 import { useDebounce } from "@uidotdev/usehooks";
+import { Link, usePathname } from "expo-router";
 import { ArrowLeftRight, CameraIcon } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
+import { useProductsFilters } from "../hooks/products-filters";
 
 type SearchMode = "barcode" | "name";
 
 interface Props {
-  onChangeTerm: (value: string | null, searchMode: SearchMode) => void;
+  businessSlug: string;
+  defaultBarcode?: string;
 }
 
-export function ProductsSearchInput({ onChangeTerm }: Props) {
-  const [searchBy, setSearchBy] = useState<SearchMode>("name");
-  const [searchTerm, setSearchTerm] = useState("");
+export function ProductsSearchInput({ businessSlug, defaultBarcode }: Props) {
+  const pathname = usePathname();
+  const { filtersDispatch } = useProductsFilters();
+  const [searchBy, setSearchBy] = useState<SearchMode>(
+    defaultBarcode ? "barcode" : "name"
+  );
+  const [searchTerm, setSearchTerm] = useState(
+    searchBy === "barcode" ? (defaultBarcode ?? "") : ""
+  );
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   const toggleSearchBy = () => {
@@ -25,21 +34,38 @@ export function ProductsSearchInput({ onChangeTerm }: Props) {
     setSearchTerm("");
   };
 
-  const handleSearch = (term: string) => {
-    setSearchTerm(term);
-  };
-
   useEffect(() => {
     if (debouncedSearchTerm.length === 0) {
-      onChangeTerm(null, searchBy);
+      filtersDispatch({
+        type: "set:name",
+        payload: null,
+      });
+
+      filtersDispatch({
+        type: "set:barcode",
+        payload: null,
+      });
       return;
     }
-    onChangeTerm(debouncedSearchTerm, searchBy);
 
-    return () => {
-      onChangeTerm(null, searchBy);
-    };
-  }, [debouncedSearchTerm, onChangeTerm, searchBy]);
+    if (searchBy === "name") {
+      filtersDispatch({
+        type: "set:name",
+        payload: debouncedSearchTerm,
+      });
+
+      return;
+    }
+
+    if (searchBy === "barcode") {
+      filtersDispatch({
+        type: "set:barcode",
+        payload: debouncedSearchTerm,
+      });
+
+      return;
+    }
+  }, [debouncedSearchTerm, searchBy, filtersDispatch]);
 
   return (
     <View className="flex flex-row gap-x-2">
@@ -47,7 +73,7 @@ export function ProductsSearchInput({ onChangeTerm }: Props) {
         <SearchInput
           className="flex-1"
           placeholder="Buscar productos por nombre"
-          onChangeText={handleSearch}
+          onChangeText={setSearchTerm}
           value={searchTerm}
         />
       )}
@@ -56,12 +82,24 @@ export function ProductsSearchInput({ onChangeTerm }: Props) {
           <SearchInput
             className="flex-1"
             placeholder="Buscar productos por codigo de barras"
-            onChangeText={handleSearch}
+            onChangeText={setSearchTerm}
             value={searchTerm}
           />
-          <Button variant="outline" size="icon">
-            <Icon as={CameraIcon} size={18} />
-          </Button>
+          <Link
+            asChild
+            push
+            href={{
+              pathname: "/businesses/[businessSlug]/barcode-reader",
+              params: {
+                businessSlug,
+                from: pathname,
+              },
+            }}
+          >
+            <Button variant="outline" size="icon">
+              <Icon as={CameraIcon} size={18} />
+            </Button>
+          </Link>
         </View>
       )}
       <Button variant="outline" size="icon" onPress={toggleSearchBy}>

@@ -1,6 +1,7 @@
-import { SearchIcon } from "lucide-react-native";
+import { SearchIcon, X } from "lucide-react-native";
 import { View } from "react-native";
 import { cn } from "../lib/utils";
+import { Button } from "./ui/button";
 import { Icon } from "./ui/icon";
 import { Input } from "./ui/input";
 
@@ -36,6 +37,14 @@ export function SearchInput({
           transform: [{ translateY: "-50%" }],
         }}
       />
+      <Button
+        variant="ghost"
+        size="icon"
+        className="absolute right-0"
+        onPress={() => onChangeText("")}
+      >
+        <Icon as={X} size={18} className="text-muted-foreground" />
+      </Button>
     </View>
   );
 }

@@ -44,12 +44,24 @@ export class ProductsQueriesOptions {
     }
 
     return infiniteQueryOptions({
-      queryKey,
+      queryKey: params?.barcode
+        ? ["businesses", businessSlug, "products", "barcode", params.barcode]
+        : queryKey,
       initialPageParam: params?.base64Cursor,
       queryFn: async ({ pageParam }) => {
+        const searchParams = params
+          ? {
+              limit: params.limit,
+              base64Cursor: pageParam,
+              name: !params.barcode ? params.name : undefined,
+              categoryId: !params.barcode ? params.categoryId : undefined,
+              barcode: params.barcode,
+            }
+          : undefined;
+
         const response = await this.productsActions.findMany({
           businessSlug,
-          params: params ? { ...params, base64Cursor: pageParam } : undefined,
+          params: searchParams,
         });
 
         if (response.error || !response.data) {

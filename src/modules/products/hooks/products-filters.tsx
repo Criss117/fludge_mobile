@@ -9,6 +9,7 @@ interface Filters {
   name?: string | null;
   categoryId?: string | null;
   limit: number;
+  barcode?: string | null;
 }
 
 type FiltersActions =
@@ -51,7 +52,7 @@ export function useProductsFilters() {
   return context;
 }
 
-function filtersReducer(state: Filters, action: FiltersActions) {
+function filtersReducer(state: Filters, action: FiltersActions): Filters {
   switch (action.type) {
     case "set:limit":
       return {
@@ -69,12 +70,18 @@ function filtersReducer(state: Filters, action: FiltersActions) {
         categoryId: action.payload,
       };
 
+    case "set:barcode":
+      return {
+        ...state,
+        barcode: action.payload,
+      };
     case "clear:filters":
       return {
         name: null,
         categoryId: null,
         limit: 5,
       };
+
     default:
       return state;
   }

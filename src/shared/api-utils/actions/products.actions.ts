@@ -14,6 +14,7 @@ export type FindManyQueryParams = {
   nextCursor?: ProductCursor;
   name?: string;
   categoryId?: string;
+  barcode?: string;
 };
 
 type CreateProduct = {
@@ -70,6 +71,7 @@ export class ProductsActions {
           nextCursor: params?.base64Cursor,
           name: params?.name,
           categoryId: params?.categoryId,
+          barcode: params?.barcode,
         }),
       "Error al obtener los productos"
     );

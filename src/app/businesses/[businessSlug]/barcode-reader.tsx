@@ -1,10 +1,39 @@
 import { Button } from "@/modules/shared/components/ui/button";
 import { Text } from "@/modules/shared/components/ui/text";
 import { CameraView, useCameraPermissions } from "expo-camera";
+import {
+  type RelativePathString,
+  useGlobalSearchParams,
+  useRouter,
+} from "expo-router";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
 
-export default function Providers() {
+export default function BarcodeReader() {
+  const { from } = useGlobalSearchParams<{
+    from: RelativePathString;
+  }>();
+  const router = useRouter();
+  const [isScanning, setIsScanning] = useState(false);
+
   const [permission, requestPermission] = useCameraPermissions();
+
+  function onBarcodeScanned(code: string) {
+    if (isScanning) return;
+    setIsScanning(true);
+    router.replace({
+      pathname: from,
+      params: {
+        barcode: code,
+      },
+    });
+  }
+
+  useEffect(() => {
+    return () => {
+      setIsScanning(false);
+    };
+  }, []);
 
   if (!permission) {
     // Camera permissions are still loading.
@@ -34,7 +63,7 @@ export default function Providers() {
         barcodeScannerSettings={{
           barcodeTypes: ["ean13"],
         }}
-        onBarcodeScanned={(code) => console.log(code.data)}
+        onBarcodeScanned={(code) => onBarcodeScanned(code.data)}
       />
     </View>
   );

@@ -4,20 +4,33 @@ import type { CategorySummary } from "@/shared/entities/categories.entity";
 import { Link } from "expo-router";
 import { PlusIcon } from "lucide-react-native";
 import { View } from "react-native";
+import { CategoriesList } from "../components/categories-filter-list";
+import { ProductsSearchInput } from "../components/products-search-input";
 import { ProductsFiltersProvider } from "../hooks/products-filters";
-import { ProductsHeaderSection } from "../sections/products-header.section";
 import { ProductsListSection } from "../sections/products-list.section";
 
 interface Props {
   categories: CategorySummary[];
   businessSlug: string;
+  barcode?: string;
 }
 
-export function ProductsScreen({ categories, businessSlug }: Props) {
+export function ProductsScreen({ categories, businessSlug, barcode }: Props) {
   return (
     <ProductsFiltersProvider>
       <View className="px-1 flex relative flex-1">
-        <ProductsHeaderSection categories={categories} />
+        <View className="py-2 px-1 flex gap-y-2">
+          <ProductsSearchInput
+            businessSlug={businessSlug}
+            defaultBarcode={barcode}
+          />
+          <View className="py-2">
+            <CategoriesList
+              categories={categories}
+              businessSlug={businessSlug}
+            />
+          </View>
+        </View>
         <ProductsListSection businessSlug={businessSlug} />
         <View className="absolute right-4 bottom-4">
           <Link

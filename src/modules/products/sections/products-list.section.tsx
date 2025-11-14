@@ -33,6 +33,7 @@ function ProductsListSectionSuspense({ businessSlug }: Props) {
         limit: filters.limit,
         name: filters.name ?? undefined,
         categoryId: filters.categoryId ?? undefined,
+        barcode: filters.barcode ?? undefined,
       },
     })
   );
@@ -53,12 +54,14 @@ function ProductsListSectionSuspense({ businessSlug }: Props) {
       maxToRenderPerBatch={2}
       renderItem={({ item }) => (
         <>
-          <ProductCard
-            product={item}
-            className="flex-1 mx-0.5"
-            businessSlug={businessSlug}
-          />
-          {item.empty && <View className="flex-1 mx-0.5" />}
+          {!item.empty && (
+            <ProductCard
+              product={item}
+              className="flex-1 mx-0.5"
+              businessSlug={businessSlug}
+            />
+          )}
+          {item.empty && <View className="flex-1 mx-0.5 " />}
         </>
       )}
       ListFooterComponent={

@@ -1,14 +1,14 @@
 import { Badge } from "@/modules/shared/components/ui/badge";
 import { Text } from "@/modules/shared/components/ui/text";
 import { cn } from "@/modules/shared/lib/utils";
-import { CategorySummary } from "@/shared/entities/categories.entity";
+import type { CategorySummary } from "@/shared/entities/categories.entity";
 import { useState } from "react";
 import { FlatList, Pressable, View } from "react-native";
-import { ProductsSearchInput } from "../components/products-search-input";
 import { useProductsFilters } from "../hooks/products-filters";
 
 interface Props {
   categories: CategorySummary[];
+  businessSlug: string;
 }
 
 interface CategoryBadgeProps {
@@ -53,7 +53,7 @@ function CategoryBadge({
   );
 }
 
-function CategoriesList({ categories }: Props) {
+export function CategoriesList({ categories }: Props) {
   const { filters, filtersDispatch } = useProductsFilters();
 
   const selectedCategoryId = filters.categoryId;
@@ -94,37 +94,5 @@ function CategoriesList({ categories }: Props) {
       showsHorizontalScrollIndicator={false}
       ItemSeparatorComponent={() => <View className="size-1" />}
     />
-  );
-}
-
-export function ProductsHeaderSection({ categories }: Props) {
-  const { filtersDispatch } = useProductsFilters();
-
-  const setName = (name: string | null) => {
-    filtersDispatch({
-      type: "set:name",
-      payload: name,
-    });
-  };
-
-  const setBarcode = (barcode: string | null) => {
-    filtersDispatch({
-      type: "set:barcode",
-      payload: barcode,
-    });
-  };
-
-  return (
-    <View className="py-2 px-1 flex gap-y-2">
-      <ProductsSearchInput
-        onChangeTerm={(value, searchMode) => {
-          if (searchMode === "name") setName(value);
-          if (searchMode === "barcode") setBarcode(value);
-        }}
-      />
-      <View className="py-2">
-        <CategoriesList categories={categories} />
-      </View>
-    </View>
   );
 }

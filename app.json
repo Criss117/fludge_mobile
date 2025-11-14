@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "mobile",
-    "slug": "mobile",
+    "name": "Fludge",
+    "slug": "Fludge",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/images/icon.png",
-    "scheme": "mobile",
+    "scheme": "fludge",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -46,6 +46,14 @@
         {
           "configureAndroidBackup": true,
           "faceIDPermission": "Allow Fludge to access your Face ID biometric data."
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow Fludge to access your camera",
+          "microphonePermission": "Allow Fludge to access your microphone",
+          "recordAudioAndroid": true
         }
       ]
     ],
