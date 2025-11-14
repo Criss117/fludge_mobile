@@ -85,7 +85,7 @@ export function BusinessesMenu({ currentBusiness }: Props) {
         <DropdownMenuItem asChild>
           <Link href="/businesses/register" push asChild>
             <Button>
-              <Icon as={PlusIcon} size={20} />
+              <Icon as={PlusIcon} size={20} className="text-white" />
               <Text>Registrar nuevo negocio</Text>
             </Button>
           </Link>

@@ -18,7 +18,7 @@ export function RegisterBusinessScreen() {
         <Card className="w-full">
           <CardHeader>
             <View className="flex flex-row gap-x-2 items-center">
-              <Icon as={Building2} size={20} />
+              <Icon as={Building2} size={29} />
               <CardTitle variant="h4">Registra tu Negocio</CardTitle>
             </View>
             <CardDescription>
@@ -30,7 +30,7 @@ export function RegisterBusinessScreen() {
         <CreateBusinessForm.Root>
           <Card>
             <CardHeader className="flex items-center flex-row gap-x-2">
-              <Icon as={CheckCircle} />
+              <Icon as={CheckCircle} size={20} />
               <CardTitle variant="h4">Información básica</CardTitle>
             </CardHeader>
             <CardContent className="flex gap-y-2">
@@ -42,7 +42,7 @@ export function RegisterBusinessScreen() {
 
           <Card>
             <CardHeader className="flex items-center flex-row gap-x-2">
-              <Icon as={CheckCircle} size={16} />
+              <Icon as={CheckCircle} size={20} />
               <CardTitle variant="h4">Informacíon de contacto</CardTitle>
             </CardHeader>
             <CardContent className="flex gap-y-2">

@@ -3,7 +3,12 @@ import { Text } from "@/modules/shared/components/ui/text";
 import { completeEvenItems } from "@/modules/shared/lib/complete-even-items";
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { Suspense, useMemo } from "react";
-import { ActivityIndicator, FlatList, View } from "react-native";
+import {
+  ActivityIndicator,
+  FlatList,
+  RefreshControl,
+  View,
+} from "react-native";
 import { ProductCard } from "../components/product-card";
 import { useProductsFilters } from "../hooks/products-filters";
 
@@ -14,17 +19,23 @@ interface Props {
 function ProductsListSectionSuspense({ businessSlug }: Props) {
   const { filters } = useProductsFilters();
 
-  const { data, isFetchingNextPage, hasNextPage, fetchNextPage } =
-    useSuspenseInfiniteQuery(
-      productsQueriesOptions.findMany({
-        businessSlug,
-        params: {
-          limit: filters.limit,
-          name: filters.name ?? undefined,
-          categoryId: filters.categoryId ?? undefined,
-        },
-      })
-    );
+  const {
+    data,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+    refetch,
+    isRefetching,
+  } = useSuspenseInfiniteQuery(
+    productsQueriesOptions.findMany({
+      businessSlug,
+      params: {
+        limit: filters.limit,
+        name: filters.name ?? undefined,
+        categoryId: filters.categoryId ?? undefined,
+      },
+    })
+  );
 
   const items = useMemo(() => {
     const products = data?.pages.flatMap((page) => page.items);
@@ -57,6 +68,9 @@ function ProductsListSectionSuspense({ businessSlug }: Props) {
         </View>
       }
       ItemSeparatorComponent={() => <View className="size-1" />}
+      refreshControl={
+        <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
+      }
       onEndReachedThreshold={0.5}
       onEndReached={() => {
         if (!hasNextPage) return;

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const createProductDtoSchema = z.object({
+export const createProductSchema = z.object({
   name: z
     .string({
       message: "El nombre del producto no puede estar vacío",
@@ -102,8 +102,8 @@ export const createProductDtoSchema = z.object({
     .optional()
     .nullable(),
 
-  allowNegativeStock: z.boolean().default(false),
+  allowNegativeStock: z.boolean(),
 });
 
 // Tipo TypeScript inferido
-export type CreateProductSchema = z.infer<typeof createProductDtoSchema>;
+export type CreateProductSchema = z.infer<typeof createProductSchema>;

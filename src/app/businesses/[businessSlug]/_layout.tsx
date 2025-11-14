@@ -62,7 +62,7 @@ export default function BusinessesLayout() {
         />
 
         <Stack.Screen
-          name="products/[productId]/index"
+          name="products/[productSlug]/index"
           options={{
             title: "Producto ...",
             headerRight: () => (

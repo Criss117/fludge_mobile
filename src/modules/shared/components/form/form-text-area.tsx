@@ -6,12 +6,11 @@ import {
   type UseFormReturn,
 } from "react-hook-form";
 import { Field, FieldDescription, FieldError, FieldLabel } from "../ui/field";
-import { Input } from "../ui/input";
 import { Text } from "../ui/text";
 import { Textarea } from "../ui/textarea";
 
 interface Props<T extends FieldValues>
-  extends React.ComponentProps<typeof Input> {
+  extends React.ComponentProps<typeof Textarea> {
   form: UseFormReturn<T, unknown, T>;
   name: Path<T>;
   description?: string;
