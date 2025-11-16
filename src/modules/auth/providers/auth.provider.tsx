@@ -51,6 +51,7 @@ interface Context {
   >;
   user: UserDetail | null;
   isFetchingSession: boolean;
+  sessionToken: string | null;
   refetch: () => Promise<void>;
 }
 
@@ -70,6 +71,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<UserDetail | null>(null);
+  const [sessionToken, setSessionToken] = useState<string | null>(null);
   const [isRestoringSession, setIsRestoringSession] = useState(true);
   const [isFetchingSession, setIsFetchingSession] = useState(false);
 
@@ -87,6 +89,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     onSuccess: async () => {
       await secureStorage.remove(AuthTokenKey);
       setUser(null);
+      setSessionToken(null);
     },
   });
 
@@ -105,6 +108,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       await secureStorage.save(AuthTokenKey, data.token);
       setUser(userResponse.data);
+      setSessionToken(data.token);
     } catch (error) {
       console.error("Error during sign in:", error);
       // Opcional: puedes limpiar el token si falla
@@ -160,6 +164,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           await secureStorage.remove(AuthTokenKey);
           console.warn("Invalid or expired token");
         } else {
+          setSessionToken(token);
           setUser(userResponse.data);
         }
       } catch (error) {
@@ -193,6 +198,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         closeAllSessions,
         user,
         isFetchingSession,
+        sessionToken,
         refetch,
       }}
     >

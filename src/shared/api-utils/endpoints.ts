@@ -1,4 +1,8 @@
 export const ENDPOINTS = {
+  IMAGES: {
+    PRODUCTS: (imageName: string) =>
+      `/images/products/${imageName}` as `/images/products/${string}`,
+  },
   AUTH: {
     SIGN_UP: "/auth/sign-up",
     SIGN_IN: "/auth/sign-in",
@@ -44,6 +48,8 @@ export const ENDPOINTS = {
         `/businesses/${businessSlug}/products/${productSlug}` as `/businesses/${string}/products/${string}`,
       FIND_MANY: (businessSlug: string) =>
         `/businesses/${businessSlug}/products` as `/businesses/${string}/products`,
+      UPLOAD: (businessSlug: string, productSlug: string) =>
+        `/businesses/${businessSlug}/products/${productSlug}/upload` as `/businesses/${string}/products/${string}/upload`,
     },
     CATEGORIES: {
       CREATE: (businessSlug: string) =>

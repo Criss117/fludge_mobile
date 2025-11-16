@@ -5,11 +5,13 @@ import {
 } from "@/modules/shared/components/ui/card";
 import { Text } from "@/modules/shared/components/ui/text";
 import { cn, formatCurrency } from "@/modules/shared/lib/utils";
+import { ENDPOINTS } from "@/shared/api-utils/endpoints";
 import { ProductSummary } from "@/shared/entities/products.entity";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Image, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
+import { env } from "../../shared/lib/config";
 
 interface Props {
   product: ProductSummary;
@@ -63,7 +65,9 @@ export function ProductCard({ product, className, businessSlug }: Props) {
             {product.productImage && (
               <Image
                 source={{
-                  uri: product.productImage,
+                  uri: product.productImage.includes("http")
+                    ? product.productImage
+                    : `${env.EXPO_PUBLIC_API_URL}${ENDPOINTS.IMAGES.PRODUCTS(product.productImage)}`,
                 }}
                 loadingIndicatorSource={require("@/assets/placeholder.png")}
                 fadeDuration={100}

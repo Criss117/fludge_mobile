@@ -1,41 +1,5 @@
-import { Button } from "@/modules/shared/components/ui/button";
-import { Text } from "@/modules/shared/components/ui/text";
-import { CameraView, useCameraPermissions } from "expo-camera";
-import { View } from "react-native";
+import ImagePickerExample from "@/modules/shared/components/example-image-picker";
 
 export default function Providers() {
-  const [permission, requestPermission] = useCameraPermissions();
-
-  if (!permission) {
-    // Camera permissions are still loading.
-    return (
-      <View>
-        <Text>Sin Permisos...</Text>
-      </View>
-    );
-  }
-
-  if (!permission.granted) {
-    // Camera permissions are not granted yet.
-    return (
-      <View>
-        <Text>Necesitas conceder permisos para usar la cámara</Text>
-        <Button onPress={requestPermission}>
-          <Text>Conceder Permisos</Text>
-        </Button>
-      </View>
-    );
-  }
-
-  return (
-    <View className="flex flex-1 justify-center">
-      <CameraView
-        style={{ flex: 1 }}
-        barcodeScannerSettings={{
-          barcodeTypes: ["ean13"],
-        }}
-        onBarcodeScanned={(code) => console.log(code.data)}
-      />
-    </View>
-  );
+  return <ImagePickerExample />;
 }

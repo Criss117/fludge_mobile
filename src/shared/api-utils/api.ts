@@ -21,6 +21,10 @@ export class API {
     this.api = api;
   }
 
+  get axios() {
+    return this.api;
+  }
+
   public applyAuthInterceptor(token: string) {
     if (this.authInterceptorId !== null) {
       this.api.interceptors.request.eject(this.authInterceptorId);
@@ -60,6 +64,20 @@ export class API {
     >(endpoint, data, {
       headers: {
         "Content-Type": "application/json",
+      },
+    });
+
+    return response;
+  }
+
+  public async postML<T>(endpoint: string, data: FormData) {
+    const response = await this.api.post<
+      CommonResponse<T>,
+      AxiosResponse<CommonResponse<T>, unknown>,
+      FormData
+    >(endpoint, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
       },
     });
 

@@ -14,7 +14,11 @@ interface Props {
 }
 
 function ProductSuspense({ businessSlug, productSlug }: Props) {
-  const { data: product } = useSuspenseQuery(
+  const {
+    data: product,
+    isRefetching,
+    refetch,
+  } = useSuspenseQuery(
     productsQueriesOptions.findOne({
       businessSlug,
       productSlug,
@@ -28,7 +32,11 @@ function ProductSuspense({ businessSlug, productSlug }: Props) {
           title: product.name,
         }}
       />
-      <ProductScreen product={product} />
+      <ProductScreen
+        product={product}
+        isPending={isRefetching}
+        refetch={refetch}
+      />
     </>
   );
 }
