@@ -7,6 +7,7 @@ import {
 import { FieldSet } from "@/modules/shared/components/ui/field";
 import { Icon } from "@/modules/shared/components/ui/icon";
 import type { CategorySummary } from "@/shared/entities/categories.entity";
+import type { ProductSummary } from "@/shared/entities/products.entity";
 import { ChartNoAxesGantt, CheckCircle, DollarSign } from "lucide-react-native";
 import { View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
@@ -15,13 +16,23 @@ import { ProductForm } from "../components/product-form";
 interface Props {
   businessId: string;
   categories: CategorySummary[];
+  product: ProductSummary;
 }
 
-export function CreateProductScreen({ businessId, categories }: Props) {
+export function UpdateProductScreen({
+  product,
+  businessId,
+  categories,
+}: Props) {
   return (
     <KeyboardAwareScrollView>
       <View className="flex gap-y-4 px-2 pt-5 pb-10">
-        <ProductForm.Root businessId={businessId}>
+        <ProductForm.Root
+          businessId={businessId}
+          type="update"
+          defaultValues={product}
+          productId={product.id}
+        >
           <Card>
             <CardHeader className="flex flex-row gap-x-2 items-center">
               <Icon as={CheckCircle} size={20} />

@@ -20,6 +20,8 @@ export default function BusinessesLayout() {
           }}
         />
 
+        {/* Groups Screens */}
+
         <Stack.Screen
           name="groups/[groupId]/index"
           options={{
@@ -38,6 +40,8 @@ export default function BusinessesLayout() {
             title: "Nuevo grupo",
           }}
         />
+
+        {/* Employees Screens */}
 
         <Stack.Screen
           name="employees/[employeeId]/index"
@@ -58,12 +62,16 @@ export default function BusinessesLayout() {
           }}
         />
 
+        {/* Categories Screens */}
+
         <Stack.Screen
           name="categories/create"
           options={{
             title: "Nueva categoría",
           }}
         />
+
+        {/* Products Screens */}
 
         <Stack.Screen
           name="products/[productId]/index"
@@ -74,6 +82,13 @@ export default function BusinessesLayout() {
                 <Icon as={MoreVerticalIcon} size={24} />
               </Button>
             ),
+          }}
+        />
+
+        <Stack.Screen
+          name="products/[productId]/update"
+          options={{
+            title: "Producto ...",
           }}
         />
 

@@ -6,11 +6,12 @@ import { FormSwitch } from "@/modules/shared/components/form/form-switch";
 import { FormTextArea } from "@/modules/shared/components/form/form-text-area";
 import { Button } from "@/modules/shared/components/ui/button";
 import { Text } from "@/modules/shared/components/ui/text";
-import { CategorySummary } from "@/shared/entities/categories.entity";
+import type { CategorySummary } from "@/shared/entities/categories.entity";
 import {
   createProductSchema,
-  CreateProductSchema,
+  type CreateProductSchema,
 } from "@/shared/schemas/products/create-product.schema";
+import type { UpdateProductSchema } from "@/shared/schemas/products/update-product.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
 import { createContext, use } from "react";
@@ -21,6 +22,9 @@ import { useMutateProducts } from "../hooks/use.mutate-products";
 interface RootProps {
   children: React.ReactNode;
   businessId: string;
+  productId?: string;
+  defaultValues?: UpdateProductSchema;
+  type?: "create" | "update";
 }
 
 interface CategoryProps {
@@ -37,28 +41,41 @@ interface Context {
   onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
   form: ReturnType<typeof useForm<CreateProductSchema>>;
   isPending: boolean;
+  type: "create" | "update";
 }
 
-const CreateProductFormContext = createContext<Context | null>(null);
+const ProductFormContext = createContext<Context | null>(null);
 
-function useCreateProduct() {
-  const context = use(CreateProductFormContext);
+function useProductForm() {
+  const context = use(ProductFormContext);
 
   if (!context) {
     throw new Error(
-      "CreateProductFormContext must be used within a CreateProductFormProvider"
+      "ProductFormContext must be used within a CreateProductFormProvider"
     );
   }
 
   return context;
 }
 
-function Root({ children, businessId }: RootProps) {
-  const { create } = useMutateProducts();
+function Root({
+  children,
+  businessId,
+  defaultValues,
+  productId,
+  type = "create",
+}: RootProps) {
+  if (type === "update" && (!defaultValues || !productId)) {
+    throw new Error(
+      "defaultValues must be provided when type is 'update' in ProductForm.Root"
+    );
+  }
+
+  const { create, update } = useMutateProducts();
   const router = useRouter();
   const form = useForm<CreateProductSchema>({
     resolver: zodResolver(createProductSchema),
-    defaultValues: {
+    defaultValues: defaultValues || {
       name: "",
       barcode: "",
       purchasePrice: 0,
@@ -72,36 +89,65 @@ function Root({ children, businessId }: RootProps) {
   });
 
   const onSubmit = form.handleSubmit((data) => {
-    create.mutate(
-      {
-        data,
-        businessId,
-      },
-      {
-        onSuccess: () => {
-          form.reset();
-          router.replace({
-            pathname: "/businesses/[businessId]/products",
-            params: {
-              businessId,
-            },
-          });
+    if (type === "create") {
+      create.mutate(
+        {
+          data,
+          businessId,
         },
-      }
-    );
+        {
+          onSuccess: () => {
+            form.reset();
+            router.replace({
+              pathname: "/businesses/[businessId]/products",
+              params: {
+                businessId,
+              },
+            });
+          },
+        }
+      );
+    }
+
+    if (type === "update" && productId) {
+      update.mutate(
+        {
+          businessId,
+          productId,
+          data,
+        },
+        {
+          onSuccess: () => {
+            form.reset();
+            router.replace({
+              pathname: "/businesses/[businessId]/products/[productId]",
+              params: {
+                businessId,
+                productId,
+              },
+            });
+          },
+        }
+      );
+    }
   });
 
   return (
-    <CreateProductFormContext.Provider
-      value={{ form, onSubmit, isPending: create.isPending }}
+    <ProductFormContext.Provider
+      value={{
+        form,
+        onSubmit,
+        isPending: create.isPending || update.isPending,
+        type,
+      }}
     >
       {children}
-    </CreateProductFormContext.Provider>
+    </ProductFormContext.Provider>
   );
 }
 
 function Name() {
-  const { form } = useCreateProduct();
+  const { form } = useProductForm();
 
   return (
     <FormInput
@@ -115,7 +161,7 @@ function Name() {
 }
 
 function Description() {
-  const { form } = useCreateProduct();
+  const { form } = useProductForm();
 
   return (
     <FormTextArea
@@ -128,7 +174,7 @@ function Description() {
 }
 
 function Barcode() {
-  const { form } = useCreateProduct();
+  const { form } = useProductForm();
 
   return (
     <FormInput
@@ -142,7 +188,7 @@ function Barcode() {
 }
 
 function PurchasePrice() {
-  const { form } = useCreateProduct();
+  const { form } = useProductForm();
 
   return (
     <FormInput
@@ -158,7 +204,7 @@ function PurchasePrice() {
 }
 
 function SalePrice() {
-  const { form } = useCreateProduct();
+  const { form } = useProductForm();
 
   return (
     <FormInput
@@ -174,7 +220,7 @@ function SalePrice() {
 }
 
 function WholesalePrice() {
-  const { form } = useCreateProduct();
+  const { form } = useProductForm();
 
   return (
     <FormInput
@@ -190,7 +236,7 @@ function WholesalePrice() {
 }
 
 function OfferPrice() {
-  const { form } = useCreateProduct();
+  const { form } = useProductForm();
 
   return (
     <FormInput
@@ -205,7 +251,7 @@ function OfferPrice() {
 }
 
 function Stock() {
-  const { form } = useCreateProduct();
+  const { form } = useProductForm();
 
   return (
     <FormInput
@@ -221,7 +267,7 @@ function Stock() {
 }
 
 function MinStock() {
-  const { form } = useCreateProduct();
+  const { form } = useProductForm();
 
   return (
     <FormInput
@@ -237,7 +283,7 @@ function MinStock() {
 }
 
 function AllowNegativeStock({ hitSlop }: AllowNegativeStockProps) {
-  const { form } = useCreateProduct();
+  const { form } = useProductForm();
 
   return (
     <FormSwitch
@@ -250,7 +296,7 @@ function AllowNegativeStock({ hitSlop }: AllowNegativeStockProps) {
 }
 
 function Category({ categories, contentClass, triggerClass }: CategoryProps) {
-  const { form } = useCreateProduct();
+  const { form } = useProductForm();
 
   return (
     <FormSelect
@@ -268,18 +314,22 @@ function Category({ categories, contentClass, triggerClass }: CategoryProps) {
 }
 
 function Submit() {
-  const { onSubmit, isPending } = useCreateProduct();
+  const { onSubmit, isPending, type } = useProductForm();
 
   return (
     <Button onPress={onSubmit} disabled={isPending}>
-      {!isPending && <Text>Crear Producto</Text>}
+      {!isPending && (
+        <Text>
+          {type === "create" ? "Crear Producto" : "Actualizar Producto"}
+        </Text>
+      )}
       {isPending && <ActivityIndicator className="text-white" />}
     </Button>
   );
 }
 
-export const CreateProductForm = {
-  useCreateProduct,
+export const ProductForm = {
+  useProductForm,
   Root,
   Name,
   Description,

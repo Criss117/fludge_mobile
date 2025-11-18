@@ -1,5 +1,6 @@
 import { productsQueriesOptions } from "@/integrations/query/query-container";
 import { usePermissions } from "@/modules/auth/providers/permissions.provider";
+import { ProductMenuActions } from "@/modules/products/components/product-menu-actions";
 import { ProductScreen } from "@/modules/products/screens/product.screen";
 import { PermissionsAlert } from "@/modules/shared/components/forbiden-alerts";
 import { Text } from "@/modules/shared/components/ui/text";
@@ -30,6 +31,9 @@ function ProductSuspense({ businessId, productId }: Props) {
       <Stack.Screen
         options={{
           title: product.name,
+          headerRight: () => (
+            <ProductMenuActions productId={productId} businessId={businessId} />
+          ),
         }}
       />
       <ProductScreen

@@ -88,7 +88,7 @@ export class ProductsActions {
   public async update({ businessId, productId, data }: UpdateProduct) {
     const response = await safeAction(
       () =>
-        this.api.put<ProductSummary, UpdateProductSchema>(
+        this.api.patch<ProductSummary, UpdateProductSchema>(
           ENDPOINTS.BUSINESSES.PRODUCTS.UPDATE(businessId, productId),
           data
         ),
