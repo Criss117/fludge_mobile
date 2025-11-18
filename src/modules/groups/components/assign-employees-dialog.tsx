@@ -27,7 +27,7 @@ interface Props {
 
 export function AssignEmployeesDialog({ group }: Props) {
   const { data: business } = useSuspenseQuery(
-    businessQueriesOptions.findOne(group.business.slug)
+    businessQueriesOptions.findOne(group.business.id)
   );
   const [open, setOpen] = useState(false);
   const [selectedEmployeeIds, setSelectedEmployeeIds] = useState<string[]>([]);

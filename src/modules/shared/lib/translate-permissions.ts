@@ -13,6 +13,9 @@ export const resourceEs = new Map<Resource | "businesses", string>([
   ["providers", "Proveedores"],
   ["clients", "Clientes"],
   ["businesses", "Negocios"],
+  ["categories", "Categorías"],
+  ["tickets", "Tickets"],
+  ["products", "Productos"],
 ]);
 
 export const actionEs = new Map<Action, string>([

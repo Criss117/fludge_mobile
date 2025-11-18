@@ -20,7 +20,7 @@ export function PermissionBadge({ permission, ...props }: Props) {
       variant = "default";
       break;
     case "read":
-      variant = "default";
+      variant = "green";
       break;
     case "update":
       variant = "outline";
