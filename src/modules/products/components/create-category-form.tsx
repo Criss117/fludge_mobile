@@ -15,7 +15,7 @@ import { useMutateCategories } from "../hooks/use.mutate-categories";
 
 interface RootProps {
   children: React.ReactNode;
-  businessSlug: string;
+  businessId: string;
 }
 
 interface Context {
@@ -38,7 +38,7 @@ function useCreateCategory() {
   return context;
 }
 
-function Root({ businessSlug, children }: RootProps) {
+function Root({ businessId, children }: RootProps) {
   const { create } = useMutateCategories();
   const router = useRouter();
   const form = useForm<CreateCategorySchema>({
@@ -51,16 +51,16 @@ function Root({ businessSlug, children }: RootProps) {
   const onSubmit = form.handleSubmit(async (values) => {
     create.mutate(
       {
-        businessSlug,
+        businessId,
         data: values,
       },
       {
         onSuccess: () => {
           form.reset();
           router.replace({
-            pathname: "/businesses/[businessSlug]/(tabs)/products/categories",
+            pathname: "/businesses/[businessId]/(tabs)/products/categories",
             params: {
-              businessSlug,
+              businessId,
             },
           });
         },

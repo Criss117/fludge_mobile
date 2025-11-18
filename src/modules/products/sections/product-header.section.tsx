@@ -48,8 +48,8 @@ export function ProductHeaderSection({ product }: Props) {
         )}
         <View className="absolute bottom-4 right-4">
           <ImagePickerButton
-            businessSlug={product.business.slug}
-            productSlug={product.slug}
+            businessId={product.business.id}
+            productId={product.id}
           />
         </View>
       </CardHeader>

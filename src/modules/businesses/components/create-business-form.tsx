@@ -59,9 +59,9 @@ function Root({ children }: RootProps) {
           if (!data) return;
 
           router.push({
-            pathname: "/businesses/[businessSlug]",
+            pathname: "/businesses/[businessId]",
             params: {
-              businessSlug: data.slug,
+              businessId: data.id,
             },
           });
         });

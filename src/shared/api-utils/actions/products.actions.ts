@@ -18,28 +18,28 @@ export type FindManyQueryParams = {
 };
 
 type CreateProduct = {
-  businessSlug: string;
+  businessId: string;
   data: CreateProductSchema;
 };
 
 type FindOneProduct = {
-  businessSlug: string;
-  productSlug: string;
+  businessId: string;
+  productId: string;
 };
 
 type FindManyProducts = {
-  businessSlug: string;
+  businessId: string;
   params?: FindManyQueryParams;
 };
 
 export class ProductsActions {
   constructor(private readonly api: API) {}
 
-  public async create({ businessSlug, data }: CreateProduct) {
+  public async create({ businessId, data }: CreateProduct) {
     const response = await safeAction(
       () =>
         this.api.post<ProductSummary, CreateProductSchema>(
-          ENDPOINTS.BUSINESSES.PRODUCTS.CREATE(businessSlug),
+          ENDPOINTS.BUSINESSES.PRODUCTS.CREATE(businessId),
           data
         ),
       "Error al crear el producto"
@@ -48,11 +48,11 @@ export class ProductsActions {
     return response;
   }
 
-  public async findOne({ businessSlug, productSlug }: FindOneProduct) {
+  public async findOne({ businessId, productId }: FindOneProduct) {
     const response = await safeAction(
       () =>
         this.api.get<ProductDetail>(
-          ENDPOINTS.BUSINESSES.PRODUCTS.FIND_ONE(businessSlug, productSlug)
+          ENDPOINTS.BUSINESSES.PRODUCTS.FIND_ONE(businessId, productId)
         ),
       "Error al obtener el producto"
     );
@@ -60,13 +60,13 @@ export class ProductsActions {
     return response;
   }
 
-  public async findMany({ businessSlug, params }: FindManyProducts) {
+  public async findMany({ businessId, params }: FindManyProducts) {
     const response = await safeAction(
       () =>
         this.api.get<{
           items: ProductSummary[];
           nextCursor: string | null;
-        }>(ENDPOINTS.BUSINESSES.PRODUCTS.FIND_MANY(businessSlug), {
+        }>(ENDPOINTS.BUSINESSES.PRODUCTS.FIND_MANY(businessId), {
           limit: params?.limit,
           nextCursor: params?.base64Cursor,
           name: params?.name,

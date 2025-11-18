@@ -13,7 +13,7 @@ export function useMutateEmployees() {
     ...employeesMutationsOptions.create(),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries(
-        businessQueriesOptions.findOne(variables.businessSlug)
+        businessQueriesOptions.findOne(variables.businessId)
       );
     },
   });
@@ -23,14 +23,14 @@ export function useMutateEmployees() {
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries(
         employeesQueriesOptions.findOne(
-          variables.businessSlug,
+          variables.businessId,
           variables.employeeId
         )
       );
 
       variables.data.groupIds.forEach((groupId) => {
         queryClient.invalidateQueries(
-          groupsQueriesOptions.findOne(variables.businessSlug, groupId)
+          groupsQueriesOptions.findOne(variables.businessId, groupId)
         );
       });
     },
@@ -41,14 +41,14 @@ export function useMutateEmployees() {
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries(
         employeesQueriesOptions.findOne(
-          variables.businessSlug,
+          variables.businessId,
           variables.employeeId
         )
       );
 
       variables.data.groupIds.forEach((groupId) => {
         queryClient.invalidateQueries(
-          groupsQueriesOptions.findOne(variables.businessSlug, groupId)
+          groupsQueriesOptions.findOne(variables.businessId, groupId)
         );
       });
     },

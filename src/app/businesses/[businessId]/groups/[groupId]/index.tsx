@@ -10,16 +10,16 @@ import { Suspense } from "react";
 import { View } from "react-native";
 
 interface Props {
-  businessSlug: string;
+  businessId: string;
   groupId: string;
 }
 
-function GroupSuspense({ businessSlug, groupId }: Props) {
+function GroupSuspense({ businessId, groupId }: Props) {
   const {
     data: group,
     refetch,
     isPending,
-  } = useSuspenseQuery(groupsQueriesOptions.findOne(businessSlug, groupId));
+  } = useSuspenseQuery(groupsQueriesOptions.findOne(businessId, groupId));
 
   return (
     <>
@@ -27,7 +27,7 @@ function GroupSuspense({ businessSlug, groupId }: Props) {
         options={{
           title: group.name,
           headerRight: () => (
-            <GroupActions group={group} businessSlug={businessSlug} />
+            <GroupActions group={group} businessId={businessId} />
           ),
         }}
       />
@@ -41,16 +41,16 @@ function GroupSuspense({ businessSlug, groupId }: Props) {
 }
 
 function Screen() {
-  const { businessSlug, groupId } = useGlobalSearchParams<{
-    businessSlug?: string;
+  const { businessId, groupId } = useGlobalSearchParams<{
+    businessId?: string;
     groupId?: string;
   }>();
 
-  if (!businessSlug || !groupId) return null;
+  if (!businessId || !groupId) return null;
 
   return (
     <Suspense fallback={<Text>Loading...</Text>}>
-      <GroupSuspense businessSlug={businessSlug} groupId={groupId} />
+      <GroupSuspense businessId={businessId} groupId={groupId} />
     </Suspense>
   );
 }

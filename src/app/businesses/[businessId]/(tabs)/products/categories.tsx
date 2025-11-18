@@ -6,20 +6,20 @@ import { useGlobalSearchParams } from "expo-router";
 import React, { Suspense } from "react";
 
 interface Props {
-  businessSlug: string;
+  businessId: string;
 }
 
-function CategoriesSuspense({ businessSlug }: Props) {
+function CategoriesSuspense({ businessId }: Props) {
   const {
     data: business,
     isRefetching,
     refetch,
-  } = useSuspenseQuery(businessQueriesOptions.findOne(businessSlug));
+  } = useSuspenseQuery(businessQueriesOptions.findOne(businessId));
 
   return (
     <CategoriesScreen
       categories={business.categories}
-      businessSlug={businessSlug}
+      businessId={businessId}
       isPending={isRefetching}
       refetch={() => refetch()}
       key={isRefetching ? "pending" : "ready"}
@@ -28,15 +28,15 @@ function CategoriesSuspense({ businessSlug }: Props) {
 }
 
 export default function Categories() {
-  const { businessSlug } = useGlobalSearchParams<{
-    businessSlug?: string;
+  const { businessId } = useGlobalSearchParams<{
+    businessId?: string;
   }>();
 
-  if (!businessSlug) return null;
+  if (!businessId) return null;
 
   return (
     <Suspense fallback={<Text>Loading categories...</Text>}>
-      <CategoriesSuspense businessSlug={businessSlug} />
+      <CategoriesSuspense businessId={businessId} />
     </Suspense>
   );
 }

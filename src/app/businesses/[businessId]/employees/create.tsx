@@ -6,12 +6,12 @@ import React from "react";
 import { View } from "react-native";
 
 export default function CreateEmployee() {
-  const { businessSlug } = useLocalSearchParams<{
-    businessSlug?: string;
+  const { businessId } = useLocalSearchParams<{
+    businessId?: string;
   }>();
   const { hasPermission } = usePermissions();
 
-  if (!businessSlug) return null;
+  if (!businessId) return null;
 
   const userCanCreateEmployee = hasPermission("employees:create");
 
@@ -24,5 +24,5 @@ export default function CreateEmployee() {
       </View>
     );
 
-  return <CreateEmployeeScreen businessSlug={businessSlug} />;
+  return <CreateEmployeeScreen businessId={businessId} />;
 }

@@ -12,7 +12,7 @@ export function useMutateGroups() {
     ...groupsMutationsOptions.create(),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries(
-        businessQueriesOptions.findOne(variables.businessSlug)
+        businessQueriesOptions.findOne(variables.businessId)
       );
     },
   });
@@ -21,11 +21,11 @@ export function useMutateGroups() {
     ...groupsMutationsOptions.update(),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries(
-        businessQueriesOptions.findOne(variables.businessSlug)
+        businessQueriesOptions.findOne(variables.businessId)
       );
 
       queryClient.invalidateQueries(
-        groupsQueriesOptions.findOne(variables.businessSlug, variables.groupId)
+        groupsQueriesOptions.findOne(variables.businessId, variables.groupId)
       );
     },
   });
@@ -34,11 +34,11 @@ export function useMutateGroups() {
     ...groupsMutationsOptions.addPermissions(),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries(
-        businessQueriesOptions.findOne(variables.businessSlug)
+        businessQueriesOptions.findOne(variables.businessId)
       );
 
       queryClient.invalidateQueries(
-        groupsQueriesOptions.findOne(variables.businessSlug, variables.groupId)
+        groupsQueriesOptions.findOne(variables.businessId, variables.groupId)
       );
     },
   });
@@ -47,11 +47,11 @@ export function useMutateGroups() {
     ...groupsMutationsOptions.removePermissions(),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries(
-        businessQueriesOptions.findOne(variables.businessSlug)
+        businessQueriesOptions.findOne(variables.businessId)
       );
 
       queryClient.invalidateQueries(
-        groupsQueriesOptions.findOne(variables.businessSlug, variables.groupId)
+        groupsQueriesOptions.findOne(variables.businessId, variables.groupId)
       );
     },
   });
@@ -60,7 +60,7 @@ export function useMutateGroups() {
     ...groupsMutationsOptions.assignEmployees(),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries(
-        groupsQueriesOptions.findOne(variables.businessSlug, variables.groupId)
+        groupsQueriesOptions.findOne(variables.businessId, variables.groupId)
       );
     },
   });
@@ -69,7 +69,7 @@ export function useMutateGroups() {
     ...groupsMutationsOptions.removeEmployees(),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries(
-        groupsQueriesOptions.findOne(variables.businessSlug, variables.groupId)
+        groupsQueriesOptions.findOne(variables.businessId, variables.groupId)
       );
     },
   });

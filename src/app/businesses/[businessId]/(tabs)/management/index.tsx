@@ -9,19 +9,19 @@ import React, { Suspense } from "react";
 import { View } from "react-native";
 
 interface Props {
-  businessSlug: string;
+  businessId: string;
 }
 
-export function EmployeesSuspense({ businessSlug }: Props) {
+export function EmployeesSuspense({ businessId }: Props) {
   const {
     data: business,
     refetch,
     isRefetching,
-  } = useSuspenseQuery(businessQueriesOptions.findOne(businessSlug));
+  } = useSuspenseQuery(businessQueriesOptions.findOne(businessId));
 
   return (
     <EmployeesScreen
-      businessSlug={businessSlug}
+      businessId={businessId}
       employees={business.employees}
       refetch={() => refetch()}
       isPending={isRefetching}
@@ -31,15 +31,15 @@ export function EmployeesSuspense({ businessSlug }: Props) {
 }
 
 function Screen() {
-  const { businessSlug } = useGlobalSearchParams<{
-    businessSlug?: string;
+  const { businessId } = useGlobalSearchParams<{
+    businessId?: string;
   }>();
 
-  if (!businessSlug) return null;
+  if (!businessId) return null;
 
   return (
     <Suspense fallback={<Text>Loading...</Text>}>
-      <EmployeesSuspense businessSlug={businessSlug} />
+      <EmployeesSuspense businessId={businessId} />
     </Suspense>
   );
 }

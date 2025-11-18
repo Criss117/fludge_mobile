@@ -13,7 +13,7 @@ export default function BusinessesLayout() {
   return (
     <Stack>
       <Stack.Screen
-        name="[businessSlug]"
+        name="[businessId]"
         options={{
           headerShown: false,
         }}

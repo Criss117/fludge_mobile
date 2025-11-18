@@ -10,22 +10,24 @@ import { FlatList, RefreshControl, View } from "react-native";
 import { EmployeeCard } from "../components/employee-card";
 
 interface Props {
-  businessSlug: string;
+  businessId: string;
   employees: EmployeeSummary[];
   refetch: () => void;
   isPending: boolean;
 }
 
 export function EmployeesScreen({
-  businessSlug,
+  businessId,
   employees,
   isPending,
   refetch,
 }: Props) {
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const [filteredEmployees, setFilteredEmployees] = useState(employees);
 
   const onChangeText = (text: string) => {
     const textToSearch = text.trim().toLowerCase();
+    setSearchTerm(textToSearch);
 
     const filtered = employees.filter((employee) => {
       return (
@@ -44,6 +46,7 @@ export function EmployeesScreen({
         <SearchInput
           placeholder="Buscar empleados"
           onChangeText={onChangeText}
+          value={searchTerm}
         />
       </View>
       <FlatList
@@ -53,7 +56,7 @@ export function EmployeesScreen({
         data={filteredEmployees}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <EmployeeCard employee={item} businessSlug={businessSlug} />
+          <EmployeeCard employee={item} businessId={businessId} />
         )}
         ItemSeparatorComponent={() => <View className="h-4" />}
         ListEmptyComponent={() => (
@@ -65,9 +68,9 @@ export function EmployeesScreen({
       <View className="absolute bottom-4 right-4">
         <Link
           href={{
-            pathname: "/businesses/[businessSlug]/employees/create",
+            pathname: "/businesses/[businessId]/employees/create",
             params: {
-              businessSlug,
+              businessId,
             },
           }}
           asChild

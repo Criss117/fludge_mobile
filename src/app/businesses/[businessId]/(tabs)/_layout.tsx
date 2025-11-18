@@ -10,18 +10,18 @@ import {
 } from "lucide-react-native";
 
 export default function BusinessLayout() {
-  const { businessSlug } = useLocalSearchParams<{
-    businessSlug?: string;
+  const { businessId } = useLocalSearchParams<{
+    businessId?: string;
   }>();
 
-  if (!businessSlug) return null;
+  if (!businessId) return null;
 
   return (
     <Tabs
       screenOptions={{
         header: (props) => (
           <BusinessHeader
-            businessSlug={businessSlug}
+            businessId={businessId}
             bottomTabHeaderProps={props}
           />
         ),

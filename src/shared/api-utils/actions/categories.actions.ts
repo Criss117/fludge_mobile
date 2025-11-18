@@ -5,18 +5,18 @@ import { ENDPOINTS } from "../endpoints";
 import { safeAction } from "../http/safe-action";
 
 type CreateCategory = {
-  businessSlug: string;
+  businessId: string;
   data: CreateCategorySchema;
 };
 
 export class CategoriesActions {
   constructor(private readonly api: API) {}
 
-  public async create({ businessSlug, data }: CreateCategory) {
+  public async create({ businessId, data }: CreateCategory) {
     const response = await safeAction(
       () =>
         this.api.post<CategorySummary[], CreateCategorySchema>(
-          ENDPOINTS.BUSINESSES.CATEGORIES.CREATE(businessSlug),
+          ENDPOINTS.BUSINESSES.CATEGORIES.CREATE(businessId),
           data
         ),
       "Error al crear la categoría"

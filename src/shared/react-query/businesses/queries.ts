@@ -4,11 +4,11 @@ import { queryOptions } from "@tanstack/react-query";
 export class BusinessQueriesOptions {
   constructor(private readonly businessesActions: BusinessesActions) {}
 
-  public findOne(slug: string) {
+  public findOne(businessId: string) {
     return queryOptions({
-      queryKey: ["businesses", slug],
+      queryKey: ["businesses", businessId],
       queryFn: async () => {
-        const response = await this.businessesActions.findOne(slug);
+        const response = await this.businessesActions.findOne(businessId);
 
         if (response.error || !response.data) {
           throw new Error(response.message, {

@@ -12,11 +12,11 @@ export function BusinessListsSection({ business }: Props) {
     <View className="flex gap-y-4">
       <RecentGroupsList
         groups={business.groups.slice(0, 3)}
-        businessSlug={business.slug}
+        businessId={business.id}
       />
       <RecentEmployeesList
         employees={business.employees.slice(0, 3)}
-        businessSlug={business.slug}
+        businessId={business.id}
       />
     </View>
   );

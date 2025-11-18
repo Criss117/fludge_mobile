@@ -2,11 +2,11 @@ import { CreateCategoryScreen } from "@/modules/products/screens/create-category
 import { useGlobalSearchParams } from "expo-router";
 
 export default function CreateCategory() {
-  const { businessSlug } = useGlobalSearchParams<{
-    businessSlug?: string;
+  const { businessId } = useGlobalSearchParams<{
+    businessId?: string;
   }>();
 
-  if (!businessSlug) return null;
+  if (!businessId) return null;
 
-  return <CreateCategoryScreen businessSlug={businessSlug} />;
+  return <CreateCategoryScreen businessId={businessId} />;
 }

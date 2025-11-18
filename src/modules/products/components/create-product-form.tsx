@@ -20,7 +20,7 @@ import { useMutateProducts } from "../hooks/use.mutate-products";
 
 interface RootProps {
   children: React.ReactNode;
-  businessSlug: string;
+  businessId: string;
 }
 
 interface CategoryProps {
@@ -53,7 +53,7 @@ function useCreateProduct() {
   return context;
 }
 
-function Root({ children, businessSlug }: RootProps) {
+function Root({ children, businessId }: RootProps) {
   const { create } = useMutateProducts();
   const router = useRouter();
   const form = useForm<CreateProductSchema>({
@@ -75,15 +75,15 @@ function Root({ children, businessSlug }: RootProps) {
     create.mutate(
       {
         data,
-        businessSlug,
+        businessId,
       },
       {
         onSuccess: () => {
           form.reset();
           router.replace({
-            pathname: "/businesses/[businessSlug]/products",
+            pathname: "/businesses/[businessId]/products",
             params: {
-              businessSlug,
+              businessId,
             },
           });
         },

@@ -10,14 +10,14 @@ import { CategoryCard } from "../components/category-card";
 
 interface Props {
   categories: CategorySummary[];
-  businessSlug: string;
+  businessId: string;
   isPending: boolean;
   refetch: () => void;
 }
 
 export function CategoriesScreen({
   categories,
-  businessSlug,
+  businessId,
   refetch,
   isPending,
 }: Props) {
@@ -55,9 +55,9 @@ export function CategoriesScreen({
       <View className="absolute right-4 bottom-4">
         <Link
           href={{
-            pathname: "/businesses/[businessSlug]/categories/create",
+            pathname: "/businesses/[businessId]/categories/create",
             params: {
-              businessSlug,
+              businessId,
             },
           }}
           push

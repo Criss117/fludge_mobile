@@ -23,9 +23,10 @@ export class BusinessesActions {
     return res;
   }
 
-  public async findOne(slug: string) {
+  public async findOne(businessId: string) {
     const res = await safeAction(
-      () => this.api.get<BusinessDetail>(ENDPOINTS.BUSINESSES.FIND_ONE(slug)),
+      () =>
+        this.api.get<BusinessDetail>(ENDPOINTS.BUSINESSES.FIND_ONE(businessId)),
       "Error al buscar negocio"
     );
 

@@ -22,13 +22,13 @@ import { ActivityIndicator, FlatList, View } from "react-native";
 import { useMutateEmployees } from "../hooks/use.mutate-employees";
 
 interface Props {
-  businessSlug: string;
+  businessId: string;
   employee: EmployeeDetail;
 }
 
-export function AssignGroupsDialog({ businessSlug, employee }: Props) {
+export function AssignGroupsDialog({ businessId, employee }: Props) {
   const { data: business } = useSuspenseQuery(
-    businessQueriesOptions.findOne(businessSlug)
+    businessQueriesOptions.findOne(businessId)
   );
   const { assignGroups } = useMutateEmployees();
   const [open, setOpen] = useState(false);
@@ -60,7 +60,7 @@ export function AssignGroupsDialog({ businessSlug, employee }: Props) {
 
     assignGroups.mutate(
       {
-        businessSlug,
+        businessId,
         employeeId: employee.id,
         data: {
           groupIds: selectedGroupIds,

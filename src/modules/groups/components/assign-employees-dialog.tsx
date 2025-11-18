@@ -59,7 +59,7 @@ export function AssignEmployeesDialog({ group }: Props) {
 
     assignEmployees.mutate(
       {
-        businessSlug: group.business.slug,
+        businessId: group.business.id,
         groupId: group.id,
         values: {
           employeeIds: selectedEmployeeIds,

@@ -10,10 +10,10 @@ import { safeAction } from "../http/safe-action";
 export class GroupsActions {
   constructor(private readonly api: API) {}
 
-  public async create(businessSlug: string, data: CreateGroupSchema) {
+  public async create(businessId: string, data: CreateGroupSchema) {
     const response = await safeAction(() =>
       this.api.post<GroupSummary, CreateGroupSchema>(
-        ENDPOINTS.BUSINESSES.GROUPS.CREATE(businessSlug),
+        ENDPOINTS.BUSINESSES.GROUPS.CREATE(businessId),
         data
       )
     );
@@ -22,13 +22,13 @@ export class GroupsActions {
   }
 
   public async update(
-    businessSlug: string,
+    businessId: string,
     groupId: string,
     values: UpdateGroupSchema
   ) {
     const response = await safeAction(() =>
       this.api.patch<GroupSummary, UpdateGroupSchema>(
-        ENDPOINTS.BUSINESSES.GROUPS.UPDATE(businessSlug, groupId),
+        ENDPOINTS.BUSINESSES.GROUPS.UPDATE(businessId, groupId),
         values
       )
     );
@@ -36,10 +36,10 @@ export class GroupsActions {
     return response;
   }
 
-  public async findOne(businessSlug: string, groupId: string) {
+  public async findOne(businessId: string, groupId: string) {
     const response = await safeAction(() =>
       this.api.get<GroupDetail>(
-        ENDPOINTS.BUSINESSES.GROUPS.FIND_ONE(businessSlug, groupId)
+        ENDPOINTS.BUSINESSES.GROUPS.FIND_ONE(businessId, groupId)
       )
     );
 
@@ -47,13 +47,13 @@ export class GroupsActions {
   }
 
   public async addPermissions(
-    businessSlug: string,
+    businessId: string,
     groupId: string,
     values: EnsurePermissionsSchema
   ) {
     const response = await safeAction(() =>
       this.api.patch<null, EnsurePermissionsSchema>(
-        ENDPOINTS.BUSINESSES.GROUPS.ADD_PERMISSION(businessSlug, groupId),
+        ENDPOINTS.BUSINESSES.GROUPS.ADD_PERMISSION(businessId, groupId),
         values
       )
     );
@@ -62,13 +62,13 @@ export class GroupsActions {
   }
 
   public async removePermissions(
-    businessSlug: string,
+    businessId: string,
     groupId: string,
     values: EnsurePermissionsSchema
   ) {
     const response = await safeAction(() =>
       this.api.delete<null, EnsurePermissionsSchema>(
-        ENDPOINTS.BUSINESSES.GROUPS.REMOVE_PERMISSION(businessSlug, groupId),
+        ENDPOINTS.BUSINESSES.GROUPS.REMOVE_PERMISSION(businessId, groupId),
         values
       )
     );
@@ -77,13 +77,13 @@ export class GroupsActions {
   }
 
   public async assignEmployees(
-    businessSlug: string,
+    businessId: string,
     groupId: string,
     values: EnsureEmployeeIdsSchema
   ) {
     const response = await safeAction(() =>
       this.api.post<null, EnsureEmployeeIdsSchema>(
-        ENDPOINTS.BUSINESSES.GROUPS.ASSING_EMPLOYEES(businessSlug, groupId),
+        ENDPOINTS.BUSINESSES.GROUPS.ASSING_EMPLOYEES(businessId, groupId),
         values
       )
     );
@@ -92,13 +92,13 @@ export class GroupsActions {
   }
 
   public async removeEmployees(
-    businessSlug: string,
+    businessId: string,
     groupId: string,
     values: EnsureEmployeeIdsSchema
   ) {
     const response = await safeAction(() =>
       this.api.delete<null, EnsureEmployeeIdsSchema>(
-        ENDPOINTS.BUSINESSES.GROUPS.REMOVE_EMPLOYEES(businessSlug, groupId),
+        ENDPOINTS.BUSINESSES.GROUPS.REMOVE_EMPLOYEES(businessId, groupId),
         values
       )
     );

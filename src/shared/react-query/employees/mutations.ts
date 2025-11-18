@@ -4,12 +4,12 @@ import { EnsureGroupIdsSchema } from "@/shared/schemas/employees/ensure-group-id
 import { mutationOptions } from "@tanstack/react-query";
 
 type CreateEmployeeParams = {
-  businessSlug: string;
+  businessId: string;
   data: CreateEmployeeSchema;
 };
 
 type AssignOrRemoveGroupParams = {
-  businessSlug: string;
+  businessId: string;
   employeeId: string;
   data: EnsureGroupIdsSchema;
 };
@@ -20,8 +20,8 @@ export class EmployeesMutationsOptions {
   public create() {
     return mutationOptions({
       mutationKey: ["businesses", "employees", "create"],
-      mutationFn: async ({ businessSlug, data }: CreateEmployeeParams) => {
-        const response = await this.employeesActions.create(businessSlug, data);
+      mutationFn: async ({ businessId, data }: CreateEmployeeParams) => {
+        const response = await this.employeesActions.create(businessId, data);
 
         if (response.error) {
           throw new Error(response.message, {
@@ -38,12 +38,12 @@ export class EmployeesMutationsOptions {
     return mutationOptions({
       mutationKey: ["businesses", "employees", "assign-groups"],
       mutationFn: async ({
-        businessSlug,
+        businessId,
         employeeId,
         data,
       }: AssignOrRemoveGroupParams) => {
         const response = await this.employeesActions.assignGroup(
-          businessSlug,
+          businessId,
           employeeId,
           data
         );
@@ -63,12 +63,12 @@ export class EmployeesMutationsOptions {
     return mutationOptions({
       mutationKey: ["businesses", "employees", "remove-groups"],
       mutationFn: async ({
-        businessSlug,
+        businessId,
         employeeId,
         data,
       }: AssignOrRemoveGroupParams) => {
         const response = await this.employeesActions.removeGroup(
-          businessSlug,
+          businessId,
           employeeId,
           data
         );

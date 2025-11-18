@@ -11,7 +11,7 @@ export function useMutateCategories() {
     ...categoriesMutationsOptions.create(),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries(
-        businessQueriesOptions.findOne(variables.businessSlug)
+        businessQueriesOptions.findOne(variables.businessId)
       );
     },
   });

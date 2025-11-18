@@ -10,10 +10,10 @@ import { MoreVerticalIcon } from "lucide-react-native";
 
 interface Props {
   employee: EmployeeSummary;
-  businessSlug: string;
+  businessId: string;
 }
 
-export function EmployeeActions({ businessSlug, employee }: Props) {
+export function EmployeeActions({ businessId, employee }: Props) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

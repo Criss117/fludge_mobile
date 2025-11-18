@@ -13,10 +13,10 @@ import { View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 
 interface Props {
-  businessSlug: string;
+  businessId: string;
 }
 
-export function CreateEmployeeScreen({ businessSlug }: Props) {
+export function CreateEmployeeScreen({ businessId }: Props) {
   return (
     <KeyboardAwareScrollView>
       <View className="px-2 flex gap-y-4 pt-4 pb-8">
@@ -28,7 +28,7 @@ export function CreateEmployeeScreen({ businessSlug }: Props) {
             </CardDescription>
           </CardHeader>
         </Card>
-        <EmployeeForm.Root businessSlug={businessSlug}>
+        <EmployeeForm.Root businessId={businessId}>
           <Card>
             <CardHeader className="flex flex-row gap-x-2 items-center">
               <View className="bg-primary/10 p-1 rounded-md">

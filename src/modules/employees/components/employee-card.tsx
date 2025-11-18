@@ -24,10 +24,10 @@ import { EmployeeActions } from "./employee-actions";
 
 interface Props {
   employee: EmployeeSummary;
-  businessSlug: string;
+  businessId: string;
 }
 
-export function EmployeeCard({ employee, businessSlug }: Props) {
+export function EmployeeCard({ employee, businessId }: Props) {
   const router = useRouter();
 
   return (
@@ -35,9 +35,9 @@ export function EmployeeCard({ employee, businessSlug }: Props) {
       activeOpacity={0.6}
       onPress={() =>
         router.push({
-          pathname: "/businesses/[businessSlug]/employees/[employeeId]",
+          pathname: "/businesses/[businessId]/employees/[employeeId]",
           params: {
-            businessSlug,
+            businessId,
             employeeId: employee.id,
           },
         })
@@ -67,7 +67,7 @@ export function EmployeeCard({ employee, businessSlug }: Props) {
               <CardDescription>{employee.user.email}</CardDescription>
             </View>
           </View>
-          <EmployeeActions businessSlug={businessSlug} employee={employee} />
+          <EmployeeActions businessId={businessId} employee={employee} />
         </CardHeader>
         <Separator />
         <CardContent>

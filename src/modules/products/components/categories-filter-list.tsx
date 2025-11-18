@@ -8,7 +8,7 @@ import { useProductsFilters } from "../hooks/products-filters";
 
 interface Props {
   categories: CategorySummary[];
-  businessSlug: string;
+  businessId: string;
 }
 
 interface CategoryBadgeProps {

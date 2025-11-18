@@ -27,7 +27,7 @@ interface Context {
 }
 
 interface RootProps {
-  businessSlug: string;
+  businessId: string;
   children: React.ReactNode;
 }
 
@@ -50,7 +50,7 @@ function useCreateGroupForm() {
   return context;
 }
 
-function Root({ children, businessSlug }: RootProps) {
+function Root({ children, businessId }: RootProps) {
   const { create } = useMutateGroups();
   const router = useRouter();
   const form = useForm<CreateGroupSchema>({
@@ -65,7 +65,7 @@ function Root({ children, businessSlug }: RootProps) {
   const onSubmit = form.handleSubmit((data) => {
     create.mutate(
       {
-        businessSlug,
+        businessId,
         data,
       },
       {
@@ -74,9 +74,9 @@ function Root({ children, businessSlug }: RootProps) {
 
           form.reset();
           router.push({
-            pathname: "/businesses/[businessSlug]/groups/[groupId]",
+            pathname: "/businesses/[businessId]/groups/[groupId]",
             params: {
-              businessSlug,
+              businessId,
               groupId: createdGroup.id,
             },
           });

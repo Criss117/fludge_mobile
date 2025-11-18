@@ -10,22 +10,24 @@ import { FlatList, RefreshControl, View } from "react-native";
 import { GroupCard } from "../components/group-card";
 
 interface Props {
-  businessSlug: string;
+  businessId: string;
   groups: GroupSummary[];
   isPending: boolean;
   refetch: () => void;
 }
 
 export function GroupsScreen({
-  businessSlug,
+  businessId,
   groups,
   isPending,
   refetch,
 }: Props) {
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const [filteredGroups, setFilteredGroups] = useState(groups);
 
   const onChanfeText = (text: string) => {
     const textToSearch = text.trim().toLowerCase();
+    setSearchTerm(textToSearch);
 
     const filtered = groups.filter((group) => {
       return group.name.toLowerCase().includes(textToSearch);
@@ -37,13 +39,17 @@ export function GroupsScreen({
   return (
     <View className="px-2 flex gap-y-2 flex-1">
       <View className="py-2">
-        <SearchInput placeholder="Buscar grupos" onChangeText={onChanfeText} />
+        <SearchInput
+          placeholder="Buscar grupos"
+          onChangeText={onChanfeText}
+          value={searchTerm}
+        />
       </View>
       <FlatList
         data={filteredGroups}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <GroupCard group={item} businessSlug={businessSlug} />
+          <GroupCard group={item} businessId={businessId} />
         )}
         ItemSeparatorComponent={() => <View className="h-4" />}
         ListEmptyComponent={() => (
@@ -58,9 +64,9 @@ export function GroupsScreen({
       <View className="absolute bottom-4 right-4">
         <Link
           href={{
-            pathname: "/businesses/[businessSlug]/groups/create",
+            pathname: "/businesses/[businessId]/groups/create",
             params: {
-              businessSlug,
+              businessId,
             },
           }}
           asChild

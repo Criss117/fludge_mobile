@@ -26,7 +26,7 @@ interface RootProps {
 }
 
 interface RemoveEmployeesAlertProps {
-  businessSlug: string;
+  businessId: string;
   groupId: string;
 }
 
@@ -80,7 +80,7 @@ function Root({ children, employees }: RootProps) {
 }
 
 function RemoveEmployeesAlert({
-  businessSlug,
+  businessId,
   groupId,
 }: RemoveEmployeesAlertProps) {
   const [open, setOpen] = useState(false);
@@ -92,7 +92,7 @@ function RemoveEmployeesAlert({
 
     removeEmployees.mutate(
       {
-        businessSlug,
+        businessId,
         groupId,
         values: {
           employeeIds: selectedEmployeeIds,

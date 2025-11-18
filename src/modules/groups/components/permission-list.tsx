@@ -26,7 +26,7 @@ interface RootProps {
 }
 
 interface RemovePermissionsAlertProps {
-  businessSlug: string;
+  businessId: string;
   groupId: string;
 }
 
@@ -82,7 +82,7 @@ function Root({ children, permissions }: RootProps) {
 }
 
 function RemovePermissionsAlert({
-  businessSlug,
+  businessId,
   groupId,
 }: RemovePermissionsAlertProps) {
   const [open, setOpen] = useState(false);
@@ -94,7 +94,7 @@ function RemovePermissionsAlert({
 
     removePermissions.mutate(
       {
-        businessSlug,
+        businessId,
         groupId,
         values: {
           permissions: selectedPermissions,

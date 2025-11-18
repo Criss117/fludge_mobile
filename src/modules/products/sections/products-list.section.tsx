@@ -13,10 +13,10 @@ import { ProductCard } from "../components/product-card";
 import { useProductsFilters } from "../hooks/products-filters";
 
 interface Props {
-  businessSlug: string;
+  businessId: string;
 }
 
-function ProductsListSectionSuspense({ businessSlug }: Props) {
+function ProductsListSectionSuspense({ businessId }: Props) {
   const { filters } = useProductsFilters();
 
   const {
@@ -28,7 +28,7 @@ function ProductsListSectionSuspense({ businessSlug }: Props) {
     isRefetching,
   } = useSuspenseInfiniteQuery(
     productsQueriesOptions.findMany({
-      businessSlug,
+      businessId,
       params: {
         limit: filters.limit,
         name: filters.name ?? undefined,
@@ -58,7 +58,7 @@ function ProductsListSectionSuspense({ businessSlug }: Props) {
             <ProductCard
               product={item}
               className="flex-1 mx-0.5"
-              businessSlug={businessSlug}
+              businessId={businessId}
             />
           )}
           {item.empty && <View className="flex-1 mx-0.5 " />}
@@ -83,10 +83,10 @@ function ProductsListSectionSuspense({ businessSlug }: Props) {
   );
 }
 
-export function ProductsListSection({ businessSlug }: Props) {
+export function ProductsListSection({ businessId }: Props) {
   return (
     <Suspense fallback={<Text>Loading Products...</Text>}>
-      <ProductsListSectionSuspense businessSlug={businessSlug} />
+      <ProductsListSectionSuspense businessId={businessId} />
     </Suspense>
   );
 }

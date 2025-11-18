@@ -4,14 +4,11 @@ import { queryOptions } from "@tanstack/react-query";
 export class GroupsQueriesOptions {
   constructor(private readonly groupsActions: GroupsActions) {}
 
-  public findOne(businessSlug: string, groupId: string) {
+  public findOne(businessId: string, groupId: string) {
     return queryOptions({
-      queryKey: ["busineses", businessSlug, "groups", groupId],
+      queryKey: ["busineses", businessId, "groups", groupId],
       queryFn: async () => {
-        const response = await this.groupsActions.findOne(
-          businessSlug,
-          groupId
-        );
+        const response = await this.groupsActions.findOne(businessId, groupId);
 
         if (response.error || !response.data) {
           throw new Error(response.message, {

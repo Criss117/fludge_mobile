@@ -12,10 +12,10 @@ import { GroupsList } from "../components/groups-list";
 
 interface Props {
   employee: EmployeeDetail;
-  businessSlug: string;
+  businessId: string;
 }
 
-function Header({ businessSlug, employee }: Props) {
+function Header({ businessId, employee }: Props) {
   const { selectedGroupsIds } = GroupsList.useGroupsListContext();
   const { hasPermission } = usePermissions();
 
@@ -30,11 +30,11 @@ function Header({ businessSlug, employee }: Props) {
       </Text>
       <View className="flex flex-row gap-x-2">
         {userCanUpdateEmployee && (
-          <AssignGroupsDialog businessSlug={businessSlug} employee={employee} />
+          <AssignGroupsDialog businessId={businessId} employee={employee} />
         )}
         {userCanUpdateEmployee && (
           <GroupsList.RemoveGroupsAlert
-            businessSlug={businessSlug}
+            businessId={businessId}
             employeeId={employee.id}
           />
         )}
@@ -43,11 +43,11 @@ function Header({ businessSlug, employee }: Props) {
   );
 }
 
-export function AssignedGroupsSection({ employee, businessSlug }: Props) {
+export function AssignedGroupsSection({ employee, businessId }: Props) {
   return (
     <View className="flex gap-y-2">
       <GroupsList.Root groups={employee.groups}>
-        <Header businessSlug={businessSlug} employee={employee} />
+        <Header businessId={businessId} employee={employee} />
         <Card>
           <CardContent className="flex gap-y-2">
             <GroupsList.List />

@@ -52,9 +52,9 @@ export function BusinessCardsInfoSection({ business }: Props) {
       description: "Clientes registrados",
       amount: 0,
       href: {
-        pathname: "/businesses/[businessSlug]/(tabs)/clients",
+        pathname: "/businesses/[businessId]/(tabs)/clients",
         params: {
-          businessSlug: business.slug,
+          businessId: business.id,
         },
       },
     },
@@ -63,9 +63,9 @@ export function BusinessCardsInfoSection({ business }: Props) {
       description: "Productos registrados",
       amount: 0,
       href: {
-        pathname: "/businesses/[businessSlug]/(tabs)/products",
+        pathname: "/businesses/[businessId]/(tabs)/products",
         params: {
-          businessSlug: business.slug,
+          businessId: business.id,
         },
       },
     },
@@ -74,9 +74,9 @@ export function BusinessCardsInfoSection({ business }: Props) {
       description: "Empleados totales",
       amount: business.employees.length,
       href: {
-        pathname: "/businesses/[businessSlug]/(tabs)/management",
+        pathname: "/businesses/[businessId]/(tabs)/management",
         params: {
-          businessSlug: business.slug,
+          businessId: business.id,
         },
       },
     },
@@ -85,9 +85,9 @@ export function BusinessCardsInfoSection({ business }: Props) {
       description: "Grupos de permisos",
       amount: business.employees.length,
       href: {
-        pathname: "/businesses/[businessSlug]/(tabs)/management/groups",
+        pathname: "/businesses/[businessId]/(tabs)/management/groups",
         params: {
-          businessSlug: business.slug,
+          businessId: business.id,
         },
       },
     },

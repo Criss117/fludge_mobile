@@ -26,7 +26,7 @@ interface RootProps {
 }
 
 interface RemoveGroupsAlertProps {
-  businessSlug: string;
+  businessId: string;
   employeeId: string;
 }
 
@@ -96,10 +96,7 @@ function List() {
   );
 }
 
-function RemoveGroupsAlert({
-  businessSlug,
-  employeeId,
-}: RemoveGroupsAlertProps) {
+function RemoveGroupsAlert({ businessId, employeeId }: RemoveGroupsAlertProps) {
   const [open, setOpen] = useState(false);
   const { removeGroups } = useMutateEmployees();
   const { selectedGroupsIds, clearState } = useGroupsListContext();
@@ -109,7 +106,7 @@ function RemoveGroupsAlert({
 
     removeGroups.mutate(
       {
-        businessSlug,
+        businessId,
         employeeId,
         data: {
           groupIds: selectedGroupsIds,

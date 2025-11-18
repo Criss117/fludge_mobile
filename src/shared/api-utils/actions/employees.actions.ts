@@ -8,10 +8,10 @@ import { safeAction } from "../http/safe-action";
 export class EmployeesActions {
   constructor(private readonly api: API) {}
 
-  public async create(businessSlug: string, data: CreateEmployeeSchema) {
+  public async create(businessId: string, data: CreateEmployeeSchema) {
     const response = await safeAction(() =>
       this.api.post<EmployeeDetail, CreateEmployeeSchema>(
-        ENDPOINTS.BUSINESSES.EMPLOYEES.CREATE(businessSlug),
+        ENDPOINTS.BUSINESSES.EMPLOYEES.CREATE(businessId),
         data
       )
     );
@@ -19,10 +19,10 @@ export class EmployeesActions {
     return response;
   }
 
-  public async findOne(businessSlug: string, employeeId: string) {
+  public async findOne(businessId: string, employeeId: string) {
     const response = await safeAction(() =>
       this.api.get<EmployeeDetail>(
-        ENDPOINTS.BUSINESSES.EMPLOYEES.FIND_ONE(businessSlug, employeeId)
+        ENDPOINTS.BUSINESSES.EMPLOYEES.FIND_ONE(businessId, employeeId)
       )
     );
 
@@ -30,13 +30,13 @@ export class EmployeesActions {
   }
 
   public async assignGroup(
-    businessSlug: string,
+    businessId: string,
     employeeId: string,
     values: EnsureGroupIdsSchema
   ) {
     const response = await safeAction(() =>
       this.api.post<null, EnsureGroupIdsSchema>(
-        ENDPOINTS.BUSINESSES.EMPLOYEES.ASSIGN_GROUP(businessSlug, employeeId),
+        ENDPOINTS.BUSINESSES.EMPLOYEES.ASSIGN_GROUP(businessId, employeeId),
         values
       )
     );
@@ -45,13 +45,13 @@ export class EmployeesActions {
   }
 
   public async removeGroup(
-    businessSlug: string,
+    businessId: string,
     employeeId: string,
     values: EnsureGroupIdsSchema
   ) {
     const response = await safeAction(() =>
       this.api.delete<null, EnsureGroupIdsSchema>(
-        ENDPOINTS.BUSINESSES.EMPLOYEES.REMOVE_GROUP(businessSlug, employeeId),
+        ENDPOINTS.BUSINESSES.EMPLOYEES.REMOVE_GROUP(businessId, employeeId),
         values
       )
     );

@@ -13,10 +13,10 @@ import { TouchableOpacity } from "react-native";
 
 interface Props {
   groups: GroupSummary[];
-  businessSlug: string;
+  businessId: string;
 }
 
-export function RecentGroupsList({ groups, businessSlug }: Props) {
+export function RecentGroupsList({ groups, businessId }: Props) {
   const router = useRouter();
 
   return (
@@ -32,9 +32,9 @@ export function RecentGroupsList({ groups, businessSlug }: Props) {
             key={group.id}
             onPress={() =>
               router.push({
-                pathname: "/businesses/[businessSlug]/groups/[groupId]",
+                pathname: "/businesses/[businessId]/groups/[groupId]",
                 params: {
-                  businessSlug,
+                  businessId,
                   groupId: group.id,
                 },
               })

@@ -12,7 +12,7 @@ import { ScrollView } from "react-native";
 import { CreateGroupForm } from "../components/create-group-form";
 
 interface Props {
-  businessSlug: string;
+  businessId: string;
 }
 
 function PermissionsList() {
@@ -39,9 +39,9 @@ function PermissionsList() {
   );
 }
 
-export function CreateGroupScreen({ businessSlug }: Props) {
+export function CreateGroupScreen({ businessId }: Props) {
   const { data: business } = useSuspenseQuery(
-    businessQueriesOptions.findOne(businessSlug)
+    businessQueriesOptions.findOne(businessId)
   );
 
   const businessHasDefaultGroup = business?.groups.some(
@@ -50,7 +50,7 @@ export function CreateGroupScreen({ businessSlug }: Props) {
 
   return (
     <ScrollView className="px-2">
-      <CreateGroupForm.Root businessSlug={businessSlug}>
+      <CreateGroupForm.Root businessId={businessId}>
         <FieldSet className="flex gap-y-2 pt-4 pb-10">
           <CreateGroupForm.Name />
           <CreateGroupForm.Description />

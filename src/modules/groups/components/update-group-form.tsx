@@ -22,7 +22,7 @@ interface Context {
 interface RootProps {
   children: React.ReactNode;
   group: GroupSummary;
-  businessSlug: string;
+  businessId: string;
   actions?: {
     onSuccess?: () => void;
   };
@@ -40,7 +40,7 @@ function useUpdateGroupForm() {
   return context;
 }
 
-function Root({ children, group, businessSlug, actions }: RootProps) {
+function Root({ children, group, businessId, actions }: RootProps) {
   const { update } = useMutateGroups();
   const form = useForm<UpdateGroupSchema>({
     resolver: zodResolver(updateGroupSchema),
@@ -53,7 +53,7 @@ function Root({ children, group, businessSlug, actions }: RootProps) {
   const onSubmit = form.handleSubmit(async (values) => {
     update.mutate(
       {
-        businessSlug: businessSlug,
+        businessId,
         groupId: group.id,
         values: {
           name: values.name,

@@ -5,13 +5,13 @@ import { useLocalSearchParams } from "expo-router";
 import { View } from "react-native";
 
 function Screen() {
-  const { businessSlug } = useLocalSearchParams<{
-    businessSlug?: string;
+  const { businessId } = useLocalSearchParams<{
+    businessId?: string;
   }>();
 
-  if (!businessSlug) return null;
+  if (!businessId) return null;
 
-  return <CreateGroupScreen businessSlug={businessSlug} />;
+  return <CreateGroupScreen businessId={businessId} />;
 }
 
 export default function CreateGroup() {

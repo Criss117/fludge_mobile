@@ -13,15 +13,15 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { CreateProductForm } from "../components/create-product-form";
 
 interface Props {
-  businessSlug: string;
+  businessId: string;
   categories: CategorySummary[];
 }
 
-export function CreateProductScreen({ businessSlug, categories }: Props) {
+export function CreateProductScreen({ businessId, categories }: Props) {
   return (
     <KeyboardAwareScrollView>
       <View className="flex gap-y-4 px-2 pt-5 pb-10">
-        <CreateProductForm.Root businessSlug={businessSlug}>
+        <CreateProductForm.Root businessId={businessId}>
           <Card>
             <CardHeader className="flex flex-row gap-x-2 items-center">
               <Icon as={CheckCircle} size={20} />

@@ -13,7 +13,6 @@ import { Separator } from "@/modules/shared/components/ui/separator";
 import { Text } from "@/modules/shared/components/ui/text";
 import { Link, Redirect, useRouter } from "expo-router";
 import { ChevronRight, MapPin } from "lucide-react-native";
-import React from "react";
 import { FlatList, Pressable, View } from "react-native";
 
 export default function Select() {
@@ -48,9 +47,9 @@ export default function Select() {
         <Pressable
           onPress={() => {
             router.replace({
-              pathname: "/businesses/[businessSlug]",
+              pathname: "/businesses/[businessId]",
               params: {
-                businessSlug: item.slug,
+                businessId: item.id,
               },
             });
           }}

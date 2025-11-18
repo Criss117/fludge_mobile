@@ -52,7 +52,7 @@ export function AddPermissionsDialog({ group }: Props) {
 
     addPermissions.mutate(
       {
-        businessSlug: group.business.slug,
+        businessId: group.business.id,
         groupId: group.id,
         values: {
           permissions: selectedPermissions,

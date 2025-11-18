@@ -15,10 +15,10 @@ import { GroupActions } from "./group-actions";
 
 interface Props {
   group: GroupSummary;
-  businessSlug: string;
+  businessId: string;
 }
 
-export function GroupCard({ group, businessSlug }: Props) {
+export function GroupCard({ group, businessId }: Props) {
   const router = useRouter();
 
   return (
@@ -26,9 +26,9 @@ export function GroupCard({ group, businessSlug }: Props) {
       activeOpacity={0.6}
       onPress={() =>
         router.push({
-          pathname: "/businesses/[businessSlug]/groups/[groupId]",
+          pathname: "/businesses/[businessId]/groups/[groupId]",
           params: {
-            businessSlug,
+            businessId,
             groupId: group.id,
           },
         })
@@ -48,7 +48,7 @@ export function GroupCard({ group, businessSlug }: Props) {
           </View>
           {/* TODO: Implement this */}
           <View className="flex-shrink-0">
-            <GroupActions group={group} businessSlug={businessSlug} />
+            <GroupActions group={group} businessId={businessId} />
           </View>
         </CardHeader>
         <Separator />

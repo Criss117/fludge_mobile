@@ -9,19 +9,19 @@ import { Suspense } from "react";
 import { View } from "react-native";
 
 interface Props {
-  businessSlug: string;
-  productSlug: string;
+  businessId: string;
+  productId: string;
 }
 
-function ProductSuspense({ businessSlug, productSlug }: Props) {
+function ProductSuspense({ businessId, productId }: Props) {
   const {
     data: product,
     isRefetching,
     refetch,
   } = useSuspenseQuery(
     productsQueriesOptions.findOne({
-      businessSlug,
-      productSlug,
+      businessId,
+      productId,
     })
   );
 
@@ -43,12 +43,12 @@ function ProductSuspense({ businessSlug, productSlug }: Props) {
 
 export default function Product() {
   const { hasPermission } = usePermissions();
-  const { businessSlug, productSlug } = useGlobalSearchParams<{
-    businessSlug?: string;
-    productSlug?: string;
+  const { businessId, productId } = useGlobalSearchParams<{
+    businessId?: string;
+    productId?: string;
   }>();
 
-  if (!businessSlug || !productSlug) return null;
+  if (!businessId || !productId) return null;
 
   const userCanReadProduct = hasPermission("products:read");
 
@@ -63,7 +63,7 @@ export default function Product() {
 
   return (
     <Suspense fallback={<Text>Loading...</Text>}>
-      <ProductSuspense businessSlug={businessSlug} productSlug={productSlug} />
+      <ProductSuspense businessId={businessId} productId={productId} />
     </Suspense>
   );
 }

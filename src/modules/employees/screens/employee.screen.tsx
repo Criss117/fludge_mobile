@@ -19,7 +19,7 @@ import {
 
 interface Props {
   employee: EmployeeDetail;
-  businessSlug: string;
+  businessId: string;
   isPending: boolean;
   refetch: () => void;
 }
@@ -28,7 +28,7 @@ export function EmployeeScreen({
   employee,
   isPending,
   refetch,
-  businessSlug,
+  businessId,
 }: Props) {
   return (
     <ScrollView
@@ -39,10 +39,7 @@ export function EmployeeScreen({
       <View className="flex-1 gap-y-7 px-2 pt-4 pb-8">
         <EmployeeHeaderSection employee={employee} />
         <LaboralInformationSection employee={employee} />
-        <AssignedGroupsSection
-          employee={employee}
-          businessSlug={businessSlug}
-        />
+        <AssignedGroupsSection employee={employee} businessId={businessId} />
         <EmployeeSystemInformationSection employee={employee} />
       </View>
     </ScrollView>

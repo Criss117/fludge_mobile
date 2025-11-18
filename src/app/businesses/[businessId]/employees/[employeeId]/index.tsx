@@ -12,18 +12,16 @@ import { Suspense } from "react";
 import { View } from "react-native";
 
 interface Props {
-  businessSlug: string;
+  businessId: string;
   employeeId: string;
 }
 
-function EmployeeSuspense({ businessSlug, employeeId }: Props) {
+function EmployeeSuspense({ businessId, employeeId }: Props) {
   const {
     data: employee,
     isRefetching,
     refetch,
-  } = useSuspenseQuery(
-    employeesQueriesOptions.findOne(businessSlug, employeeId)
-  );
+  } = useSuspenseQuery(employeesQueriesOptions.findOne(businessId, employeeId));
 
   return (
     <>
@@ -31,12 +29,12 @@ function EmployeeSuspense({ businessSlug, employeeId }: Props) {
         options={{
           title: `${employee.user.firstName} ${employee.user.lastName}`,
           headerRight: () => (
-            <EmployeeActions businessSlug={businessSlug} employee={employee} />
+            <EmployeeActions businessId={businessId} employee={employee} />
           ),
         }}
       />
       <EmployeeScreen
-        businessSlug={businessSlug}
+        businessId={businessId}
         employee={employee}
         isPending={isRefetching}
         refetch={refetch}
@@ -46,16 +44,16 @@ function EmployeeSuspense({ businessSlug, employeeId }: Props) {
 }
 
 function Screen() {
-  const { businessSlug, employeeId } = useGlobalSearchParams<{
-    businessSlug?: string;
+  const { businessId, employeeId } = useGlobalSearchParams<{
+    businessId?: string;
     employeeId?: string;
   }>();
 
-  if (!businessSlug || !employeeId) return null;
+  if (!businessId || !employeeId) return null;
 
   return (
     <Suspense fallback={<EmployeeScreenSkeleton />}>
-      <EmployeeSuspense businessSlug={businessSlug} employeeId={employeeId} />
+      <EmployeeSuspense businessId={businessId} employeeId={employeeId} />
     </Suspense>
   );
 }

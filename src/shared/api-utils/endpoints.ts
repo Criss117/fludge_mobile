@@ -13,47 +13,47 @@ export const ENDPOINTS = {
   },
   BUSINESSES: {
     CREATE: "/businesses",
-    FIND_ONE: (businessSlug: string) =>
-      `/businesses/${businessSlug}` as `/businesses/${string}`,
+    FIND_ONE: (businessId: string) =>
+      `/businesses/${businessId}` as `/businesses/${string}`,
     GROUPS: {
       CREATE: (businessSlig: string) =>
         `/businesses/${businessSlig}/groups` as `/businesses/${string}/groups`,
-      UPDATE: (businessSlug: string, groupId: string) =>
-        `/businesses/${businessSlug}/groups/${groupId}` as `/businesses/${string}/groups/${string}`,
-      FIND_ONE: (businessSlug: string, groupId: string) =>
-        `/businesses/${businessSlug}/groups/${groupId}` as `/businesses/${string}/groups/${string}`,
-      ADD_PERMISSION: (businessSlug: string, groupId: string) =>
-        `/businesses/${businessSlug}/groups/${groupId}/permissions` as `/businesses/${string}/groups/${string}/permissions`,
-      REMOVE_PERMISSION: (businessSlug: string, groupId: string) =>
-        `/businesses/${businessSlug}/groups/${groupId}/permissions` as `/businesses/${string}/groups/${string}/permissions`,
-      ASSING_EMPLOYEES: (businessSlug: string, groupId: string) =>
-        `/businesses/${businessSlug}/groups/${groupId}/employees` as `/businesses/${string}/groups/${string}/employees`,
-      REMOVE_EMPLOYEES: (businessSlug: string, groupId: string) =>
-        `/businesses/${businessSlug}/groups/${groupId}/employees` as `/businesses/${string}/groups/${string}/employees`,
+      UPDATE: (businessId: string, groupId: string) =>
+        `/businesses/${businessId}/groups/${groupId}` as `/businesses/${string}/groups/${string}`,
+      FIND_ONE: (businessId: string, groupId: string) =>
+        `/businesses/${businessId}/groups/${groupId}` as `/businesses/${string}/groups/${string}`,
+      ADD_PERMISSION: (businessId: string, groupId: string) =>
+        `/businesses/${businessId}/groups/${groupId}/permissions` as `/businesses/${string}/groups/${string}/permissions`,
+      REMOVE_PERMISSION: (businessId: string, groupId: string) =>
+        `/businesses/${businessId}/groups/${groupId}/permissions` as `/businesses/${string}/groups/${string}/permissions`,
+      ASSING_EMPLOYEES: (businessId: string, groupId: string) =>
+        `/businesses/${businessId}/groups/${groupId}/employees` as `/businesses/${string}/groups/${string}/employees`,
+      REMOVE_EMPLOYEES: (businessId: string, groupId: string) =>
+        `/businesses/${businessId}/groups/${groupId}/employees` as `/businesses/${string}/groups/${string}/employees`,
     },
     EMPLOYEES: {
-      CREATE: (businessSlug: string) =>
-        `/businesses/${businessSlug}/employees` as `/businesses/${string}/employees`,
-      FIND_ONE: (businessSlug: string, employeeId: string) =>
-        `/businesses/${businessSlug}/employees/${employeeId}` as `/businesses/${string}/employees/${string}`,
-      ASSIGN_GROUP: (businessSlug: string, employeeId: string) =>
-        `/businesses/${businessSlug}/employees/${employeeId}/groups` as `/businesses/${string}/employees/${string}/groups`,
-      REMOVE_GROUP: (businessSlug: string, employeeId: string) =>
-        `/businesses/${businessSlug}/employees/${employeeId}/groups` as `/businesses/${string}/employees/${string}/groups`,
+      CREATE: (businessId: string) =>
+        `/businesses/${businessId}/employees` as `/businesses/${string}/employees`,
+      FIND_ONE: (businessId: string, employeeId: string) =>
+        `/businesses/${businessId}/employees/${employeeId}` as `/businesses/${string}/employees/${string}`,
+      ASSIGN_GROUP: (businessId: string, employeeId: string) =>
+        `/businesses/${businessId}/employees/${employeeId}/groups` as `/businesses/${string}/employees/${string}/groups`,
+      REMOVE_GROUP: (businessId: string, employeeId: string) =>
+        `/businesses/${businessId}/employees/${employeeId}/groups` as `/businesses/${string}/employees/${string}/groups`,
     },
     PRODUCTS: {
-      CREATE: (businessSlug: string) =>
-        `/businesses/${businessSlug}/products` as `/businesses/${string}/products`,
-      FIND_ONE: (businessSlug: string, productSlug: string) =>
-        `/businesses/${businessSlug}/products/${productSlug}` as `/businesses/${string}/products/${string}`,
-      FIND_MANY: (businessSlug: string) =>
-        `/businesses/${businessSlug}/products` as `/businesses/${string}/products`,
-      UPLOAD: (businessSlug: string, productSlug: string) =>
-        `/businesses/${businessSlug}/products/${productSlug}/upload` as `/businesses/${string}/products/${string}/upload`,
+      CREATE: (businessId: string) =>
+        `/businesses/${businessId}/products` as `/businesses/${string}/products`,
+      FIND_ONE: (businessId: string, productId: string) =>
+        `/businesses/${businessId}/products/${productId}` as `/businesses/${string}/products/${string}`,
+      FIND_MANY: (businessId: string) =>
+        `/businesses/${businessId}/products` as `/businesses/${string}/products`,
+      UPLOAD: (businessId: string, productId: string) =>
+        `/businesses/${businessId}/products/${productId}/upload` as `/businesses/${string}/products/${string}/upload`,
     },
     CATEGORIES: {
-      CREATE: (businessSlug: string) =>
-        `/businesses/${businessSlug}/categories` as `/businesses/${string}/categories`,
+      CREATE: (businessId: string) =>
+        `/businesses/${businessId}/categories` as `/businesses/${string}/categories`,
     },
   },
 } as const;

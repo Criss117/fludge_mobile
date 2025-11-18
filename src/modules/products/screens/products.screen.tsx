@@ -11,33 +11,30 @@ import { ProductsListSection } from "../sections/products-list.section";
 
 interface Props {
   categories: CategorySummary[];
-  businessSlug: string;
+  businessId: string;
   barcode?: string;
 }
 
-export function ProductsScreen({ categories, businessSlug, barcode }: Props) {
+export function ProductsScreen({ categories, businessId, barcode }: Props) {
   return (
     <ProductsFiltersProvider>
       <View className="px-1 flex relative flex-1">
         <View className="py-2 px-1 flex gap-y-2">
           <ProductsSearchInput
-            businessSlug={businessSlug}
+            businessId={businessId}
             defaultBarcode={barcode}
           />
           <View className="py-2">
-            <CategoriesList
-              categories={categories}
-              businessSlug={businessSlug}
-            />
+            <CategoriesList categories={categories} businessId={businessId} />
           </View>
         </View>
-        <ProductsListSection businessSlug={businessSlug} />
+        <ProductsListSection businessId={businessId} />
         <View className="absolute right-4 bottom-4">
           <Link
             href={{
-              pathname: "/businesses/[businessSlug]/products/create",
+              pathname: "/businesses/[businessId]/products/create",
               params: {
-                businessSlug,
+                businessId,
               },
             }}
             push

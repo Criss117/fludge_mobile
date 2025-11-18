@@ -48,9 +48,9 @@ function EmployeeRedirect({ user }: Props) {
   return (
     <Redirect
       href={{
-        pathname: "/businesses/[businessSlug]/(tabs)",
+        pathname: "/businesses/[businessId]/(tabs)",
         params: {
-          businessSlug: user.isEmployeeIn.slug,
+          businessId: user.isEmployeeIn.id,
         },
       }}
     />
@@ -70,9 +70,9 @@ function RootUserRedirect({ user }: Props) {
     return (
       <Redirect
         href={{
-          pathname: "/businesses/[businessSlug]/(tabs)",
+          pathname: "/businesses/[businessId]/(tabs)",
           params: {
-            businessSlug: businesses[0].slug,
+            businessId: businesses[0].id,
           },
         }}
       />

@@ -11,11 +11,11 @@ import { useProductsFilters } from "../hooks/products-filters";
 type SearchMode = "barcode" | "name";
 
 interface Props {
-  businessSlug: string;
+  businessId: string;
   defaultBarcode?: string;
 }
 
-export function ProductsSearchInput({ businessSlug, defaultBarcode }: Props) {
+export function ProductsSearchInput({ businessId, defaultBarcode }: Props) {
   const pathname = usePathname();
   const { filtersDispatch } = useProductsFilters();
   const [searchBy, setSearchBy] = useState<SearchMode>(
@@ -89,9 +89,9 @@ export function ProductsSearchInput({ businessSlug, defaultBarcode }: Props) {
             asChild
             push
             href={{
-              pathname: "/businesses/[businessSlug]/barcode-reader",
+              pathname: "/businesses/[businessId]/barcode-reader",
               params: {
-                businessSlug,
+                businessId,
                 from: pathname,
               },
             }}

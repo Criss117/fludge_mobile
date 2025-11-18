@@ -14,10 +14,10 @@ import { UpdateGroupFormDialog } from "./update-group-form-dialog";
 
 interface Props {
   group: GroupSummary;
-  businessSlug: string;
+  businessId: string;
 }
 
-export function GroupActions({ businessSlug, group }: Props) {
+export function GroupActions({ businessId, group }: Props) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -27,7 +27,7 @@ export function GroupActions({ businessSlug, group }: Props) {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-32">
         <DropdownMenuItem asChild>
-          <UpdateGroupFormDialog group={group} businessSlug={businessSlug} />
+          <UpdateGroupFormDialog group={group} businessId={businessId} />
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>

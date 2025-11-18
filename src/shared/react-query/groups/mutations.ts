@@ -6,24 +6,24 @@ import { mutationOptions } from "@tanstack/react-query";
 import { GroupsActions } from "../../api-utils/actions/groups.actions";
 
 type CreateGroupParams = {
-  businessSlug: string;
+  businessId: string;
   data: CreateGroupSchema;
 };
 
 type UpdateGroupParams = {
-  businessSlug: string;
+  businessId: string;
   groupId: string;
   values: UpdateGroupSchema;
 };
 
 type AddPermissionsParams = {
-  businessSlug: string;
+  businessId: string;
   groupId: string;
   values: EnsurePermissionsSchema;
 };
 
 type AssignEmployeesParams = {
-  businessSlug: string;
+  businessId: string;
   groupId: string;
   values: EnsureEmployeeIdsSchema;
 };
@@ -36,8 +36,8 @@ export class GroupsMutationsOptions {
   public create() {
     return mutationOptions({
       mutationFn: async (values: CreateGroupParams) => {
-        const { businessSlug, data } = values;
-        const response = await this.groupsActions.create(businessSlug, data);
+        const { businessId, data } = values;
+        const response = await this.groupsActions.create(businessId, data);
 
         if (response.error) {
           throw new Error(response.message, {
@@ -53,9 +53,9 @@ export class GroupsMutationsOptions {
   public update() {
     return mutationOptions({
       mutationFn: async (data: UpdateGroupParams) => {
-        const { businessSlug, groupId, values } = data;
+        const { businessId, groupId, values } = data;
         const response = await this.groupsActions.update(
-          businessSlug,
+          businessId,
           groupId,
           values
         );
@@ -74,9 +74,9 @@ export class GroupsMutationsOptions {
   public addPermissions() {
     return mutationOptions({
       mutationFn: async (data: AddPermissionsParams) => {
-        const { businessSlug, groupId, values } = data;
+        const { businessId, groupId, values } = data;
         const response = await this.groupsActions.addPermissions(
-          businessSlug,
+          businessId,
           groupId,
           values
         );
@@ -95,9 +95,9 @@ export class GroupsMutationsOptions {
   public removePermissions() {
     return mutationOptions({
       mutationFn: async (data: AddPermissionsParams) => {
-        const { businessSlug, groupId, values } = data;
+        const { businessId, groupId, values } = data;
         const response = await this.groupsActions.removePermissions(
-          businessSlug,
+          businessId,
           groupId,
           values
         );
@@ -116,9 +116,9 @@ export class GroupsMutationsOptions {
   public assignEmployees() {
     return mutationOptions({
       mutationFn: async (data: AssignEmployeesParams) => {
-        const { businessSlug, groupId, values } = data;
+        const { businessId, groupId, values } = data;
         const response = await this.groupsActions.assignEmployees(
-          businessSlug,
+          businessId,
           groupId,
           values
         );
@@ -137,9 +137,9 @@ export class GroupsMutationsOptions {
   public removeEmployees() {
     return mutationOptions({
       mutationFn: async (data: RemovePermissionsParams) => {
-        const { businessSlug, groupId, values } = data;
+        const { businessId, groupId, values } = data;
         const response = await this.groupsActions.removeEmployees(
-          businessSlug,
+          businessId,
           groupId,
           values
         );

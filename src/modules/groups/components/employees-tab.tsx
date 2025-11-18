@@ -23,7 +23,7 @@ function EmployeesHeader({ group }: Props) {
       <View className="flex flex-row gap-x-2">
         <AssignEmployeesDialog group={group} />
         <EmployeesList.RemoveEmployeesAlert
-          businessSlug={group.business.slug}
+          businessId={group.business.id}
           groupId={group.id}
         />
       </View>

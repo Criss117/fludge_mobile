@@ -15,11 +15,11 @@ import { env } from "../../shared/lib/config";
 
 interface Props {
   product: ProductSummary;
-  businessSlug: string;
+  businessId: string;
   className?: string;
 }
 
-export function ProductCard({ product, className, businessSlug }: Props) {
+export function ProductCard({ product, className, businessId }: Props) {
   const [isPressed, setIsPressed] = useState(false);
   const router = useRouter();
 
@@ -30,10 +30,10 @@ export function ProductCard({ product, className, businessSlug }: Props) {
       onPressOut={() => setIsPressed(false)}
       onPress={() => {
         router.push({
-          pathname: "/businesses/[businessSlug]/products/[productSlug]",
+          pathname: "/businesses/[businessId]/products/[productId]",
           params: {
-            businessSlug,
-            productSlug: product.slug,
+            businessId,
+            productId: product.id,
           },
         });
       }}

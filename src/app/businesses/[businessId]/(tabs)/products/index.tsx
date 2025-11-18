@@ -6,35 +6,35 @@ import { useGlobalSearchParams } from "expo-router";
 import { Suspense } from "react";
 
 interface Props {
-  businessSlug: string;
+  businessId: string;
   barcode?: string;
 }
 
-function SuspenseProducts({ businessSlug, barcode }: Props) {
+function SuspenseProducts({ businessId, barcode }: Props) {
   const { data: business } = useSuspenseQuery(
-    businessQueriesOptions.findOne(businessSlug)
+    businessQueriesOptions.findOne(businessId)
   );
 
   return (
     <ProductsScreen
       categories={business.categories}
-      businessSlug={businessSlug}
+      businessId={businessId}
       barcode={barcode}
     />
   );
 }
 
 export default function Products() {
-  const { businessSlug, barcode } = useGlobalSearchParams<{
-    businessSlug?: string;
+  const { businessId, barcode } = useGlobalSearchParams<{
+    businessId?: string;
     barcode?: string;
   }>();
 
-  if (!businessSlug) return null;
+  if (!businessId) return null;
 
   return (
     <Suspense fallback={<Text>Loading products...</Text>}>
-      <SuspenseProducts businessSlug={businessSlug} barcode={barcode} />
+      <SuspenseProducts businessId={businessId} barcode={barcode} />
     </Suspense>
   );
 }

@@ -20,10 +20,10 @@ import { UpdateGroupForm } from "./update-group-form";
 
 interface Props {
   group: GroupSummary;
-  businessSlug: string;
+  businessId: string;
 }
 
-export function UpdateGroupFormDialog({ group, businessSlug }: Props) {
+export function UpdateGroupFormDialog({ group, businessId }: Props) {
   const [open, setOpen] = useState(false);
   const { width } = useSafeAreaFrame();
 
@@ -44,7 +44,7 @@ export function UpdateGroupFormDialog({ group, businessSlug }: Props) {
         </DialogHeader>
         <UpdateGroupForm.Root
           group={group}
-          businessSlug={businessSlug}
+          businessId={businessId}
           actions={{
             onSuccess: () => setOpen(false),
           }}

@@ -2,13 +2,13 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { CreateCategoryForm } from "../components/create-category-form";
 
 interface Props {
-  businessSlug: string;
+  businessId: string;
 }
 
-export function CreateCategoryScreen({ businessSlug }: Props) {
+export function CreateCategoryScreen({ businessId }: Props) {
   return (
     <KeyboardAwareScrollView>
-      <CreateCategoryForm.Root businessSlug={businessSlug}>
+      <CreateCategoryForm.Root businessId={businessId}>
         <CreateCategoryForm.Name />
         <CreateCategoryForm.Description />
         <CreateCategoryForm.Submit />

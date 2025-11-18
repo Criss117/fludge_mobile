@@ -20,10 +20,10 @@ import { TouchableOpacity, View } from "react-native";
 
 interface Props {
   employees: EmployeeSummary[];
-  businessSlug: string;
+  businessId: string;
 }
 
-export function RecentEmployeesList({ employees, businessSlug }: Props) {
+export function RecentEmployeesList({ employees, businessId }: Props) {
   const router = useRouter();
 
   return (
@@ -41,9 +41,9 @@ export function RecentEmployeesList({ employees, businessSlug }: Props) {
             key={employee.id}
             onPress={() => {
               router.push({
-                pathname: "/businesses/[businessSlug]/employees/[employeeId]",
+                pathname: "/businesses/[businessId]/employees/[employeeId]",
                 params: {
-                  businessSlug,
+                  businessId,
                   employeeId: employee.id,
                 },
               });

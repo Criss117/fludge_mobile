@@ -65,9 +65,9 @@ export function BusinessesMenu({ currentBusiness }: Props) {
             <DropdownMenuItem key={business.id} asChild>
               <Link
                 href={{
-                  pathname: "/businesses/[businessSlug]/(tabs)",
+                  pathname: "/businesses/[businessId]/(tabs)",
                   params: {
-                    businessSlug: business.slug,
+                    businessId: business.id,
                   },
                 }}
                 push

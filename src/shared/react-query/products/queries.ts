@@ -12,13 +12,13 @@ type FindManyProductsParams = Parameters<ProductsActions["findMany"]>[number];
 export class ProductsQueriesOptions {
   constructor(private readonly productsActions: ProductsActions) {}
 
-  public findOne({ businessSlug, productSlug }: FindOneProductParams) {
+  public findOne({ businessId, productId }: FindOneProductParams) {
     return queryOptions({
-      queryKey: ["businesses", businessSlug, "products", productSlug],
+      queryKey: ["businesses", businessId, "products", productId],
       queryFn: async () => {
         const response = await this.productsActions.findOne({
-          businessSlug,
-          productSlug,
+          businessId,
+          productId,
         });
 
         if (response.error || !response.data) {
@@ -32,8 +32,8 @@ export class ProductsQueriesOptions {
     });
   }
 
-  public findMany({ businessSlug, params }: FindManyProductsParams) {
-    let queryKey = ["businesses", businessSlug, "products"];
+  public findMany({ businessId, params }: FindManyProductsParams) {
+    let queryKey = ["businesses", businessId, "products"];
 
     if (params?.name) {
       queryKey = [...queryKey, "name", params.name.trim().toLowerCase()];
@@ -45,7 +45,7 @@ export class ProductsQueriesOptions {
 
     return infiniteQueryOptions({
       queryKey: params?.barcode
-        ? ["businesses", businessSlug, "products", "barcode", params.barcode]
+        ? ["businesses", businessId, "products", "barcode", params.barcode]
         : queryKey,
       initialPageParam: params?.base64Cursor,
       queryFn: async ({ pageParam }) => {
@@ -60,7 +60,7 @@ export class ProductsQueriesOptions {
           : undefined;
 
         const response = await this.productsActions.findMany({
-          businessSlug,
+          businessId,
           params: searchParams,
         });
 

@@ -19,7 +19,7 @@ interface Context {
 }
 
 interface RootProps {
-  businessSlug: string;
+  businessId: string;
   children: React.ReactNode;
 }
 
@@ -35,7 +35,7 @@ function useEmployeeFormContext() {
   return context;
 }
 
-function Root({ children, businessSlug }: RootProps) {
+function Root({ children, businessId }: RootProps) {
   const { create } = useMutateEmployees();
   const router = useRouter();
   const form = useForm<CreateEmployeeSchema>({
@@ -52,7 +52,7 @@ function Root({ children, businessSlug }: RootProps) {
   const onSubmit = form.handleSubmit(async (data) => {
     create.mutate(
       {
-        businessSlug,
+        businessId,
         data,
       },
       {

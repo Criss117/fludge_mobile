@@ -8,12 +8,12 @@ import { UserButton } from "./user-button";
 
 interface Props {
   bottomTabHeaderProps: BottomTabHeaderProps;
-  businessSlug: string;
+  businessId: string;
 }
 
-export function BusinessHeader({ businessSlug, bottomTabHeaderProps }: Props) {
+export function BusinessHeader({ businessId, bottomTabHeaderProps }: Props) {
   const { data: business } = useSuspenseQuery(
-    businessQueriesOptions.findOne(businessSlug)
+    businessQueriesOptions.findOne(businessId)
   );
   const { top } = useSafeAreaInsets();
 

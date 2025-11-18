@@ -8,12 +8,12 @@ import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface Props {
-  businessSlug: string;
+  businessId: string;
 }
 
-function BusinessHomeSuspense({ businessSlug }: Props) {
+function BusinessHomeSuspense({ businessId }: Props) {
   const { data: business } = useSuspenseQuery(
-    businessQueriesOptions.findOne(businessSlug)
+    businessQueriesOptions.findOne(businessId)
   );
 
   return <BusinessScreen business={business} />;
@@ -21,16 +21,16 @@ function BusinessHomeSuspense({ businessSlug }: Props) {
 
 export default function BusinessHome() {
   const { top } = useSafeAreaInsets();
-  const { businessSlug } = useLocalSearchParams<{
-    businessSlug?: string;
+  const { businessId } = useLocalSearchParams<{
+    businessId?: string;
   }>();
 
-  if (!businessSlug) return null;
+  if (!businessId) return null;
 
   return (
     <View style={{ top: top, paddingHorizontal: 8 }}>
       <Suspense fallback={<Text>Cargando...</Text>}>
-        <BusinessHomeSuspense businessSlug={businessSlug} />
+        <BusinessHomeSuspense businessId={businessId} />
       </Suspense>
     </View>
   );

@@ -23,7 +23,7 @@ function PermissionsHeader({ group }: Props) {
       <View className="flex flex-row gap-x-2">
         <AddPermissionsDialog group={group} />
         <PermissionsList.RemovePermissionsAlert
-          businessSlug={group.business.slug}
+          businessId={group.business.id}
           groupId={group.id}
         />
       </View>
