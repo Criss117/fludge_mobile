@@ -5,13 +5,17 @@ export const resources = [
   "providers",
   "categories",
   "clients",
+  "tickets",
 ] as const;
 export const actions = ["create", "read", "update", "delete"] as const;
 
 export type Resource = (typeof resources)[number];
 export type Action = (typeof actions)[number];
 
-export type Permission = `${Resource}:${Action}` | "businesses:read";
+export type Permission =
+  | `${Resource}:${Action}`
+  | "businesses:read"
+  | "businesses:update";
 
 export const allPermission: Permission[] = [
   "employees:create",
@@ -43,4 +47,11 @@ export const allPermission: Permission[] = [
   "categories:read",
   "categories:update",
   "categories:delete",
+
+  "tickets:create",
+  "tickets:read",
+  "tickets:update",
+  "tickets:delete",
+
+  "businesses:update",
 ] as const;

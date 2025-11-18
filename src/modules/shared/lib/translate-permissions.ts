@@ -6,12 +6,13 @@ import {
   resources,
 } from "@/shared/entities/permissions";
 
-export const resourceEs = new Map<Resource, string>([
+export const resourceEs = new Map<Resource | "businesses", string>([
   ["employees", "Empleados"],
   ["groups", "Grupos"],
   ["products", "Productos"],
   ["providers", "Proveedores"],
   ["clients", "Clientes"],
+  ["businesses", "Negocios"],
 ]);
 
 export const actionEs = new Map<Action, string>([
@@ -24,7 +25,7 @@ export const actionEs = new Map<Action, string>([
 export function translatePermission(permission: Permission) {
   const [resource, action] = permission.split(":") as [Resource, Action];
 
-  if (!resources.includes(resource)) {
+  if (![...resources, "businesses"].includes(resource)) {
     throw new Error(`Invalid resource: ${resource}`);
   }
 
