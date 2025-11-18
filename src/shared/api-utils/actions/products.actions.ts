@@ -4,6 +4,7 @@ import type {
   ProductSummary,
 } from "@/shared/entities/products.entity";
 import type { CreateProductSchema } from "@/shared/schemas/products/create-product.schema";
+import type { UpdateProductSchema } from "@/shared/schemas/products/update-product.schema";
 import { API } from "../api";
 import { ENDPOINTS } from "../endpoints";
 import { safeAction } from "../http/safe-action";
@@ -32,6 +33,17 @@ type FindManyProducts = {
   params?: FindManyQueryParams;
 };
 
+type DeleteManyProducts = {
+  businessId: string;
+  productIds: string[];
+};
+
+type UpdateProduct = {
+  businessId: string;
+  productId: string;
+  data: UpdateProductSchema;
+};
+
 export class ProductsActions {
   constructor(private readonly api: API) {}
 
@@ -48,6 +60,19 @@ export class ProductsActions {
     return response;
   }
 
+  public async deleteMany({ businessId, productIds }: DeleteManyProducts) {
+    const response = await safeAction(
+      () =>
+        this.api.delete<null, { productIds: string[] }>(
+          ENDPOINTS.BUSINESSES.PRODUCTS.DELETE_MANY(businessId),
+          { productIds }
+        ),
+      "Error al eliminar los productos"
+    );
+
+    return response;
+  }
+
   public async findOne({ businessId, productId }: FindOneProduct) {
     const response = await safeAction(
       () =>
@@ -55,6 +80,19 @@ export class ProductsActions {
           ENDPOINTS.BUSINESSES.PRODUCTS.FIND_ONE(businessId, productId)
         ),
       "Error al obtener el producto"
+    );
+
+    return response;
+  }
+
+  public async update({ businessId, productId, data }: UpdateProduct) {
+    const response = await safeAction(
+      () =>
+        this.api.put<ProductSummary, UpdateProductSchema>(
+          ENDPOINTS.BUSINESSES.PRODUCTS.UPDATE(businessId, productId),
+          data
+        ),
+      "Error al actualizar el producto"
     );
 
     return response;

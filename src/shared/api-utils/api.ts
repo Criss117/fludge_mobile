@@ -98,7 +98,7 @@ export class API {
     return response;
   }
 
-  public async delete<T, D>(endpoint: string, data: D) {
+  public async delete<T, D = undefined>(endpoint: string, data?: D) {
     const response = await this.api.delete<
       CommonResponse<T>,
       AxiosResponse<CommonResponse<T>, unknown>,
