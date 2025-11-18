@@ -42,9 +42,12 @@ export function UserButton() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-64">
-        <DropdownMenuLabel>Mi cuenta</DropdownMenuLabel>
+        <DropdownMenuGroup className="flex flex-row justify-between">
+          <DropdownMenuLabel>Mi cuenta</DropdownMenuLabel>
+          <ToggleTheme variant="button" />
+        </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuGroup className="flex flex-row items-center gap-x-4">
+        <DropdownMenuGroup className="flex flex-row items-center gap-x-4 px-2">
           <Avatar
             alt={`${user.firstName} ${user.lastName}`}
             className="border-2 border-background"
@@ -64,9 +67,8 @@ export function UserButton() {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem asChild>
-            <ToggleTheme />
-          </DropdownMenuItem>
+          <DropdownMenuItem asChild></DropdownMenuItem>
+          <DropdownMenuSeparator />
         </DropdownMenuGroup>
         <DropdownMenuItem asChild>
           <Button
