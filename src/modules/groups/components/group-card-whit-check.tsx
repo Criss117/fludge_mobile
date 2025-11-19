@@ -53,23 +53,35 @@ export function GroupCardWithCheck({ isSelected, group, onPress }: Props) {
 export function GroupCardWithCheckSkeleton() {
   return (
     <Card>
-      <CardHeader className="flex items-start flex-row">
+      <CardHeader className="flex items-center flex-row justify-between">
+        <View className="flex gap-y-1">
+          <CardTitle>
+            <Skeleton className="h-4 w-32 rounded-md bg-muted-foreground" />
+          </CardTitle>
+          <CardDescription>
+            <Skeleton className="h-3 w-48 rounded-md bg-muted-foreground" />
+          </CardDescription>
+        </View>
         <Checkbox
           checked={false}
           onCheckedChange={() => {}}
           disabled
           className="size-5"
         />
-        <View className="flex gap-y-1">
-          <CardTitle>
-            <Skeleton className="w-56 h-6 bg-muted-foreground" />
-          </CardTitle>
-          <CardDescription>
-            <Skeleton className="w-56 h-4 bg-muted-foreground" />
-          </CardDescription>
-        </View>
       </CardHeader>
-      <CardFooter></CardFooter>
+
+      <CardFooter>
+        <FlatList
+          data={Array.from({ length: 3 })}
+          keyExtractor={(_, index) => index.toString()}
+          renderItem={() => (
+            <Skeleton className="h-6 w-20 rounded-md bg-muted-foreground" />
+          )}
+          ItemSeparatorComponent={() => <View className="w-2" />}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+        />
+      </CardFooter>
     </Card>
   );
 }

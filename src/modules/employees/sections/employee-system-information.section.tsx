@@ -85,7 +85,7 @@ export function EmployeeSystemInformationSectionSkeleton() {
                 Creado
               </Text>
               <Text>
-                <Skeleton className="w-2/3 h-4 bg-muted-foreground" />
+                <Skeleton className="w-2/3 h-3 bg-muted-foreground" />
               </Text>
             </View>
           </View>
@@ -99,7 +99,7 @@ export function EmployeeSystemInformationSectionSkeleton() {
                 Última actualización
               </Text>
               <Text>
-                <Skeleton className="w-2/3 h-4 bg-muted-foreground" />
+                <Skeleton className="w-2/3 h-3 bg-muted-foreground" />
               </Text>
             </View>
           </View>
@@ -112,7 +112,7 @@ export function EmployeeSystemInformationSectionSkeleton() {
               <Text variant="muted" className="text-muted-foreground">
                 Estado
               </Text>
-              <Skeleton className="w-2/3 h-4 bg-muted-foreground" />
+              <Skeleton className="w-2/3 h-3 bg-muted-foreground" />
             </View>
           </View>
         </CardContent>
