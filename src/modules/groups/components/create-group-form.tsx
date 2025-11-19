@@ -6,7 +6,7 @@ import { FormTextArea } from "@/modules/shared/components/form/form-text-area";
 import { Button } from "@/modules/shared/components/ui/button";
 import { FieldError } from "@/modules/shared/components/ui/field";
 import { Text } from "@/modules/shared/components/ui/text";
-import { allPermission, Permission } from "@/shared/entities/permissions";
+import { Permission } from "@/shared/entities/permissions";
 import {
   createGroupSchema,
   CreateGroupSchema,
@@ -16,7 +16,7 @@ import * as Haptics from "expo-haptics";
 import { useRouter } from "expo-router";
 import { createContext, use } from "react";
 import { useForm } from "react-hook-form";
-import { ActivityIndicator, Insets, ScrollView, View } from "react-native";
+import { ActivityIndicator, Insets, View } from "react-native";
 import { useMutateGroups } from "../hooks/use.mutate-groups";
 import { PermissionCard } from "./permission-card";
 
@@ -34,6 +34,10 @@ interface RootProps {
 interface IsDefaultProps {
   disabled?: boolean;
   hitSlop?: number | Insets | null | undefined;
+}
+
+interface PermissionsListProps {
+  permissions: Permission[];
 }
 
 const CreateGroupFormContext = createContext<Context | null>(null);
@@ -125,7 +129,7 @@ function Description() {
   );
 }
 
-function Permissions() {
+function Permissions({ permissions }: PermissionsListProps) {
   const { form } = useCreateGroupForm();
   const selectedPermissions = form.watch("permissions") ?? [];
   const permissionsError = form.formState.errors.permissions;
@@ -146,18 +150,22 @@ function Permissions() {
   return (
     <View className="flex gap-y-2">
       <FieldError errors={[permissionsError]} />
-      <ScrollView className="max-h-96" nestedScrollEnabled>
-        <View className="flex gap-y-2">
-          {allPermission.map((permission) => (
-            <PermissionCard
-              key={permission}
-              permission={permission}
-              isSelected={selectedPermissions.includes(permission)}
-              onPress={handlePermissionSelect}
-            />
+      <View className="flex gap-y-2">
+        {permissions.map((permission) => (
+          <PermissionCard
+            key={permission}
+            permission={permission}
+            isSelected={selectedPermissions.includes(permission)}
+            onPress={handlePermissionSelect}
+          />
+        ))}
+        {selectedPermissions.length > permissions.length ||
+          (permissions.length === 0 && (
+            <Text className="text-muted-foreground text-center">
+              Sin resultados
+            </Text>
           ))}
-        </View>
-      </ScrollView>
+      </View>
     </View>
   );
 }
@@ -183,7 +191,7 @@ function Submit() {
   return (
     <Button onPress={onSubmit} disabled={isPending}>
       {isPending && <ActivityIndicator className="text-white" />}
-      {!isPending && <Text>Guardar</Text>}
+      {!isPending && <Text>Crear Grupo</Text>}
     </Button>
   );
 }

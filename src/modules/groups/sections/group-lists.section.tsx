@@ -33,7 +33,7 @@ export function GroupListsSection({ group }: Props) {
   return (
     <View>
       <Tabs value={value} onValueChange={(v) => setValue(v as Values)}>
-        <TabsList className="w-full mb-5">
+        <TabsList className="w-full mb-3">
           {tabs.map(({ name }) => (
             <TabsTrigger value={name} key={name} className="flex-1">
               <Text>{name}</Text>

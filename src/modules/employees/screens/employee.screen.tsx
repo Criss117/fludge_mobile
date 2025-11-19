@@ -49,7 +49,7 @@ export function EmployeeScreen({
 export function EmployeeScreenSkeleton() {
   return (
     <ScrollView>
-      <View className="flex-1 gap-y-7 px-4 pt-4 pb-8">
+      <View className="flex-1 gap-y-7 px-2 pt-4 pb-8">
         <EmployeeHeaderSectionSkeleton />
         <LaboralInformationSectionSkeleton />
         <AssignedGroupsSectionSkeleton />

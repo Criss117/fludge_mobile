@@ -44,7 +44,7 @@ export function UserButton() {
       <DropdownMenuContent className="w-64">
         <DropdownMenuGroup className="flex flex-row justify-between">
           <DropdownMenuLabel>Mi cuenta</DropdownMenuLabel>
-          <ToggleTheme variant="button" />
+          <ToggleTheme />
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup className="flex flex-row items-center gap-x-4 px-2">

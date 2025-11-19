@@ -41,7 +41,7 @@ export function ProductsScreen({ categories, businessId, barcode }: Props) {
             asChild
           >
             <Button size="icon" className="rounded-full">
-              <Icon as={PlusIcon} size={24} className="text-white" />
+              <Icon as={PlusIcon} size={24} />
             </Button>
           </Link>
         </View>

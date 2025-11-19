@@ -21,19 +21,20 @@ export function GroupCardWithCheck({ isSelected, group, onPress }: Props) {
   return (
     <TouchableOpacity onPress={() => onPress(group)} activeOpacity={0.6}>
       <Card className={cn(isSelected && "border-primary bg-primary/10")}>
-        <CardHeader className="flex items-start flex-row">
-          <Checkbox
-            checked={isSelected}
-            onCheckedChange={() => onPress(group)}
-            className="size-5"
-          />
+        <CardHeader className="flex items-center flex-row justify-between">
           <View>
             <CardTitle>{spliText(group.name, 25)}</CardTitle>
             <CardDescription>
               {group.description ? spliText(group.description, 30) : ""}
             </CardDescription>
           </View>
+          <Checkbox
+            checked={isSelected}
+            onCheckedChange={() => onPress(group)}
+            className="size-5"
+          />
         </CardHeader>
+
         <CardFooter>
           <FlatList
             data={group.permissions}

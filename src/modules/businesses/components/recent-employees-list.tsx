@@ -27,63 +27,60 @@ export function RecentEmployeesList({ employees, businessId }: Props) {
   const router = useRouter();
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Empleados recientes</CardTitle>
-        <CardDescription>
-          Lista de empleados agregados recientemente
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="flex gap-y-2">
-        {employees.map((employee) => (
-          <TouchableOpacity
-            activeOpacity={0.6}
-            key={employee.id}
-            onPress={() => {
-              router.push({
-                pathname: "/businesses/[businessId]/employees/[employeeId]",
-                params: {
-                  businessId,
-                  employeeId: employee.id,
-                },
-              });
-            }}
-          >
-            <Card className="flex flex-row">
-              <CardHeader className="flex flex-row items-center">
-                <Avatar
-                  alt={`Imagen del empleado ${employee.user.firstName} ${employee.user.lastName}`}
-                  className="size-12"
-                >
-                  <AvatarImage
-                    source={require("@/assets/user_placeholder.jpg")}
-                  />
-                  <AvatarFallback className="size-12">
-                    <Text className="text-2xl">
-                      {firstLetterToUpperCase(
-                        employee.user.firstName,
-                        employee.user.lastName
-                      )}
-                    </Text>
-                  </AvatarFallback>
-                </Avatar>
-                <View>
-                  <CardTitle className="text-xl">
-                    {employee.user.firstName} {employee.user.lastName}
-                  </CardTitle>
-                  <CardDescription>
-                    Ingresado{" "}
-                    {formatDistanceToNow(employee.createdAt, {
-                      addSuffix: true,
-                      locale: es,
-                    })}
-                  </CardDescription>
-                </View>
-              </CardHeader>
-            </Card>
-          </TouchableOpacity>
-        ))}
-      </CardContent>
-    </Card>
+    <View className="flex gap-y-2">
+      <Text variant="h4">Empleados recientes</Text>
+      <Card>
+        <CardContent className="flex gap-y-2">
+          {employees.map((employee) => (
+            <TouchableOpacity
+              activeOpacity={0.6}
+              key={employee.id}
+              onPress={() => {
+                router.push({
+                  pathname: "/businesses/[businessId]/employees/[employeeId]",
+                  params: {
+                    businessId,
+                    employeeId: employee.id,
+                  },
+                });
+              }}
+            >
+              <Card className="flex flex-row">
+                <CardHeader className="flex flex-row items-center">
+                  <Avatar
+                    alt={`Imagen del empleado ${employee.user.firstName} ${employee.user.lastName}`}
+                    className="size-12"
+                  >
+                    <AvatarImage
+                      source={require("@/assets/user_placeholder.jpg")}
+                    />
+                    <AvatarFallback className="size-12">
+                      <Text className="text-2xl">
+                        {firstLetterToUpperCase(
+                          employee.user.firstName,
+                          employee.user.lastName
+                        )}
+                      </Text>
+                    </AvatarFallback>
+                  </Avatar>
+                  <View>
+                    <CardTitle className="text-xl">
+                      {employee.user.firstName} {employee.user.lastName}
+                    </CardTitle>
+                    <CardDescription>
+                      Ingresado{" "}
+                      {formatDistanceToNow(employee.createdAt, {
+                        addSuffix: true,
+                        locale: es,
+                      })}
+                    </CardDescription>
+                  </View>
+                </CardHeader>
+              </Card>
+            </TouchableOpacity>
+          ))}
+        </CardContent>
+      </Card>
+    </View>
   );
 }

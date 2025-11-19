@@ -1,4 +1,5 @@
 import { businessQueriesOptions } from "@/integrations/query/query-container";
+import { SearchInput } from "@/modules/shared/components/search-input";
 import {
   Card,
   CardContent,
@@ -6,9 +7,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/modules/shared/components/ui/card";
-import { FieldSet } from "@/modules/shared/components/ui/field";
+import { Icon } from "@/modules/shared/components/ui/icon";
+import { translatePermission } from "@/modules/shared/lib/translate-permissions";
+import { allPermission } from "@/shared/entities/permissions";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { ScrollView } from "react-native";
+import { FileText, ShieldCheck } from "lucide-react-native";
+import { useMemo, useState } from "react";
+import { View } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
 import { CreateGroupForm } from "../components/create-group-form";
 
 interface Props {
@@ -18,13 +24,38 @@ interface Props {
 function PermissionsList() {
   "use no memo";
   const { form } = CreateGroupForm.useCreateGroupForm();
+  const [searchTerm, setSearchTerm] = useState("");
 
   const permissionsSelected = form.watch("permissions") ?? [];
+  const translatedPermissions = useMemo(
+    () =>
+      new Map<string, string>(
+        allPermission.map((permission) => [
+          permission,
+          translatePermission(permission).es,
+        ])
+      ),
+    []
+  );
+
+  const filteresPermissions = allPermission.filter((permission) => {
+    const translated = translatedPermissions.get(permission) ?? "";
+    return (
+      permission.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      translated.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      permissionsSelected.includes(permission)
+    );
+  });
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Selección de permisos</CardTitle>
+        <View className="flex flex-row gap-x-2 items-center">
+          <View className="bg-primary/10 p-1 rounded-md">
+            <Icon as={ShieldCheck} size={20} />
+          </View>
+          <CardTitle>Selección de permisos {searchTerm.length}</CardTitle>
+        </View>
         <CardDescription>
           Selecciona los permisos que deseas asignar a este grupo.
         </CardDescription>
@@ -33,7 +64,12 @@ function PermissionsList() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <CreateGroupForm.Permissions />
+        <SearchInput
+          value={searchTerm}
+          onChangeText={setSearchTerm}
+          placeholder="Filtrar permisos"
+        />
+        <CreateGroupForm.Permissions permissions={filteresPermissions} />
       </CardContent>
     </Card>
   );
@@ -49,11 +85,29 @@ export function CreateGroupScreen({ businessId }: Props) {
   );
 
   return (
-    <ScrollView className="px-2">
-      <CreateGroupForm.Root businessId={businessId}>
-        <FieldSet className="flex gap-y-2 pt-4 pb-10">
-          <CreateGroupForm.Name />
-          <CreateGroupForm.Description />
+    <KeyboardAwareScrollView className="px-2">
+      <View className="px-2 flex gap-y-4 pt-4 pb-8">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-xl">Registrar un Grupo</CardTitle>
+            <CardDescription>
+              Completa la información del nuevo grupo
+            </CardDescription>
+          </CardHeader>
+        </Card>
+        <CreateGroupForm.Root businessId={businessId}>
+          <Card>
+            <CardHeader className="flex flex-row gap-x-2 items-center">
+              <View className="bg-primary/10 p-1 rounded-md">
+                <Icon as={FileText} size={20} />
+              </View>
+              <CardTitle>Informacíon General</CardTitle>
+            </CardHeader>
+            <CardContent className="flex gap-y-2">
+              <CreateGroupForm.Name />
+              <CreateGroupForm.Description />
+            </CardContent>
+          </Card>
           <Card>
             {businessHasDefaultGroup && (
               <CardHeader>
@@ -76,8 +130,8 @@ export function CreateGroupScreen({ businessId }: Props) {
           </Card>
           <PermissionsList />
           <CreateGroupForm.Submit />
-        </FieldSet>
-      </CreateGroupForm.Root>
-    </ScrollView>
+        </CreateGroupForm.Root>
+      </View>
+    </KeyboardAwareScrollView>
   );
 }

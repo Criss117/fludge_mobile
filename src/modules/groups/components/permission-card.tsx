@@ -1,31 +1,43 @@
-import { Card, CardContent } from "@/modules/shared/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/modules/shared/components/ui/card";
 import { Checkbox } from "@/modules/shared/components/ui/checkbox";
-import { Text } from "@/modules/shared/components/ui/text";
 import { translatePermission } from "@/modules/shared/lib/translate-permissions";
 import { cn } from "@/modules/shared/lib/utils";
 import type { Permission } from "@/shared/entities/permissions";
-import { TouchableWithoutFeedback, View } from "react-native";
+import { TouchableWithoutFeedback } from "react-native";
 
 interface Props {
   permission: Permission;
-  onPress: (permission: Permission) => void;
   isSelected: boolean;
+  onPress: (permission: Permission) => void;
 }
 
 export function PermissionCard({ onPress, permission, isSelected }: Props) {
   return (
     <TouchableWithoutFeedback onPress={() => onPress(permission)}>
-      <Card className={cn(isSelected && "border-primary bg-primary/10")}>
-        <CardContent className="flex flex-row gap-x-2">
+      <Card
+        className={cn(
+          "py-3 flex flex-row justify-between items-center",
+          isSelected && "border-primary bg-primary/10"
+        )}
+      >
+        <CardHeader className="px-4">
+          <CardTitle>{translatePermission(permission).es}</CardTitle>
+          <CardDescription className="text-sm text-muted-foreground">
+            {permission}
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-row gap-x-2 px-4">
           <Checkbox
             checked={isSelected}
             onCheckedChange={() => onPress(permission)}
-            className="size-5 mt-1"
+            className="size-5"
           />
-          <View>
-            <Text>{translatePermission(permission).es}</Text>
-            <Text className="text-sm text-muted-foreground">{permission}</Text>
-          </View>
         </CardContent>
       </Card>
     </TouchableWithoutFeedback>
