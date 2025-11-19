@@ -1,9 +1,11 @@
 import { groupsQueriesOptions } from "@/integrations/query/query-container";
 import { usePermissions } from "@/modules/auth/providers/permissions.provider";
 import { GroupActions } from "@/modules/groups/components/group-actions";
-import { GroupScreen } from "@/modules/groups/screens/group.screen";
+import {
+  GroupScreen,
+  GroupScreenSkeleton,
+} from "@/modules/groups/screens/group.screen";
 import { PermissionsAlert } from "@/modules/shared/components/forbiden-alerts";
-import { Text } from "@/modules/shared/components/ui/text";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Stack, useGlobalSearchParams } from "expo-router";
 import { Suspense } from "react";
@@ -17,8 +19,8 @@ interface Props {
 function GroupSuspense({ businessId, groupId }: Props) {
   const {
     data: group,
-    refetch,
     isPending,
+    refetch,
   } = useSuspenseQuery(groupsQueriesOptions.findOne(businessId, groupId));
 
   return (
@@ -49,7 +51,7 @@ function Screen() {
   if (!businessId || !groupId) return null;
 
   return (
-    <Suspense fallback={<Text>Loading...</Text>}>
+    <Suspense fallback={<GroupScreenSkeleton />}>
       <GroupSuspense businessId={businessId} groupId={groupId} />
     </Suspense>
   );

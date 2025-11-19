@@ -1,3 +1,5 @@
+import { Card, CardContent } from "@/modules/shared/components/ui/card";
+import { Skeleton } from "@/modules/shared/components/ui/skeleton";
 import {
   Tabs,
   TabsContent,
@@ -27,6 +29,7 @@ const tabs = [
 ] as const;
 
 type Values = (typeof tabs)[number]["name"];
+
 export function GroupListsSection({ group }: Props) {
   const [value, setValue] = useState<Values>("Empleados");
 
@@ -45,6 +48,32 @@ export function GroupListsSection({ group }: Props) {
             <Cmp group={group} />
           </TabsContent>
         ))}
+      </Tabs>
+    </View>
+  );
+}
+
+export function GroupListsSectionSkeleton() {
+  return (
+    <View>
+      <Tabs value="employees" onValueChange={() => {}}>
+        <TabsList className="w-full mb-3">
+          <TabsTrigger value="employees" className="flex-1" disabled>
+            <Text>Empleados</Text>
+          </TabsTrigger>
+          <TabsTrigger value="groups" className="flex-1" disabled>
+            <Text>Grupos</Text>
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value="employees">
+          <Card>
+            <CardContent className="flex gap-y-2">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <Skeleton key={i} className="w-full h-14 bg-muted-foreground" />
+              ))}
+            </CardContent>
+          </Card>
+        </TabsContent>
       </Tabs>
     </View>
   );

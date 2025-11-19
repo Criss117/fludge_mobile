@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/modules/shared/components/ui/card";
 import { Icon } from "@/modules/shared/components/ui/icon";
 import { Separator } from "@/modules/shared/components/ui/separator";
+import { Skeleton } from "@/modules/shared/components/ui/skeleton";
 import { Text } from "@/modules/shared/components/ui/text";
 import type { GroupDetail } from "@/shared/entities/group.entity";
 import { formatDistanceToNow } from "date-fns";
@@ -61,6 +62,57 @@ export function GroupAditionalInfo({ group }: Props) {
                 Estado
               </Text>
               <Text>{group.isActive ? "Activo" : "Inactivo"}</Text>
+            </View>
+          </View>
+        </CardContent>
+      </Card>
+    </View>
+  );
+}
+
+export function GroupAditionalInfoSkeleton() {
+  return (
+    <View className="flex gap-y-2">
+      <Text variant="h4">Información del sistema</Text>
+      <Card>
+        <CardContent className="flex gap-y-2">
+          <View className="flex flex-row items-start gap-x-2">
+            <View className="p-2 bg-primary/10 rounded-md">
+              <Icon as={Clock} size={24} />
+            </View>
+            <View>
+              <Text variant="muted" className="text-muted-foreground">
+                Creado
+              </Text>
+              <Text>
+                <Skeleton className="w-2/3 h-3 bg-muted-foreground" />
+              </Text>
+            </View>
+          </View>
+          <Separator />
+          <View className="flex flex-row items-start gap-x-2">
+            <View className="p-2 bg-primary/10 rounded-md">
+              <Icon as={Clock} size={24} />
+            </View>
+            <View>
+              <Text variant="muted" className="text-muted-foreground">
+                Última actualización
+              </Text>
+              <Text>
+                <Skeleton className="w-2/3 h-3 bg-muted-foreground" />
+              </Text>
+            </View>
+          </View>
+          <Separator />
+          <View className="flex flex-row items-start gap-x-2">
+            <View className="p-2 bg-primary/10 rounded-md">
+              <Icon as={Check} size={24} />
+            </View>
+            <View>
+              <Text variant="muted" className="text-muted-foreground">
+                Estado
+              </Text>
+              <Skeleton className="w-2/3 h-3 bg-muted-foreground" />
             </View>
           </View>
         </CardContent>
