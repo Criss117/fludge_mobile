@@ -15,8 +15,8 @@ interface Props {
 export function SearchInput({
   placeholder,
   value,
-  onChangeText,
   className,
+  onChangeText,
 }: Props) {
   return (
     <View className={cn("relative", className)}>

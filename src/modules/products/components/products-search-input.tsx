@@ -108,3 +108,19 @@ export function ProductsSearchInput({ businessId, defaultBarcode }: Props) {
     </View>
   );
 }
+
+export function ProductsSearchInputSkeleton() {
+  return (
+    <View className="flex flex-row gap-x-2">
+      <SearchInput
+        className="flex-1"
+        placeholder="Buscar productos por nombre"
+        onChangeText={() => {}}
+        value=""
+      />
+      <Button variant="outline" size="icon" disabled>
+        <Icon as={ArrowLeftRight} size={18} />
+      </Button>
+    </View>
+  );
+}

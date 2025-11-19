@@ -1,6 +1,8 @@
 import { businessQueriesOptions } from "@/integrations/query/query-container";
-import { ProductsScreen } from "@/modules/products/screens/products.screen";
-import { Text } from "@/modules/shared/components/ui/text";
+import {
+  ProductsScreen,
+  ProductsScreenSkeleton,
+} from "@/modules/products/screens/products.screen";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useGlobalSearchParams } from "expo-router";
 import { Suspense } from "react";
@@ -33,7 +35,7 @@ export default function Products() {
   if (!businessId) return null;
 
   return (
-    <Suspense fallback={<Text>Loading products...</Text>}>
+    <Suspense fallback={<ProductsScreenSkeleton />}>
       <SuspenseProducts businessId={businessId} barcode={barcode} />
     </Suspense>
   );

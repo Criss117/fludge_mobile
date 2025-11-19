@@ -1,4 +1,5 @@
 import { Badge } from "@/modules/shared/components/ui/badge";
+import { Skeleton } from "@/modules/shared/components/ui/skeleton";
 import { Text } from "@/modules/shared/components/ui/text";
 import { cn } from "@/modules/shared/lib/utils";
 import type { CategorySummary } from "@/shared/entities/categories.entity";
@@ -91,6 +92,34 @@ export function CategoriesList({ categories }: Props) {
         />
       )}
       keyExtractor={(item) => item.id}
+      showsHorizontalScrollIndicator={false}
+      ItemSeparatorComponent={() => <View className="size-1" />}
+    />
+  );
+}
+
+export function CategoriesListSkeleton() {
+  return (
+    <FlatList
+      horizontal
+      data={Array.from({ length: 5 })}
+      ListHeaderComponent={() => (
+        <CategoryBadge
+          category={{
+            id: "all",
+            name: "Todos",
+          }}
+          onPress={() => {}}
+          isSelected
+          className="mx-1"
+        />
+      )}
+      renderItem={() => (
+        <View className="flex items-center justify-center">
+          <Skeleton className="h-5 w-28 px-4 rounded-full" />
+        </View>
+      )}
+      keyExtractor={() => Math.random().toString()}
       showsHorizontalScrollIndicator={false}
       ItemSeparatorComponent={() => <View className="size-1" />}
     />

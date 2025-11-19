@@ -9,7 +9,7 @@ import {
   RefreshControl,
   View,
 } from "react-native";
-import { ProductCard } from "../components/product-card";
+import { ProductCard, ProductCardSkeleton } from "../components/product-card";
 import { useProductsFilters } from "../hooks/products-filters";
 
 interface Props {
@@ -85,8 +85,21 @@ function ProductsListSectionSuspense({ businessId }: Props) {
 
 export function ProductsListSection({ businessId }: Props) {
   return (
-    <Suspense fallback={<Text>Loading Products...</Text>}>
+    <Suspense fallback={<ProductsListSectionSkeleton />}>
       <ProductsListSectionSuspense businessId={businessId} />
     </Suspense>
+  );
+}
+
+export function ProductsListSectionSkeleton() {
+  return (
+    <FlatList
+      numColumns={2}
+      data={Array.from({ length: 6 })}
+      keyExtractor={() => Math.random().toString()}
+      maxToRenderPerBatch={2}
+      renderItem={() => <ProductCardSkeleton className="flex-1 mx-0.5" />}
+      ItemSeparatorComponent={() => <View className="size-1" />}
+    />
   );
 }

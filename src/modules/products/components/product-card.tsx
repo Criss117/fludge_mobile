@@ -3,6 +3,7 @@ import {
   CardContent,
   CardHeader,
 } from "@/modules/shared/components/ui/card";
+import { Skeleton } from "@/modules/shared/components/ui/skeleton";
 import { Text } from "@/modules/shared/components/ui/text";
 import { cn, formatCurrency } from "@/modules/shared/lib/utils";
 import { ENDPOINTS } from "@/shared/api-utils/endpoints";
@@ -94,5 +95,37 @@ export function ProductCard({ product, className, businessId }: Props) {
         </Card>
       </Animated.View>
     </Pressable>
+  );
+}
+
+export function ProductCardSkeleton({ className }: { className?: string }) {
+  return (
+    <Card className={cn("py-2", className)}>
+      <CardHeader className="px-2">
+        <Image
+          source={require("@/assets/placeholder.png")}
+          className="aspect-[20/21] rounded-lg"
+          style={{
+            width: "auto",
+            height: "auto",
+          }}
+          fadeDuration={100}
+        />
+      </CardHeader>
+      <CardContent className="flex gap-y-2 px-2">
+        <Skeleton className="h-4 w-full rounded-md bg-muted-foreground" />
+        <View className="flex gap-y-1">
+          <Text variant="muted" className="text-muted-foreground">
+            <Skeleton className="h-3 w-1/2 rounded-md bg-muted-foreground" />
+          </Text>
+          <Text>
+            <Skeleton className="h-3 w-1/2 rounded-md bg-muted-foreground" />
+          </Text>
+          <Text variant="muted" className="text-muted-foreground">
+            <Skeleton className="h-3 w-1/3 rounded-md bg-muted-foreground" />
+          </Text>
+        </View>
+      </CardContent>
+    </Card>
   );
 }

@@ -4,10 +4,19 @@ import type { CategorySummary } from "@/shared/entities/categories.entity";
 import { Link } from "expo-router";
 import { PlusIcon } from "lucide-react-native";
 import { View } from "react-native";
-import { CategoriesList } from "../components/categories-filter-list";
-import { ProductsSearchInput } from "../components/products-search-input";
+import {
+  CategoriesList,
+  CategoriesListSkeleton,
+} from "../components/categories-filter-list";
+import {
+  ProductsSearchInput,
+  ProductsSearchInputSkeleton,
+} from "../components/products-search-input";
 import { ProductsFiltersProvider } from "../hooks/products-filters";
-import { ProductsListSection } from "../sections/products-list.section";
+import {
+  ProductsListSection,
+  ProductsListSectionSkeleton,
+} from "../sections/products-list.section";
 
 interface Props {
   categories: CategorySummary[];
@@ -47,5 +56,24 @@ export function ProductsScreen({ categories, businessId, barcode }: Props) {
         </View>
       </View>
     </ProductsFiltersProvider>
+  );
+}
+
+export function ProductsScreenSkeleton() {
+  return (
+    <View className="px-1 flex relative flex-1">
+      <View className="py-2 px-1 flex gap-y-2">
+        <ProductsSearchInputSkeleton />
+        <View className="py-2">
+          <CategoriesListSkeleton />
+        </View>
+      </View>
+      <ProductsListSectionSkeleton />
+      <View className="absolute right-4 bottom-4">
+        <Button size="icon" className="rounded-full" disabled>
+          <Icon as={PlusIcon} size={24} />
+        </Button>
+      </View>
+    </View>
   );
 }
