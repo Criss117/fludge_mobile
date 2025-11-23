@@ -119,13 +119,7 @@ function Root({
         {
           onSuccess: () => {
             form.reset();
-            router.replace({
-              pathname: "/businesses/[businessId]/products/[productId]",
-              params: {
-                businessId,
-                productId,
-              },
-            });
+            router.back();
           },
         }
       );

@@ -67,7 +67,6 @@ export function UserButton() {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem asChild></DropdownMenuItem>
           <DropdownMenuSeparator />
         </DropdownMenuGroup>
         <DropdownMenuItem asChild>
