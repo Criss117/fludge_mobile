@@ -1,6 +1,8 @@
 import { businessQueriesOptions } from "@/integrations/query/query-container";
-import { BusinessScreen } from "@/modules/businesses/screens/business.screen";
-import { Text } from "@/modules/shared/components/ui/text";
+import {
+  BusinessScreen,
+  BusinessScreenSkeleton,
+} from "@/modules/businesses/screens/business.screen";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
 import React, { Suspense } from "react";
@@ -29,7 +31,7 @@ export default function BusinessHome() {
 
   return (
     <View style={{ top: top, paddingHorizontal: 8 }}>
-      <Suspense fallback={<Text>Cargando...</Text>}>
+      <Suspense fallback={<BusinessScreenSkeleton />}>
         <BusinessHomeSuspense businessId={businessId} />
       </Suspense>
     </View>

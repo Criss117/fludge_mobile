@@ -6,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/modules/shared/components/ui/card";
+import { Skeleton } from "@/modules/shared/components/ui/skeleton";
 import { Text } from "@/modules/shared/components/ui/text";
 import type { GroupSummary } from "@/shared/entities/group.entity";
 import { useRouter } from "expo-router";
@@ -54,6 +55,33 @@ export function RecentGroupsList({ groups, businessId }: Props) {
                 </CardContent>
               </Card>
             </TouchableOpacity>
+          ))}
+        </CardContent>
+      </Card>
+    </View>
+  );
+}
+
+export function RecentGroupsListSkeleton() {
+  return (
+    <View className="flex gap-y-2">
+      <Text variant="h4">Grupos recientes</Text>
+      <Card>
+        <CardContent className="flex gap-y-2">
+          {Array.from({ length: 3 }).map((_, index) => (
+            <Card className="flex flex-row justify-between" key={index}>
+              <CardHeader>
+                <CardTitle>
+                  <Skeleton className="h-5 w-full rounded-lg bg-muted-foreground" />
+                </CardTitle>
+                <CardDescription>
+                  <Skeleton className="h-4 w-3/4 rounded-lg  bg-muted-foreground" />
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Skeleton className="h-4 w-3/4 rounded-lg  bg-muted-foreground" />
+              </CardContent>
+            </Card>
           ))}
         </CardContent>
       </Card>

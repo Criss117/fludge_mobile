@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/modules/shared/components/ui/dropdown-menu";
 import { Icon } from "@/modules/shared/components/ui/icon";
+import { Skeleton } from "@/modules/shared/components/ui/skeleton";
 import { Text } from "@/modules/shared/components/ui/text";
 import { spliText } from "@/modules/shared/lib/utils";
 import type { BusinessDetail } from "@/shared/entities/business.entity";
@@ -92,5 +93,18 @@ export function BusinessesMenu({ currentBusiness }: Props) {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+}
+
+export function BusinessesMenuSkeleton() {
+  return (
+    <View className="flex items-center justify-center flex-row px-5 py-2 gap-2">
+      <View className="bg-primary/10 p-1 rounded-md">
+        <Icon as={Building2} size={20} />
+      </View>
+      <Text className="text-base">
+        <Skeleton className="h-4 w-3/4 rounded-lg  bg-muted-foreground" />
+      </Text>
+    </View>
   );
 }
