@@ -1,9 +1,9 @@
+import { ScanBarcodeDialog } from "@/modules/shared/components/scan-barcode-dialog";
 import { SearchInput } from "@/modules/shared/components/search-input";
 import { Button } from "@/modules/shared/components/ui/button";
 import { Icon } from "@/modules/shared/components/ui/icon";
 import { useDebounce } from "@uidotdev/usehooks";
-import { Link, usePathname } from "expo-router";
-import { ArrowLeftRight, CameraIcon } from "lucide-react-native";
+import { ArrowLeftRight } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
 import { useProductsFilters } from "../hooks/products-filters";
@@ -11,12 +11,10 @@ import { useProductsFilters } from "../hooks/products-filters";
 type SearchMode = "barcode" | "name";
 
 interface Props {
-  businessId: string;
   defaultBarcode?: string;
 }
 
-export function ProductsSearchInput({ businessId, defaultBarcode }: Props) {
-  const pathname = usePathname();
+export function ProductsSearchInput({ defaultBarcode }: Props) {
   const { filtersDispatch } = useProductsFilters();
   const [searchBy, setSearchBy] = useState<SearchMode>(
     defaultBarcode ? "barcode" : "name"
@@ -85,21 +83,7 @@ export function ProductsSearchInput({ businessId, defaultBarcode }: Props) {
             onChangeText={setSearchTerm}
             value={searchTerm}
           />
-          <Link
-            asChild
-            push
-            href={{
-              pathname: "/businesses/[businessId]/barcode-reader",
-              params: {
-                businessId,
-                from: pathname,
-              },
-            }}
-          >
-            <Button variant="outline" size="icon">
-              <Icon as={CameraIcon} size={18} />
-            </Button>
-          </Link>
+          <ScanBarcodeDialog setBarcode={setSearchTerm} />
         </View>
       )}
       <Button variant="outline" size="icon" onPress={toggleSearchBy}>

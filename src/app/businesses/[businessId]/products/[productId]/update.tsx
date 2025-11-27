@@ -11,10 +11,9 @@ import { Suspense } from "react";
 interface Props {
   businessId: string;
   productId: string;
-  barcode?: string;
 }
 
-function Screen({ businessId, productId, barcode }: Props) {
+function Screen({ businessId, productId }: Props) {
   const { data: product } = useSuspenseQuery(
     productsQueriesOptions.findOne({
       businessId,
@@ -36,24 +35,22 @@ function Screen({ businessId, productId, barcode }: Props) {
         product={product}
         businessId={business.id}
         categories={business.categories}
-        barcode={barcode}
       />
     </>
   );
 }
 
 export default function UpdateProductPage() {
-  const { businessId, productId, barcode } = useGlobalSearchParams<{
+  const { businessId, productId } = useGlobalSearchParams<{
     businessId?: string;
     productId?: string;
-    barcode?: string;
   }>();
 
   if (!businessId || !productId) return null;
 
   return (
     <Suspense fallback={<Text>Loading...</Text>}>
-      <Screen businessId={businessId} productId={productId} barcode={barcode} />
+      <Screen businessId={businessId} productId={productId} />
     </Suspense>
   );
 }

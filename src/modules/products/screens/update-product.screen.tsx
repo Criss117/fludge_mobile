@@ -17,14 +17,12 @@ interface Props {
   businessId: string;
   categories: CategorySummary[];
   product: ProductSummary;
-  barcode?: string;
 }
 
 export function UpdateProductScreen({
   product,
   businessId,
   categories,
-  barcode,
 }: Props) {
   return (
     <KeyboardAwareScrollView>
@@ -32,7 +30,7 @@ export function UpdateProductScreen({
         <ProductForm.Root
           businessId={businessId}
           type="update"
-          defaultValues={{ ...product, barcode: barcode || product.barcode }}
+          defaultValues={product}
           productId={product.id}
         >
           <Card>

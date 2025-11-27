@@ -9,34 +9,28 @@ import { Suspense } from "react";
 
 interface Props {
   businessId: string;
-  barcode?: string;
 }
 
-function SuspenseProducts({ businessId, barcode }: Props) {
+function SuspenseProducts({ businessId }: Props) {
   const { data: business } = useSuspenseQuery(
     businessQueriesOptions.findOne(businessId)
   );
 
   return (
-    <ProductsScreen
-      categories={business.categories}
-      businessId={businessId}
-      barcode={barcode}
-    />
+    <ProductsScreen categories={business.categories} businessId={businessId} />
   );
 }
 
 export default function Products() {
-  const { businessId, barcode } = useGlobalSearchParams<{
+  const { businessId } = useGlobalSearchParams<{
     businessId?: string;
-    barcode?: string;
   }>();
 
   if (!businessId) return null;
 
   return (
     <Suspense fallback={<ProductsScreenSkeleton />}>
-      <SuspenseProducts businessId={businessId} barcode={barcode} />
+      <SuspenseProducts businessId={businessId} />
     </Suspense>
   );
 }

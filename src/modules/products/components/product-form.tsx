@@ -4,8 +4,8 @@ import { FormInput } from "@/modules/shared/components/form/form-input";
 import { FormSelect } from "@/modules/shared/components/form/form-select";
 import { FormSwitch } from "@/modules/shared/components/form/form-switch";
 import { FormTextArea } from "@/modules/shared/components/form/form-text-area";
+import { ScanBarcodeDialog } from "@/modules/shared/components/scan-barcode-dialog";
 import { Button } from "@/modules/shared/components/ui/button";
-import { Icon } from "@/modules/shared/components/ui/icon";
 import { Text } from "@/modules/shared/components/ui/text";
 import type { CategorySummary } from "@/shared/entities/categories.entity";
 import {
@@ -14,8 +14,7 @@ import {
 } from "@/shared/schemas/products/create-product.schema";
 import type { UpdateProductSchema } from "@/shared/schemas/products/update-product.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link, usePathname, useRouter } from "expo-router";
-import { CameraIcon } from "lucide-react-native";
+import { useRouter } from "expo-router";
 import { createContext, use } from "react";
 import { useForm } from "react-hook-form";
 import { ActivityIndicator, Insets, View } from "react-native";
@@ -173,8 +172,7 @@ function Description() {
 }
 
 function Barcode() {
-  const { form, businessId } = useProductForm();
-  const pathname = usePathname();
+  const { form } = useProductForm();
 
   return (
     <View className="flex flex-row gap-x-1 flex-1 items-end">
@@ -186,21 +184,9 @@ function Barcode() {
         fieldClassName="flex-1"
         required
       />
-      <Link
-        asChild
-        push
-        href={{
-          pathname: "/businesses/[businessId]/barcode-reader",
-          params: {
-            businessId,
-            from: pathname,
-          },
-        }}
-      >
-        <Button variant="outline" size="icon">
-          <Icon as={CameraIcon} size={18} />
-        </Button>
-      </Link>
+      <ScanBarcodeDialog
+        setBarcode={(code) => form.setValue("barcode", code)}
+      />
     </View>
   );
 }

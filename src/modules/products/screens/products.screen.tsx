@@ -29,10 +29,7 @@ export function ProductsScreen({ categories, businessId, barcode }: Props) {
     <ProductsFiltersProvider>
       <View className="px-1 flex relative flex-1">
         <View className="py-2 px-1 flex gap-y-2">
-          <ProductsSearchInput
-            businessId={businessId}
-            defaultBarcode={barcode}
-          />
+          <ProductsSearchInput defaultBarcode={barcode} />
           <View className="py-2">
             <CategoriesList categories={categories} businessId={businessId} />
           </View>
