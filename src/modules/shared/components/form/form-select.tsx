@@ -13,6 +13,8 @@ import {
 } from "../ui/select";
 import { Text } from "../ui/text";
 
+type Item = { label: string; value: string };
+
 interface Props<T extends FieldValues> {
   form: UseFormReturn<T, unknown, T>;
   name: Path<T>;
@@ -20,9 +22,22 @@ interface Props<T extends FieldValues> {
   label?: string;
   required?: boolean;
   disabled?: boolean;
-  items: { label: string; value: string }[];
+  items: Item[];
   triggerClass?: string;
   contentClass?: string;
+}
+
+function getDefaultValue(items: Item[], value?: string): Item | undefined {
+  if (!value) return undefined;
+
+  const label = items.find((item) => item.value === value);
+
+  if (!label) return undefined;
+
+  return {
+    label: label.label,
+    value: label.value,
+  };
 }
 
 export function FormSelect<T extends FieldValues>({
@@ -73,6 +88,7 @@ export function FormSelect<T extends FieldValues>({
 
               field.onChange(v.value);
             }}
+            defaultValue={getDefaultValue(items, field.value)}
           >
             <SelectTrigger className={cn(triggerClass)}>
               <SelectValue placeholder="Selecciona una categoria" />
