@@ -9,9 +9,11 @@ export const createEmployeeSchema = signUpSchema
     username: z
       .string({ error: "El nombre de usuario es obligatorio" })
       .min(1, "El nombre de usuario es obligatorio"),
-    salary: z.number({ message: "El salario debe ser un número" }).positive({
-      error: "El salario debe ser positivo",
-    }),
+    salary: z.coerce
+      .number<number>({ message: "El salario debe ser un número" })
+      .positive({
+        error: "El salario debe ser positivo",
+      }),
     groupIds: z
       .array(z.uuid({ message: "Cada grupo debe ser un valor válido" }))
       .optional(),

@@ -26,8 +26,8 @@ export const createProductSchema = z.object({
     })
     .transform((val) => val?.trim()),
 
-  purchasePrice: z
-    .number({
+  purchasePrice: z.coerce
+    .number<number>({
       message: "El precio de compra debe ser un número entero",
     })
     .int({
@@ -35,8 +35,8 @@ export const createProductSchema = z.object({
     })
     .min(1, { message: "El precio de compra debe ser mayor a 0" }),
 
-  salePrice: z
-    .number({
+  salePrice: z.coerce
+    .number<number>({
       message: "El precio de venta debe ser un número entero",
     })
     .int({
@@ -44,8 +44,8 @@ export const createProductSchema = z.object({
     })
     .min(1, { message: "El precio de venta debe ser mayor a 0" }),
 
-  wholesalePrice: z
-    .number({
+  wholesalePrice: z.coerce
+    .number<number>({
       message: "El precio mayorista debe ser un número entero",
     })
     .int({
@@ -53,8 +53,8 @@ export const createProductSchema = z.object({
     })
     .min(1, { message: "El precio mayorista debe ser mayor a 0" }),
 
-  stock: z
-    .number({
+  stock: z.coerce
+    .number<number>({
       message: "El stock debe ser un número entero",
     })
     .int({
@@ -62,8 +62,8 @@ export const createProductSchema = z.object({
     })
     .min(1, { message: "El stock debe ser mayor a 0" }),
 
-  minStock: z
-    .number({
+  minStock: z.coerce
+    .number<number>({
       message: "El stock mínimo debe ser un número entero",
     })
     .int({
@@ -91,8 +91,8 @@ export const createProductSchema = z.object({
     .optional()
     .nullable(),
 
-  offerPrice: z
-    .number({
+  offerPrice: z.coerce
+    .number<number>({
       message: "El precio de oferta debe de ser un número entero",
     })
     .int({
