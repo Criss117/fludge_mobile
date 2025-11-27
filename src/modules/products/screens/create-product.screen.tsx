@@ -15,13 +15,23 @@ import { ProductForm } from "../components/product-form";
 interface Props {
   businessId: string;
   categories: CategorySummary[];
+  barcode?: string;
 }
 
-export function CreateProductScreen({ businessId, categories }: Props) {
+export function CreateProductScreen({
+  businessId,
+  categories,
+  barcode,
+}: Props) {
   return (
     <KeyboardAwareScrollView>
       <View className="flex gap-y-4 px-2 pt-5 pb-10">
-        <ProductForm.Root businessId={businessId}>
+        <ProductForm.Root
+          businessId={businessId}
+          defaultValues={{
+            barcode,
+          }}
+        >
           <Card>
             <CardHeader className="flex flex-row gap-x-2 items-center">
               <Icon as={CheckCircle} size={20} />

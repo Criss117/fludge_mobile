@@ -5,6 +5,7 @@ import { FormSelect } from "@/modules/shared/components/form/form-select";
 import { FormSwitch } from "@/modules/shared/components/form/form-switch";
 import { FormTextArea } from "@/modules/shared/components/form/form-text-area";
 import { Button } from "@/modules/shared/components/ui/button";
+import { Icon } from "@/modules/shared/components/ui/icon";
 import { Text } from "@/modules/shared/components/ui/text";
 import type { CategorySummary } from "@/shared/entities/categories.entity";
 import {
@@ -13,10 +14,11 @@ import {
 } from "@/shared/schemas/products/create-product.schema";
 import type { UpdateProductSchema } from "@/shared/schemas/products/update-product.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "expo-router";
+import { Link, usePathname, useRouter } from "expo-router";
+import { CameraIcon } from "lucide-react-native";
 import { createContext, use } from "react";
 import { useForm } from "react-hook-form";
-import { ActivityIndicator, Insets } from "react-native";
+import { ActivityIndicator, Insets, View } from "react-native";
 import { useMutateProducts } from "../hooks/use.mutate-products";
 
 interface RootProps {
@@ -41,6 +43,7 @@ interface Context {
   onSubmit: (e?: React.BaseSyntheticEvent) => Promise<void>;
   form: ReturnType<typeof useForm<CreateProductSchema>>;
   isPending: boolean;
+  businessId: string;
   type: "create" | "update";
 }
 
@@ -75,7 +78,7 @@ function Root({
   const router = useRouter();
   const form = useForm<CreateProductSchema>({
     resolver: zodResolver(createProductSchema),
-    defaultValues: defaultValues || {
+    defaultValues: {
       name: "",
       barcode: "",
       purchasePrice: 0,
@@ -85,6 +88,7 @@ function Root({
       minStock: 0,
       description: "",
       allowNegativeStock: false,
+      ...defaultValues,
     },
   });
 
@@ -132,6 +136,7 @@ function Root({
         form,
         onSubmit,
         isPending: create.isPending || update.isPending,
+        businessId,
         type,
       }}
     >
@@ -168,16 +173,35 @@ function Description() {
 }
 
 function Barcode() {
-  const { form } = useProductForm();
+  const { form, businessId } = useProductForm();
+  const pathname = usePathname();
 
   return (
-    <FormInput
-      form={form}
-      name="barcode"
-      label="Código de barras"
-      placeholder="Escanea o ingresa manualmente"
-      required
-    />
+    <View className="flex flex-row gap-x-1 flex-1 items-end">
+      <FormInput
+        form={form}
+        name="barcode"
+        label="Código de barras"
+        placeholder="Escanea o ingresa manualmente"
+        fieldClassName="flex-1"
+        required
+      />
+      <Link
+        asChild
+        push
+        href={{
+          pathname: "/businesses/[businessId]/barcode-reader",
+          params: {
+            businessId,
+            from: pathname,
+          },
+        }}
+      >
+        <Button variant="outline" size="icon">
+          <Icon as={CameraIcon} size={18} />
+        </Button>
+      </Link>
+    </View>
   );
 }
 

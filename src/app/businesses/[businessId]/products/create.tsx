@@ -7,9 +7,10 @@ import { Suspense } from "react";
 
 interface Props {
   businessId: string;
+  barcode?: string;
 }
 
-function Screen({ businessId }: Props) {
+function Screen({ businessId, barcode }: Props) {
   const { data: business } = useSuspenseQuery(
     businessQueriesOptions.findOne(businessId)
   );
@@ -18,20 +19,24 @@ function Screen({ businessId }: Props) {
     <CreateProductScreen
       businessId={businessId}
       categories={business.categories}
+      barcode={barcode}
     />
   );
 }
 
 export default function CreateProduct() {
-  const { businessId } = useGlobalSearchParams<{
+  const { businessId, barcode } = useGlobalSearchParams<{
     businessId?: string;
+    barcode?: string;
   }>();
+
+  console.log({ barcode });
 
   if (!businessId) return null;
 
   return (
     <Suspense fallback={<Text>Cargando...</Text>}>
-      <Screen businessId={businessId} />
+      <Screen businessId={businessId} barcode={barcode} />
     </Suspense>
   );
 }
