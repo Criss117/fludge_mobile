@@ -66,7 +66,7 @@ function CardInfoSkeleton({ icon }: CardInfoSkeletonProps) {
 }
 
 export function BusinessCardsInfoSection({ business }: Props) {
-  const cardsInfo = [
+  const cardsInfo: CardInfoProps[] = [
     {
       icon: Users2Icon,
       description: "Clientes registrados",
@@ -81,7 +81,7 @@ export function BusinessCardsInfoSection({ business }: Props) {
     {
       icon: PackageSearch,
       description: "Productos registrados",
-      amount: 0,
+      amount: business.totalProducts,
       href: {
         pathname: "/businesses/[businessId]/(tabs)/products",
         params: {
@@ -111,7 +111,7 @@ export function BusinessCardsInfoSection({ business }: Props) {
         },
       },
     },
-  ] as const satisfies CardInfoProps[];
+  ] as const;
 
   return (
     <FlatList

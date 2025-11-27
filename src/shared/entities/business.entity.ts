@@ -21,4 +21,5 @@ export interface BusinessDetail extends BusinessSummary {
   employees: EmployeeSummary[];
   groups: GroupSummary[];
   categories: CategorySummary[];
+  totalProducts: number;
 }
