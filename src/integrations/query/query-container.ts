@@ -5,6 +5,7 @@ import { CategoriesActions } from "@/shared/api-utils/actions/categories.actions
 import { EmployeesActions } from "@/shared/api-utils/actions/employees.actions";
 import { GroupsActions } from "@/shared/api-utils/actions/groups.actions";
 import { ProductsActions } from "@/shared/api-utils/actions/products.actions";
+import { TicketsActions } from "@/shared/api-utils/actions/tickets.actions";
 import { API } from "@/shared/api-utils/api";
 import { AuthMutationsOptions } from "@/shared/react-query/auth/mutations";
 import { AuthQueriesOptions } from "@/shared/react-query/auth/queries";
@@ -17,8 +18,12 @@ import { GroupsMutationsOptions } from "@/shared/react-query/groups/mutations";
 import { GroupsQueriesOptions } from "@/shared/react-query/groups/queries";
 import { ProductsMutationsOptions } from "@/shared/react-query/products/mutations";
 import { ProductsQueriesOptions } from "@/shared/react-query/products/queries";
+import { TicketsMutationsOptions } from "@/shared/react-query/tickets/mutations";
+import { TicketsQueriesOptions } from "@/shared/react-query/tickets/queries";
 
-export const api = new API(env.EXPO_PUBLIC_API_URL);
+export const api = new API(
+  env.EXPO_PUBLIC_API_URL || "http://192.168.101.9:8080/api"
+);
 
 //Auth Actions
 export const authActions = new AuthActions(api);
@@ -27,6 +32,7 @@ export const groupsActions = new GroupsActions(api);
 export const employeesActions = new EmployeesActions(api);
 export const productsActions = new ProductsActions(api);
 export const categoriesActions = new CategoriesActions(api);
+export const ticketsActions = new TicketsActions(api);
 
 //Auth Queries
 export const authQueriesOptions = new AuthQueriesOptions(authActions);
@@ -66,4 +72,10 @@ export const productsMutationsOptions = new ProductsMutationsOptions(
 // );
 export const categoriesMutationsOptions = new CategoriesMutationsOptions(
   categoriesActions
+);
+
+//Tickets Queries
+export const ticketsQueriesOptions = new TicketsQueriesOptions(ticketsActions);
+export const ticketsMutationsOptions = new TicketsMutationsOptions(
+  ticketsActions
 );

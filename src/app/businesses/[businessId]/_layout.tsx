@@ -98,13 +98,6 @@ export default function BusinessesLayout() {
             title: "Nuevo producto",
           }}
         />
-
-        <Stack.Screen
-          name="barcode-reader"
-          options={{
-            title: "Leer codigo de barras",
-          }}
-        />
       </Stack>
     </PermissionsProvider>
   );

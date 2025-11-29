@@ -69,5 +69,17 @@ export const ENDPOINTS = {
       UPDATE: (businessId: string, productId: string) =>
         `/businesses/${businessId}/products/${productId}` as `/businesses/${string}/products/${string}`,
     },
+    TICKETS: {
+      CREATE: (businessId: string) =>
+        `/businesses/${businessId}/tickets` as `/businesses/${string}/tickets`,
+      DELETE_MANY: (businessId: string) =>
+        `/businesses/${businessId}/tickets` as `/businesses/${string}/tickets`,
+      FIND_MANY: (businessId: string) =>
+        `/businesses/${businessId}/tickets` as `/businesses/${string}/tickets`,
+      FIND_ONE: (businessId: string, ticketId: string) =>
+        `/businesses/${businessId}/tickets/${ticketId}` as `/businesses/${string}/tickets/${string}`,
+      UPDATE: (businessId: string, ticketId: string) =>
+        `/businesses/${businessId}/tickets/${ticketId}` as `/businesses/${string}/tickets/${string}`,
+    },
   },
 } as const;
