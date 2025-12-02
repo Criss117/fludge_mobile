@@ -31,7 +31,7 @@ export function TicketsScreen({ businessId, tickets }: Props) {
       <View className="absolute bottom-4 right-4">
         <Link
           href={{
-            pathname: "/",
+            pathname: "/businesses/[businessId]/sale",
             params: {
               businessId,
             },

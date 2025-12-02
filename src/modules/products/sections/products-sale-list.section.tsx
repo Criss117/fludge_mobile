@@ -1,4 +1,5 @@
 import { Text } from "@/modules/shared/components/ui/text";
+import { ProductSummary } from "@/shared/entities/products.entity";
 import { Suspense } from "react";
 import {
   ActivityIndicator,
@@ -6,14 +7,16 @@ import {
   RefreshControl,
   View,
 } from "react-native";
-import { ProductCard, ProductCardSkeleton } from "../components/product-card";
+import { ProductCardSkeleton } from "../components/product-card";
+import { ProductSaleCard } from "../components/product-sale-card";
 import { useFindManyProducts } from "../hooks/use.find-many-products";
 
 interface Props {
   businessId: string;
+  onPress: (product: ProductSummary) => void;
 }
 
-function ProductsListSectionSuspense({ businessId }: Props) {
+function ProductsSaleListSectionSuspense({ businessId, onPress }: Props) {
   const {
     hasNextPage,
     isFetchingNextPage,
@@ -32,10 +35,10 @@ function ProductsListSectionSuspense({ businessId }: Props) {
       renderItem={({ item }) => (
         <>
           {!item.empty && (
-            <ProductCard
+            <ProductSaleCard
               product={item}
               className="flex-1 mx-0.5"
-              businessId={businessId}
+              onPress={onPress}
             />
           )}
           {item.empty && <View className="flex-1 mx-0.5 " />}
@@ -60,15 +63,15 @@ function ProductsListSectionSuspense({ businessId }: Props) {
   );
 }
 
-export function ProductsListSection({ businessId }: Props) {
+export function ProductsSaleListSection(props: Props) {
   return (
-    <Suspense fallback={<ProductsListSectionSkeleton />}>
-      <ProductsListSectionSuspense businessId={businessId} />
+    <Suspense fallback={<ProductsSaleListSectionSkeleton />}>
+      <ProductsSaleListSectionSuspense {...props} />
     </Suspense>
   );
 }
 
-export function ProductsListSectionSkeleton() {
+export function ProductsSaleListSectionSkeleton() {
   return (
     <FlatList
       numColumns={2}

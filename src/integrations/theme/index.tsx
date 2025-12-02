@@ -1,4 +1,4 @@
-import { NAV_THEME } from "@/modules/shared/lib/theme";
+import { NAV_THEME, THEME } from "@/modules/shared/lib/theme";
 import { ThemeProvider as TProvider } from "@react-navigation/native";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -8,6 +8,7 @@ import { createContext, use, useCallback, useLayoutEffect } from "react";
 
 interface Context {
   theme: "light" | "dark";
+  colors: (typeof THEME)["light" | "dark"];
   toggleTheme: () => Promise<void>;
   setTheme: (theme: "light" | "dark") => Promise<void>;
 }
@@ -53,6 +54,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     <ThemeContext.Provider
       value={{
         theme: colorScheme ?? "dark",
+        colors: THEME[colorScheme ?? "dark"],
         setTheme,
         toggleTheme,
       }}

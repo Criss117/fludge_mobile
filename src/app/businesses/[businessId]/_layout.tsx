@@ -98,6 +98,13 @@ export default function BusinessesLayout() {
             title: "Nuevo producto",
           }}
         />
+
+        <Stack.Screen
+          name="sale"
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack>
     </PermissionsProvider>
   );
