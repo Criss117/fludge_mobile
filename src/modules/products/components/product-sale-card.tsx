@@ -52,8 +52,9 @@ export function ProductSaleCard({ product, className, onPress }: Props) {
         <Card
           className={cn(
             "py-2 relative",
-            (product.stock === 0 || product.minStock > product.stock) &&
-              "border-destructive bg-destructive/20"
+            product.minStock > product.stock &&
+              "border-orange-400 bg-orange-400/20",
+            product.stock === 0 && "border-destructive bg-destructive/20"
           )}
         >
           <CardHeader className="px-2">
@@ -92,13 +93,34 @@ export function ProductSaleCard({ product, className, onPress }: Props) {
                 $ {formatCurrency(product.purchasePrice)}
               </Text>
               <Text>$ {formatCurrency(product.salePrice)}</Text>
-              <Text variant="muted" className="text-muted-foreground">
+              <Text
+                variant="muted"
+                className={cn(
+                  "text-muted-foreground",
+                  product.stock === 0 && "text-destructive"
+                )}
+              >
                 Unidades: {product.stock}
+              </Text>
+              <Text
+                variant="muted"
+                className={cn(
+                  "text-muted-foreground",
+                  product.minStock > product.stock && "text-orange-400",
+                  product.stock === 0 && "text-destructive"
+                )}
+              >
+                Unidades mín: {product.minStock}
               </Text>
             </View>
           </CardContent>
           <View className="absolute right-4 bottom-4">
-            <Button size="icon" className="rounded-full" variant="outline">
+            <Button
+              size="icon"
+              className="rounded-full"
+              variant="outline"
+              onPress={onCardPress}
+            >
               <Icon as={PlusIcon} size={24} />
             </Button>
           </View>

@@ -18,6 +18,11 @@ export interface TicketStore {
   tickets: Map<string, TicketItemStore[]>;
 }
 
+export interface Store {
+  businessId: string;
+  state: TicketStore;
+}
+
 interface TicketStoreActions {
   createTicket: (ticketId: string) => void;
   addTicketItem: (item: TicketItemStore, ticketId?: string) => void;
@@ -36,6 +41,7 @@ interface TicketStoreActions {
   clearTicket: (ticketId?: string) => void;
   removeTicket: (ticketId?: string) => void;
   renameTicket: (ticketId: string, newName: string) => void;
+  clearState: () => void;
 }
 
 export const useTicketsStore = create<TicketStore & TicketStoreActions>()(
@@ -101,7 +107,7 @@ export const useTicketsStore = create<TicketStore & TicketStoreActions>()(
 
     changeItemQuantity: (ticketId, itemId, quantity) => {
       set((state) => {
-        if (quantity <= 0) return state;
+        if (quantity < 0) return state;
 
         const items = state.tickets.get(ticketId);
         if (!items) return state;
@@ -208,6 +214,13 @@ export const useTicketsStore = create<TicketStore & TicketStoreActions>()(
 
         return { tickets: newMap };
       });
+    },
+
+    clearState: () => {
+      set(() => ({
+        currentTicketId: "ticket-1",
+        tickets: new Map([["ticket-1", []]]),
+      }));
     },
   })
 );

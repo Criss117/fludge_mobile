@@ -1,66 +1,54 @@
-import { Button } from "@/modules/shared/components/ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/modules/shared/components/ui/dialog";
+import { Card } from "@/modules/shared/components/ui/card";
+import { Icon } from "@/modules/shared/components/ui/icon";
 import { Text } from "@/modules/shared/components/ui/text";
-import { CameraView } from "expo-camera";
-import { useState } from "react";
-import { useSafeAreaFrame } from "react-native-safe-area-context";
+import { Trash2Icon } from "lucide-react-native";
+import { useMemo } from "react";
+import { PanResponder, TouchableOpacity, View } from "react-native";
+import Animated, { useSharedValue, withSpring } from "react-native-reanimated";
 
 export default function Providers() {
-  const { width } = useSafeAreaFrame();
-  const [code, setCode] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
-  const [isScanning, setIsScanning] = useState(false);
+  const translateX = useSharedValue(0);
 
-  function onBarcodeScanned(code: string) {
-    if (isScanning) return;
-    setIsScanning(true);
-    setCode(code);
-    setIsOpen(false);
-    setIsScanning(false);
-  }
+  const panResponder = useMemo(() => {
+    return PanResponder.create({
+      onMoveShouldSetPanResponder: () => true,
+      onStartShouldSetPanResponder: () => true,
+      onPanResponderMove: (e, gestureState) => {
+        if (gestureState.dx < 0) {
+          translateX.set(gestureState.dx);
+        }
+      },
+      onPanResponderRelease(e, gestureState) {
+        if (gestureState.dx < -50) {
+          translateX.set(withSpring(-100));
+        } else {
+          translateX.set(withSpring(0));
+        }
+      },
+    });
+  }, [translateX]);
 
   return (
-    <>
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogTrigger asChild>
-          <Button>
-            <Text>Open dialog {code}</Text>
-          </Button>
-        </DialogTrigger>
-
-        <DialogContent
-          style={{
-            width: width - 32,
-            height: width - 32,
-          }}
-        >
-          <DialogHeader>
-            <DialogTitle>Dialog title</DialogTitle>
-          </DialogHeader>
-          <CameraView
-            style={{ flex: 1 }}
-            barcodeScannerSettings={{
-              barcodeTypes: ["ean13"],
-            }}
-            onBarcodeScanned={(code) => onBarcodeScanned(code.data)}
-          />
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline">
-                <Text>Close</Text>
-              </Button>
-            </DialogClose>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </>
+    <View className="px-2 my-5">
+      <Animated.View
+        style={{
+          transform: [
+            {
+              translateX: translateX,
+            },
+          ],
+        }}
+        className="flex flex-row relative"
+      >
+        <Card className="bg-gray-700 p-5 flex-1" {...panResponder.panHandlers}>
+          <Text>Providers</Text>
+        </Card>
+        <View className="absolute h-full  w-20 -right-24 rounded-md bg-destructive">
+          <TouchableOpacity className="flex-1 flex items-center justify-center">
+            <Icon as={Trash2Icon} size={24} className="text-white" />
+          </TouchableOpacity>
+        </View>
+      </Animated.View>
+    </View>
   );
 }

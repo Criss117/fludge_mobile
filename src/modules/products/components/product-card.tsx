@@ -50,7 +50,14 @@ export function ProductCard({ product, className, businessId }: Props) {
           transitionDuration: "50ms",
         }}
       >
-        <Card className="py-2">
+        <Card
+          className={cn(
+            "py-2",
+            product.minStock > product.stock &&
+              "border-orange-400 bg-orange-400/20",
+            product.stock === 0 && "border-destructive bg-destructive/20"
+          )}
+        >
           <CardHeader className="px-2">
             {!product.productImage && (
               <Image
@@ -87,8 +94,24 @@ export function ProductCard({ product, className, businessId }: Props) {
                 $ {formatCurrency(product.purchasePrice)}
               </Text>
               <Text>$ {formatCurrency(product.salePrice)}</Text>
-              <Text variant="muted" className="text-muted-foreground">
+              <Text
+                variant="muted"
+                className={cn(
+                  "text-muted-foreground",
+                  product.stock === 0 && "text-destructive"
+                )}
+              >
                 Unidades: {product.stock}
+              </Text>
+              <Text
+                variant="muted"
+                className={cn(
+                  "text-muted-foreground",
+                  product.minStock > product.stock && "text-orange-400",
+                  product.stock === 0 && "text-destructive"
+                )}
+              >
+                Unidades mín: {product.minStock}
               </Text>
             </View>
           </CardContent>

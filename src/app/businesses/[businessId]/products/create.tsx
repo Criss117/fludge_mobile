@@ -30,8 +30,6 @@ export default function CreateProduct() {
     barcode?: string;
   }>();
 
-  console.log({ barcode });
-
   if (!businessId) return null;
 
   return (

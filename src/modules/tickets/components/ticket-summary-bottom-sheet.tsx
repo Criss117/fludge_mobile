@@ -1,49 +1,24 @@
 import { useTheme } from "@/integrations/theme";
 import { Button } from "@/modules/shared/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/modules/shared/components/ui/card";
-import { Icon } from "@/modules/shared/components/ui/icon";
 import { Text } from "@/modules/shared/components/ui/text";
-import { formatCurrency, spliText } from "@/modules/shared/lib/utils";
+import { formatCurrency } from "@/modules/shared/lib/utils";
 import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
-import { MinusIcon, PlusIcon } from "lucide-react-native";
-import { useCallback, useMemo, useRef } from "react";
+import { useMemo, useRef } from "react";
 import { View } from "react-native";
-import { TicketItemStore, useTicketsStore } from "../store/tickets.store";
+import { type TicketItemStore, useTicketsStore } from "../store/tickets.store";
+import { TicketItemCard } from "./ticket-item-card";
 
 export function TicketSummaryBottomSheet() {
   const { colors } = useTheme();
   const bottomSheetRef = useRef<BottomSheet>(null);
   const tickets = useTicketsStore((state) => state.tickets);
   const currentTicketId = useTicketsStore((state) => state.currentTicketId);
-  const removeTicketItem = useTicketsStore((state) => state.removeTicketItem);
-  const changeItemQuantity = useTicketsStore(
-    (state) => state.changeItemQuantity
-  );
 
   const snapPoints = useMemo(() => ["8%", "50%", "75%"], []);
 
   const currentTicket = useMemo(
     () => tickets.get(currentTicketId) ?? [],
     [tickets, currentTicketId]
-  );
-
-  const increaseItemQuantity = useCallback(
-    (itemId: string, quantity: number) => {
-      changeItemQuantity(currentTicketId, itemId, quantity + 1);
-    },
-    [currentTicketId, changeItemQuantity]
-  );
-
-  const decreaseItemQuantity = useCallback(
-    (itemId: string, quantity: number) => {
-      changeItemQuantity(currentTicketId, itemId, quantity - 1);
-    },
-    [currentTicketId, changeItemQuantity]
   );
 
   const total = useMemo(() => {
@@ -77,42 +52,16 @@ export function TicketSummaryBottomSheet() {
             </Text>
           </View>
         )}
+        ListFooterComponent={() => (
+          <View className="mt-5 mb-10">
+            <Button disabled={total === 0} onPress={() => {}}>
+              <Text>Continuar</Text>
+            </Button>
+          </View>
+        )}
         ItemSeparatorComponent={() => <View className="h-2" />}
         renderItem={({ item }: { item: TicketItemStore }) => (
-          <Card className="py-2 flex flex-row justify-between">
-            <CardHeader className="px-2">
-              <CardTitle>{spliText(item.name, 20)}</CardTitle>
-              <View className="flex flex-row gap-x-1">
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="rounded-full"
-                  disabled={item.quantity <= 1}
-                  onPress={() => decreaseItemQuantity(item.id, item.quantity)}
-                >
-                  <Icon as={MinusIcon} size={18} />
-                </Button>
-                <View className="flex items-center justify-center p-2">
-                  <Text>{item.quantity}</Text>
-                </View>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="rounded-full"
-                  disabled={item.quantity >= item.stock}
-                  onPress={() => increaseItemQuantity(item.id, item.quantity)}
-                >
-                  <Icon as={PlusIcon} size={18} />
-                </Button>
-              </View>
-            </CardHeader>
-            <CardContent className="px-2 flex items-end justify-center">
-              <Text variant="muted" className="text-muted-foreground">
-                {formatCurrency(item.salePrice)}
-              </Text>
-              <Text>{formatCurrency(item.salePrice * item.quantity)}</Text>
-            </CardContent>
-          </Card>
+          <TicketItemCard item={item} />
         )}
         className="flex-1 p-2 bg-background h-full"
       />

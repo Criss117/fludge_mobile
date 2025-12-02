@@ -12,16 +12,19 @@ import { Icon } from "@/modules/shared/components/ui/icon";
 import { Skeleton } from "@/modules/shared/components/ui/skeleton";
 import { Text } from "@/modules/shared/components/ui/text";
 import { spliText } from "@/modules/shared/lib/utils";
+import { useTicketsStore } from "@/modules/tickets/store/tickets.store";
 import type { BusinessDetail } from "@/shared/entities/business.entity";
 import { Link } from "expo-router";
 import { Building2, ChevronDownIcon, PlusIcon } from "lucide-react-native";
 import { View } from "react-native";
+
 interface Props {
   currentBusiness: BusinessDetail;
 }
 
 export function BusinessesMenu({ currentBusiness }: Props) {
   const { user } = useAuth();
+  const clearTicketStore = useTicketsStore((state) => state.clearState);
 
   if (!user) return null;
 
@@ -74,7 +77,11 @@ export function BusinessesMenu({ currentBusiness }: Props) {
                 push
                 asChild
               >
-                <Button variant="outline" className="justify-start">
+                <Button
+                  variant="outline"
+                  className="justify-start"
+                  onPress={() => clearTicketStore()}
+                >
                   <Icon as={Building2} size={20} />
                   <Text>{spliText(business.name, 25)}</Text>
                 </Button>
@@ -85,7 +92,7 @@ export function BusinessesMenu({ currentBusiness }: Props) {
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <Link href="/businesses/register" push asChild>
-            <Button>
+            <Button onPress={() => clearTicketStore()}>
               <Icon as={PlusIcon} size={20} className="text-black" />
               <Text>Registrar nuevo negocio</Text>
             </Button>

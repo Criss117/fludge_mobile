@@ -5,6 +5,7 @@ import {
 } from "@/integrations/query/query-container";
 import { LoadingScreen } from "@/modules/shared/components/loading-screen";
 import { secureStorage } from "@/modules/shared/lib/secure-storage";
+import { useTicketsStore } from "@/modules/tickets/store/tickets.store";
 import type { CommonResponse } from "@/shared/api-utils/http/common-response";
 import type { SessionSummary } from "@/shared/entities/session.entity";
 import { UserDetail } from "@/shared/entities/user.entity";
@@ -75,6 +76,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isRestoringSession, setIsRestoringSession] = useState(true);
   const [isFetchingSession, setIsFetchingSession] = useState(false);
 
+  const clearTicketStore = useTicketsStore((state) => state.clearState);
+
   // mutations
   const signUp = useMutation(authMutationsOptions.signUp());
   const closeAllSessions = useMutation(authMutationsOptions.closeAllSessions());
@@ -90,6 +93,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       await secureStorage.remove(AuthTokenKey);
       setUser(null);
       setSessionToken(null);
+      clearTicketStore();
     },
   });
 
