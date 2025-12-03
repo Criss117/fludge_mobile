@@ -7,15 +7,14 @@ import {
 import { Icon } from "@/modules/shared/components/ui/icon";
 import { Skeleton } from "@/modules/shared/components/ui/skeleton";
 import { Text } from "@/modules/shared/components/ui/text";
-import { env } from "@/modules/shared/lib/config";
 import { cn, formatCurrency } from "@/modules/shared/lib/utils";
-import { ENDPOINTS } from "@/shared/api-utils/endpoints";
 import { ProductSummary } from "@/shared/entities/products.entity";
 import * as Haptics from "expo-haptics";
 import { PlusIcon } from "lucide-react-native";
 import { useState } from "react";
 import { Image, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
+import { ProductImage } from "./product-image";
 
 interface Props {
   product: ProductSummary;
@@ -58,33 +57,7 @@ export function ProductSaleCard({ product, className, onPress }: Props) {
           )}
         >
           <CardHeader className="px-2">
-            {!product.productImage && (
-              <Image
-                source={require("@/assets/placeholder.png")}
-                className="aspect-[20/21] rounded-lg"
-                style={{
-                  width: "auto",
-                  height: "auto",
-                }}
-                fadeDuration={100}
-              />
-            )}
-            {product.productImage && (
-              <Image
-                source={{
-                  uri: product.productImage.includes("http")
-                    ? product.productImage
-                    : `${env.EXPO_PUBLIC_API_URL}${ENDPOINTS.IMAGES.PRODUCTS(product.productImage)}`,
-                }}
-                loadingIndicatorSource={require("@/assets/placeholder.png")}
-                fadeDuration={100}
-                className="aspect-[20/21] rounded-lg"
-                style={{
-                  width: "auto",
-                  height: "auto",
-                }}
-              />
-            )}
+            <ProductImage productImage={product.productImage} />
           </CardHeader>
           <CardContent className="flex gap-y-2 px-2">
             <Text className="line-clamp-1">{product.name}</Text>

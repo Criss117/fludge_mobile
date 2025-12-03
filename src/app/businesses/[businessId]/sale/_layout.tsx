@@ -1,7 +1,7 @@
 import { Icon } from "@/modules/shared/components/ui/icon";
-import { Text } from "@/modules/shared/components/ui/text";
+import { TicketsList } from "@/modules/tickets/components/tickets-list";
 import { Stack } from "expo-router";
-import { ChevronDown, MoreVerticalIcon } from "lucide-react-native";
+import { MoreVerticalIcon } from "lucide-react-native";
 import { View } from "react-native";
 
 export default function RootLayout() {
@@ -15,8 +15,7 @@ export default function RootLayout() {
         ),
         headerTitle: () => (
           <View className="flex flex-row items-center gap-x-2 mx-auto">
-            <Text>Ticket 1</Text>
-            <Icon as={ChevronDown} size={24} />
+            <TicketsList />
           </View>
         ),
       }}
