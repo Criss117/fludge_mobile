@@ -54,7 +54,7 @@ export function CreateTicketScreen({ categories, businessId }: Props) {
             onPress={onAddTicketItem}
           />
         </View>
-        <TicketSummaryBottomSheet />
+        <TicketSummaryBottomSheet businessId={businessId} />
       </ProductsFiltersProvider>
     </GestureHandlerRootView>
   );

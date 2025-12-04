@@ -4,9 +4,11 @@ import { Image } from "react-native";
 
 interface Props {
   productImage?: string | null;
+  width?: number;
+  height?: number;
 }
 
-export function ProductImage({ productImage }: Props) {
+export function ProductImage({ productImage, width, height }: Props) {
   return (
     <>
       {!productImage && (
@@ -14,8 +16,8 @@ export function ProductImage({ productImage }: Props) {
           source={require("@/assets/placeholder.png")}
           className="aspect-[20/21] rounded-lg"
           style={{
-            width: "auto",
-            height: "auto",
+            width: width ?? "auto",
+            height: height ?? "auto",
           }}
           fadeDuration={100}
         />
@@ -31,8 +33,8 @@ export function ProductImage({ productImage }: Props) {
           fadeDuration={100}
           className="aspect-[20/21] rounded-lg"
           style={{
-            width: "auto",
-            height: "auto",
+            width: width ?? "auto",
+            height: height ?? "auto",
           }}
         />
       )}

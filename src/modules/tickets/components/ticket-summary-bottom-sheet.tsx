@@ -1,14 +1,19 @@
 import { useTheme } from "@/integrations/theme";
 import { Button } from "@/modules/shared/components/ui/button";
 import { Text } from "@/modules/shared/components/ui/text";
-import { formatCurrency } from "@/modules/shared/lib/utils";
+import { formatCurrency, spliText } from "@/modules/shared/lib/utils";
 import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
+import { Link } from "expo-router";
 import { useMemo, useRef } from "react";
 import { View } from "react-native";
 import { type TicketItemStore, useTicketsStore } from "../store/tickets.store";
 import { TicketItemCard } from "./ticket-item-card";
 
-export function TicketSummaryBottomSheet() {
+interface Props {
+  businessId: string;
+}
+
+export function TicketSummaryBottomSheet({ businessId }: Props) {
   const { colors } = useTheme();
   const bottomSheetRef = useRef<BottomSheet>(null);
   const tickets = useTicketsStore((state) => state.tickets);
@@ -45,7 +50,7 @@ export function TicketSummaryBottomSheet() {
         ListHeaderComponent={() => (
           <View className="flex flex-row justify-between items-center mb-5">
             <Text variant="h4" className="flex items-center">
-              Ticket Actual ({currentTicket.length})
+              {spliText(currentTicketId)} ({currentTicket.length})
             </Text>
             <Text variant="muted" className="text-muted-foreground">
               Total: <Text>$ {formatCurrency(total)}</Text>
@@ -54,9 +59,25 @@ export function TicketSummaryBottomSheet() {
         )}
         ListFooterComponent={() => (
           <View className="mt-5 mb-10">
-            <Button disabled={total === 0} onPress={() => {}}>
-              <Text>Continuar</Text>
-            </Button>
+            <Link
+              href={{
+                pathname: "/businesses/[businessId]/sale/resume",
+                params: {
+                  businessId,
+                },
+              }}
+              asChild
+              push
+            >
+              <Button disabled={total === 0} onPress={() => {}}>
+                <Text>Continuar</Text>
+              </Button>
+            </Link>
+          </View>
+        )}
+        ListEmptyComponent={() => (
+          <View className="flex items-center justify-center">
+            <Text>No hay productos para mostrar</Text>
           </View>
         )}
         ItemSeparatorComponent={() => <View className="h-2" />}
